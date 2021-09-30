@@ -1,0 +1,8 @@
+.navbar-expand-lg {
+	background-color: black !important;
+}
+
+a.navbar-brand {
+	font-size: 26px;
+	font-family: GothamRegular;
+}

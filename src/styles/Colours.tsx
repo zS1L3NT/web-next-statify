@@ -10,5 +10,6 @@ export const SUCCESS = "#1db954"
 export const FAILURE = "#e22134"
 export const WARNING = "#ff5722"
 
+export const GREY = "#121212"
 export const BLACK = "#000000"
 export const WHITE = "#FFFFFF"
