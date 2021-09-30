@@ -1,10 +1,11 @@
-import React, { useState } from "react"
+import React from "react"
 import { Container, Nav, Navbar } from "react-bootstrap"
+import { useSelector } from "react-redux"
 import Image from "../../atoms/image"
 import "./index.css"
 
 const Navigator = (): JSX.Element => {
-	const [credentials] = useState(null)
+	const credentials = useSelector(state => state.access_token)
 
 	return (
 		<Navbar bg="dark" variant="dark" expand="lg">
