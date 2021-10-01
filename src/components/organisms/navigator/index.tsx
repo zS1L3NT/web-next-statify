@@ -11,8 +11,7 @@ const Navigator = (): JSX.Element => {
 		<Navbar bg="dark" variant="dark" expand="lg">
 			<Container>
 				<Navbar.Brand href="/">
-					<Image />
-					Statify
+					<Image src="/assets/images/statify.svg" width="36px" height="36px" /> Statify
 				</Navbar.Brand>
 				<Navbar.Toggle aria-controls="basic-navbar-nav" />
 				<Navbar.Collapse id="basic-navbar-nav">

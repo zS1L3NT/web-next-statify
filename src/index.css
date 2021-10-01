@@ -10,3 +10,7 @@ body,
 	height: 100%;
 	font-family: GothamLight;
 }
+
+::-webkit-scrollbar {
+	width: 0;
+}
