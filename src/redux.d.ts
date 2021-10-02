@@ -1,4 +1,4 @@
-export type iInitialAccessToken = string | null
+export type iAccessTokenData = string | null
 
 export interface iSetAccessToken {
 	type: "SET_ACCESS_TOKEN"

@@ -1,12 +1,12 @@
 import { Reducer } from "redux"
-import { iAccessTokenActions, iInitialAccessToken } from "../redux"
+import { iAccessTokenActions, iAccessTokenData } from "../redux"
 
-const initialState: iInitialAccessToken = null
+const initialState: iAccessTokenData = null
 
-const reducer: Reducer<iInitialAccessToken, iAccessTokenActions> = (
+const reducer: Reducer<iAccessTokenData, iAccessTokenActions> = (
 	state = initialState,
 	action: iAccessTokenActions
-): iInitialAccessToken => {
+): iAccessTokenData => {
 	switch (action.type) {
 		case "SET_ACCESS_TOKEN":
 			return action.payload.access_token
