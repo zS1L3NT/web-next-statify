@@ -19,7 +19,7 @@ const HomeFocus = (): JSX.Element => {
 	}
 
 	return (
-		<Center className="w-100 h-100">
+		<Center max>
 			<Text color={Colours.PRIMARY} size="jumbo" className="m-auto mb-1">
 				Statify
 			</Text>

@@ -3,7 +3,6 @@ import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
 import { setAccessToken } from "../../../actions/AccessTokenActions"
-import Colours from "../../../styles/Colours"
 import AuthenticatedFocus from "../../molecules/authenticated-focus"
 import Center from "../../particles/center"
 
@@ -41,10 +40,10 @@ const Authenticated = (): JSX.Element => {
 					})
 			}, 3000)
 		}
-	}, [history, dispatch])
+	}, [dispatch, history])
 
 	return (
-		<Center className="w-100 h-100" style={{ backgroundColor: Colours.GREY }}>
+		<Center max>
 			<AuthenticatedFocus />
 		</Center>
 	)
