@@ -6,3 +6,7 @@ a.navbar-brand {
 	font-size: 26px;
 	font-family: GothamRegular;
 }
+
+span.navbar-brand {
+	cursor: pointer;
+}
