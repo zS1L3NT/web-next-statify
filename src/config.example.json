@@ -1,7 +1,8 @@
 {
 	"spotify": {
-		"clientId": "",
-		"clientSecret": "",
-		"redirectUri": ""
+		"client_id": "",
+		"client_secret": "",
+		"redirect_uri": "",
+		"scope": ""
 	}
 }

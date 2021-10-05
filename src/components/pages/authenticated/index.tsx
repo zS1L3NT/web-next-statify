@@ -20,9 +20,9 @@ const Authenticated = (): JSX.Element => {
 				const data = new URLSearchParams()
 				data.append("grant_type", "authorization_code")
 				data.append("code", code)
-				data.append("redirect_uri", config.spotify.redirectUri)
-				data.append("client_id", config.spotify.clientId)
-				data.append("client_secret", config.spotify.clientSecret)
+				data.append("redirect_uri", config.spotify.redirect_uri)
+				data.append("client_id", config.spotify.client_id)
+				data.append("client_secret", config.spotify.client_secret)
 
 				axios
 					.post("https://accounts.spotify.com/api/token", data, {

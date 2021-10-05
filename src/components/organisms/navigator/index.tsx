@@ -15,9 +15,9 @@ const Navigator = (): JSX.Element => {
 	useEffect(() => {
 		const query = new URLSearchParams({
 			response_type: "code",
-			client_id: config.spotify.clientId,
-			redirect_uri: config.spotify.redirectUri,
-			scope: "user-read-private"
+			client_id: config.spotify.client_id,
+			redirect_uri: config.spotify.redirect_uri,
+			scope: config.spotify.scope
 		}).toString()
 
 		setSpotifyUrl("https://accounts.spotify.com/authorize?" + query)
