@@ -5,6 +5,7 @@ import Home from "./components/pages/home"
 import Authenticated from "./components/pages/authenticated"
 import Colours from "./styles/Colours"
 import Logout from "./components/pages/logout"
+import TopTracks from "./components/pages/top-tracks"
 
 function App(): JSX.Element {
 	useEffect(() => {
@@ -18,6 +19,7 @@ function App(): JSX.Element {
 				<Route exact path="/" component={Home} />
 				<Route exact path="/authenticated" component={Authenticated} />
 				<Route exact path="/logout" component={Logout} />
+				<Route exact path="/top-tracks" component={TopTracks} />
 			</Switch>
 		</div>
 	)

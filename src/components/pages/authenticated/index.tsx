@@ -2,7 +2,9 @@ import axios from "axios"
 import React, { useEffect } from "react"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router"
+import Spotify from "spotify-web-api-js"
 import { setAccessToken } from "../../../actions/AccessTokenActions"
+import { setSpotifyApi } from "../../../actions/SpotifyApiActions"
 import AuthenticatedFocus from "../../molecules/authenticated-focus"
 import Center from "../../particles/center"
 
@@ -33,12 +35,17 @@ const Authenticated = (): JSX.Element => {
 					.then(res => {
 						const { access_token } = res.data as any
 						dispatch(setAccessToken(access_token))
+
+						const spotify_api = new Spotify()
+						spotify_api.setAccessToken(access_token)
+						dispatch(setSpotifyApi(spotify_api))
+
 						history.push("/top-tracks")
 					})
 					.catch(err => {
 						console.error(err.response.data.error)
 					})
-			}, 3000)
+			}, 0)
 		}
 	}, [dispatch, history])
 

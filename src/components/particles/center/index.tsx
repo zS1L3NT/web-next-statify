@@ -2,7 +2,7 @@ import React from "react"
 import BaseProps from "../../base-props"
 
 interface CenterProps extends BaseProps {
-	max?: any
+	max?: boolean
 }
 
 const Center = (props: CenterProps): JSX.Element => {
