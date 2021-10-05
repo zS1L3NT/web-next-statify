@@ -20,10 +20,76 @@ export type iAccessTokenActions = iSetAccessToken
 export type iSpotifyApiData = Spotify.SpotifyWebApiJs | null
 
 export interface iSetSpotifyApi {
-	type: "SET_SPOTIFY_API",
+	type: "SET_SPOTIFY_API"
 	payload: {
 		spotify_api: Spotify.SpotifyWebApiJs | null
 	}
 }
 
 export type iSpotifyApiActions = iSetSpotifyApi
+
+/**
+ * Statistics
+ */
+export interface iStatisticsData {
+	tracks: {
+		short_term: SpotifyApi.TrackObjectFull[] | null
+		medium_term: SpotifyApi.TrackObjectFull[] | null
+		long_term: SpotifyApi.TrackObjectFull[] | null
+	}
+	artists: {
+		short_term: SpotifyApi.ArtistObjectFull[] | null
+		medium_term: SpotifyApi.ArtistObjectFull[] | null
+		long_term: SpotifyApi.ArtistObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsTracksShortTerm {
+	type: "SET_STATISTICS_TRACKS_SHORT_TERM"
+	payload: {
+		short_term: SpotifyApi.TrackObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsTracksMediumTerm {
+	type: "SET_STATISTICS_TRACKS_MEDIUM_TERM"
+	payload: {
+		medium_term: SpotifyApi.TrackObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsTracksLongTerm {
+	type: "SET_STATISTICS_TRACKS_LONG_TERM"
+	payload: {
+		long_term: SpotifyApi.TrackObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsArtistsShortTerm {
+	type: "SET_STATISTICS_ARTISTS_SHORT_TERM"
+	payload: {
+		short_term: SpotifyApi.ArtistObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsArtistsMediumTerm {
+	type: "SET_STATISTICS_ARTISTS_MEDIUM_TERM"
+	payload: {
+		medium_term: SpotifyApi.ArtistObjectFull[] | null
+	}
+}
+
+export interface iSetStatisticsArtistsLongTerm {
+	type: "SET_STATISTICS_ARTISTS_LONG_TERM"
+	payload: {
+		long_term: SpotifyApi.ArtistObjectFull[] | null
+	}
+}
+
+export type iStatisticsActions =
+	| iSetStatisticsTracksShortTerm
+	| iSetStatisticsTracksMediumTerm
+	| iSetStatisticsTracksLongTerm
+	| iSetStatisticsArtistsShortTerm
+	| iSetStatisticsArtistsMediumTerm
+	| iSetStatisticsArtistsLongTerm
