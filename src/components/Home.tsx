@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
 				spacing={10}
 				justifyContent="center">
 				{cards.map(card => (
-					<Card key={card.url} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }} variant="outlined">
+					<Card key={card.url} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
 						<CardContent>
 							<Typography variant="h4" gutterBottom>
 								{card.header}
