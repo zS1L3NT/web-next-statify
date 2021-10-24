@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 interface iCard {
+	id: string
 	header: string
 	body: string
 	url: string
@@ -15,16 +16,19 @@ const Home = (): JSX.Element => {
 
 	const cards: iCard[] = [
 		{
+			id: "home-top-tracks",
 			header: "Top Tracks",
 			body: "See the top 100 tracks you played on Spotify in the past 4 weeks, 6 months and lifetime!",
 			url: "/top-tracks"
 		},
 		{
+			id: "home-top-artists",
 			header: "Top Artists",
 			body: "See the top 100 artists you played on Spotify in the past 4 weeks, 6 months and lifetime!",
 			url: "/top-tracks"
 		},
 		{
+			id: "home-recently-played",
 			header: "Recently Played",
 			body: "See the last 50 tracks that you played and when you played them on Spotify!",
 			url: "/recently-played"
@@ -54,7 +58,7 @@ const Home = (): JSX.Element => {
 				spacing={10}
 				justifyContent="center">
 				{cards.map(card => (
-					<Card key={card.url} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
+					<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
 						<CardContent>
 							<Typography variant="h4" gutterBottom>
 								{card.header}

@@ -30,6 +30,7 @@ import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 interface iItem {
+	id: string
 	icon: JSX.Element
 	title: string
 	url: string
@@ -37,6 +38,7 @@ interface iItem {
 }
 
 interface iDropdown {
+	id: string
 	icon: JSX.Element
 	title: string
 	drop: number
@@ -52,35 +54,41 @@ const Navigator = (): JSX.Element => {
 
 	const data: (iItem | iDropdown)[] = [
 		{
+			id: "nav-home",
 			icon: <Home />,
 			title: "Home",
 			url: "/",
 			condition: () => true
 		},
 		{
+			id: "nav-login",
 			icon: <Login />,
 			title: "Login",
 			url: "/login",
 			condition: () => !access_token
 		},
 		{
+			id: "nav-top-tracks",
 			icon: <Audiotrack />,
 			title: "Top Tracks",
 			drop: 0,
 			items: [
 				{
+					id: "nav-top-tracks-short-term",
 					icon: <AccessTime />,
 					title: "Past 4 Weeks",
 					url: "/top-tracks/short-term",
 					condition: () => !!access_token
 				},
 				{
+					id: "nav-top-tracks-medium-term",
 					icon: <AccessTimeFilled />,
 					title: "Past 6 Months",
 					url: "/top-tracks/medium-term",
 					condition: () => !!access_token
 				},
 				{
+					id: "nav-top-tracks-long-term",
 					icon: <Timeline />,
 					title: "All Time",
 					url: "/top-tracks/long-term",
@@ -90,23 +98,27 @@ const Navigator = (): JSX.Element => {
 			condition: () => !!access_token
 		},
 		{
+			id: "nav-top-artists",
 			icon: <Person />,
 			title: "Top Artists",
 			drop: 1,
 			items: [
 				{
+					id: "nav-top-artists-short-term",
 					icon: <AccessTime />,
 					title: "Past 4 Weeks",
 					url: "/top-artists/short-term",
 					condition: () => !!access_token
 				},
 				{
+					id: "nav-top-artists-medium-term",
 					icon: <AccessTimeFilled />,
 					title: "Past 6 Months",
 					url: "/top-artists/medium-term",
 					condition: () => !!access_token
 				},
 				{
+					id: "nav-top-artists-long-term",
 					icon: <Timeline />,
 					title: "All Time",
 					url: "/top-artists/long-term",
@@ -116,12 +128,14 @@ const Navigator = (): JSX.Element => {
 			condition: () => !!access_token
 		},
 		{
+			id: "nav-recently-played",
 			icon: <History />,
 			title: "Recently Played",
 			url: "/recently-played",
 			condition: () => !!access_token
 		},
 		{
+			id: "nav-logout",
 			icon: <Logout />,
 			title: "Logout",
 			url: "/logout",
@@ -167,9 +181,8 @@ const Navigator = (): JSX.Element => {
 						{data.map(
 							item =>
 								item.condition() && (
-									<>
+									<React.Fragment key={item.id}>
 										<ListItemButton
-											key={item.title}
 											onClick={() =>
 												"url" in item ? redirect(item.url) : toggleDropdown(item.drop)
 											}>
@@ -188,7 +201,7 @@ const Navigator = (): JSX.Element => {
 														item =>
 															item.condition() && (
 																<ListItemButton
-																	key={item.title}
+																	key={item.id}
 																	sx={{ pl: 4 }}
 																	onClick={() => redirect(item.url)}>
 																	<ListItemIcon>{item.icon}</ListItemIcon>
@@ -199,7 +212,7 @@ const Navigator = (): JSX.Element => {
 												</List>
 											</Collapse>
 										)}
-									</>
+									</React.Fragment>
 								)
 						)}
 					</List>
