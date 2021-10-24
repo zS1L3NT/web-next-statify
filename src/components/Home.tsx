@@ -1,5 +1,7 @@
 import React from "react"
 import { Box, Container, Typography, Stack, Button, Card, CardContent, CardActions } from "@mui/material"
+import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 interface iCard {
 	header: string
@@ -8,6 +10,9 @@ interface iCard {
 }
 
 const Home = (): JSX.Element => {
+	const history = useHistory()
+	const access_token = useSelector(state => state.access_token)
+
 	const cards: iCard[] = [
 		{
 			header: "Top Tracks",
@@ -37,8 +42,8 @@ const Home = (): JSX.Element => {
 						Log in to see your Spotify Statistics
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-						<Button size="large" variant="contained">
-							Sign in with Spotify
+						<Button size="large" variant="contained" onClick={() => history.push(access_token ? "/top-tracks" :"/login")}>
+							{access_token ? "Show me my top tracks!" :"Sign in with Spotify"}
 						</Button>
 					</Stack>
 				</Container>
@@ -59,7 +64,7 @@ const Home = (): JSX.Element => {
 							</Typography>
 						</CardContent>
 						<CardActions>
-							<Button sx={{ ml: 1 }} size="medium">
+							<Button sx={{ ml: 1 }} size="medium" onClick={() => history.push(card.url)}>
 								Bring me there!
 							</Button>
 						</CardActions>
