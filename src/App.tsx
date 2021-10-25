@@ -1,19 +1,21 @@
 import React from "react"
 import { CssBaseline, ThemeProvider } from "@mui/material"
 import { Route, Switch } from "react-router"
-import Home from "./components/Home"
-import Login from "./components/Login"
-import Logout from "./components/Logout"
+import Home from "./pages/Home"
+import Login from "./pages/Login"
+import Logout from "./pages/Logout"
 import Navigator from "./components/Navigator"
-import RecentlyPlayed from "./components/RecentlyPlayed"
-import TopArtistsLongTerm from "./components/TopArtistsLongTerm"
-import TopArtistsMediumTerm from "./components/TopArtistsMediumTerm"
-import TopArtistsShortTerm from "./components/TopArtistsShortTerm"
-import TopTracksLongTerm from "./components/TopTracksLongTerm"
-import TopTracksMediumTerm from "./components/TopTracksMediumTerm"
-import TopTracksShortTerm from "./components/TopTracksShortTerm"
+import RecentlyPlayed from "./pages/RecentlyPlayed"
+import TopArtistsLongTerm from "./pages/TopArtistsLongTerm"
+import TopArtistsMediumTerm from "./pages/TopArtistsMediumTerm"
+import TopArtistsShortTerm from "./pages/TopArtistsShortTerm"
+import TopTracksLongTerm from "./pages/TopTracksLongTerm"
+import TopTracksMediumTerm from "./pages/TopTracksMediumTerm"
+import TopTracksShortTerm from "./pages/TopTracksShortTerm"
 import { dark, light } from "./theme"
 import useThemeValue from "./hooks/useThemeValue"
+import Dark from "./pages/Dark"
+import Light from "./pages/Light"
 
 function App(): JSX.Element {
 	return (
@@ -32,6 +34,8 @@ function App(): JSX.Element {
 					<Route exact path="/top-artists/medium-term" component={TopArtistsMediumTerm} />
 					<Route exact path="/top-artists/long-term" component={TopArtistsLongTerm} />
 					<Route exact path="/recently-played" component={RecentlyPlayed} />
+					<Route exact path="/dark" component={Dark} />
+					<Route exact path="/light" component={Light} />
 				</Switch>
 			</div>
 		</ThemeProvider>

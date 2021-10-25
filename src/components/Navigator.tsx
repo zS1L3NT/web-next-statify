@@ -24,7 +24,9 @@ import {
 	Timeline,
 	Home,
 	Login,
-	Logout
+	Logout,
+	LightMode,
+	DarkMode
 } from "@mui/icons-material"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -50,6 +52,7 @@ const Navigator = (): JSX.Element => {
 	const [open, setOpen] = useState(false)
 	const [dropdowns, setDropdowns] = useState([false, false])
 	const history = useHistory()
+	const theme = useSelector(state => state.theme)
 	const access_token = useSelector(state => state.access_token)
 
 	const data: (iItem | iDropdown)[] = [
@@ -133,6 +136,20 @@ const Navigator = (): JSX.Element => {
 			title: "Recently Played",
 			url: "/recently-played",
 			condition: () => !!access_token
+		},
+		{
+			id: "nav-to-light",
+			icon: <LightMode />,
+			title: "Light Mode",
+			url: "/light",
+			condition: () => theme === "dark"
+		},
+		{
+			id: "nav-to-dark",
+			icon: <DarkMode />,
+			title: "Dark Mode",
+			url: "/dark",
+			condition: () => theme === "light"
 		},
 		{
 			id: "nav-logout",
