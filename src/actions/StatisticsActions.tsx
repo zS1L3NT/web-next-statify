@@ -8,7 +8,7 @@ import {
 	iSetStatisticsRecents
 } from "../redux"
 
-export const setStatisticsTracksShortTerm = (
+export const set_statistics_tracks_short_term = (
 	short_term: SpotifyApi.TrackObjectFull[] | null
 ): iSetStatisticsTracksShortTerm => ({
 	type: "SET_STATISTICS_TRACKS_SHORT_TERM",
@@ -17,7 +17,7 @@ export const setStatisticsTracksShortTerm = (
 	}
 })
 
-export const setStatisticsTracksMediumTerm = (
+export const set_statistics_tracks_medium_term = (
 	medium_term: SpotifyApi.TrackObjectFull[] | null
 ): iSetStatisticsTracksMediumTerm => ({
 	type: "SET_STATISTICS_TRACKS_MEDIUM_TERM",
@@ -26,7 +26,7 @@ export const setStatisticsTracksMediumTerm = (
 	}
 })
 
-export const setStatisticsTracksLongTerm = (
+export const set_statistics_tracks_long_term = (
 	long_term: SpotifyApi.TrackObjectFull[] | null
 ): iSetStatisticsTracksLongTerm => ({
 	type: "SET_STATISTICS_TRACKS_LONG_TERM",
@@ -35,7 +35,7 @@ export const setStatisticsTracksLongTerm = (
 	}
 })
 
-export const setStatisticsArtistsShortTerm = (
+export const set_statistics_artists_short_term = (
 	short_term: SpotifyApi.ArtistObjectFull[] | null
 ): iSetStatisticsArtistsShortTerm => ({
 	type: "SET_STATISTICS_ARTISTS_SHORT_TERM",
@@ -44,7 +44,7 @@ export const setStatisticsArtistsShortTerm = (
 	}
 })
 
-export const setStatisticsArtistsMediumTerm = (
+export const set_statistics_artists_medium_term = (
 	medium_term: SpotifyApi.ArtistObjectFull[] | null
 ): iSetStatisticsArtistsMediumTerm => ({
 	type: "SET_STATISTICS_ARTISTS_MEDIUM_TERM",
@@ -53,7 +53,7 @@ export const setStatisticsArtistsMediumTerm = (
 	}
 })
 
-export const setStatisticsArtistsLongTerm = (
+export const set_statistics_artists_long_term = (
 	long_term: SpotifyApi.ArtistObjectFull[] | null
 ): iSetStatisticsArtistsLongTerm => ({
 	type: "SET_STATISTICS_ARTISTS_LONG_TERM",
@@ -62,9 +62,7 @@ export const setStatisticsArtistsLongTerm = (
 	}
 })
 
-export const setStatisticsRecents = (
-	recents: SpotifyApi.PlayHistoryObject[] | null
-): iSetStatisticsRecents => ({
+export const set_statistics_recents = (recents: SpotifyApi.PlayHistoryObject[] | null): iSetStatisticsRecents => ({
 	type: "SET_STATISTICS_RECENTS",
 	payload: {
 		recents

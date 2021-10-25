@@ -17,11 +17,10 @@ import useThemeValue from "./hooks/useThemeValue"
 import Dark from "./pages/Dark"
 import Light from "./pages/Light"
 import { useDispatch, useSelector } from "react-redux"
-import { setError } from "./actions/ErrorActions"
+import { set_error } from "./actions/ErrorActions"
 
 function App(): JSX.Element {
 	const [err, setErr] = useState<Error>()
-
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const error = useSelector(state => state.error)
@@ -55,7 +54,7 @@ function App(): JSX.Element {
 				aria-describedby="error-modal-description"
 				open={!!error}
 				onClose={() => {
-					dispatch(setError(null))
+					dispatch(set_error(null))
 					history.push("/logout")
 				}}
 				closeAfterTransition

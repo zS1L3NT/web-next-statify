@@ -1,7 +1,7 @@
 import { Reducer } from "redux"
 import { iStatisticsActions, iStatisticsData } from "../redux"
 
-const initialState: iStatisticsData = {
+const initial_state: iStatisticsData = {
 	tracks: {
 		short_term: null,
 		medium_term: null,
@@ -15,7 +15,7 @@ const initialState: iStatisticsData = {
 	recents: null
 }
 
-const reducer: Reducer<iStatisticsData, iStatisticsActions> = (state = initialState, action: iStatisticsActions) => {
+const reducer: Reducer<iStatisticsData, iStatisticsActions> = (state = initial_state, action: iStatisticsActions) => {
 	switch (action.type) {
 		case "SET_STATISTICS_TRACKS_SHORT_TERM":
 			return {

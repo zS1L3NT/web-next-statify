@@ -12,35 +12,31 @@ const palette = {
 	}
 }
 
-const light = createTheme(
-	{
-		palette: {
-			...palette,
-			primary: {
-				main: "#1ED760",
-				contrastText: "#111111"
-			},
-			background: {
-				default: "#EEEEEE"
-			}
+const light = createTheme({
+	palette: {
+		...palette,
+		primary: {
+			main: "#1ED760",
+			contrastText: "#111111"
+		},
+		background: {
+			default: "#EEEEEE"
 		}
 	}
-)
+})
 
-const dark = createTheme(
-	{
-		palette: {
-			...palette,
-			primary: {
-				main: "#25b359",
-				contrastText: "#DDDDDD"
-			},
-			mode: "dark",
-			background: {
-				default: "#20262D"
-			}
+const dark = createTheme({
+	palette: {
+		...palette,
+		primary: {
+			main: "#25b359",
+			contrastText: "#DDDDDD"
+		},
+		mode: "dark",
+		background: {
+			default: "#20262D"
 		}
 	}
-)
+})
 
 export { light, dark }

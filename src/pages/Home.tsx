@@ -73,7 +73,11 @@ const Home = (): JSX.Element => {
 							</Typography>
 						</CardContent>
 						<CardActions>
-							<Button sx={{ ml: 1 }} size="medium" disabled={!access_token} onClick={() => history.push(card.url)}>
+							<Button
+								sx={{ ml: 1 }}
+								size="medium"
+								disabled={!access_token}
+								onClick={() => history.push(card.url)}>
 								Bring me there!
 							</Button>
 						</CardActions>

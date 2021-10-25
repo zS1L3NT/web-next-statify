@@ -12,8 +12,8 @@ import {
 import { DateTime } from "luxon"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setError } from "../actions/ErrorActions"
-import { setStatisticsRecents } from "../actions/StatisticsActions"
+import { set_error } from "../actions/ErrorActions"
+import { set_statistics_recents } from "../actions/StatisticsActions"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 
 const RecentlyPlayed = (): JSX.Element => {
@@ -27,14 +27,14 @@ const RecentlyPlayed = (): JSX.Element => {
 		if (api) {
 			api.getMyRecentlyPlayedTracks()
 				.then(res => {
-					dispatch(setStatisticsRecents(res.items))
+					dispatch(set_statistics_recents(res.items))
 					return api.getTracks(res.items.map(i => i.track.id))
 				})
 				.then(res => {
 					set_images(res.tracks.map(track => track.album.images.at(-1)?.url || ""))
 				})
 				.catch(err => {
-					dispatch(setError(err))
+					dispatch(set_error(err))
 				})
 		}
 	}, [dispatch, api])
@@ -43,7 +43,9 @@ const RecentlyPlayed = (): JSX.Element => {
 		<Container>
 			<Card sx={{ my: 3 }}>
 				<CardContent>
-					<Typography variant="h3" gutterBottom>Recently Played Tracks</Typography>
+					<Typography variant="h3" gutterBottom>
+						Recently Played Tracks
+					</Typography>
 					<Typography variant="body1">
 						See the recently played on Spotify. The song you listened to most recently is displayed first
 					</Typography>

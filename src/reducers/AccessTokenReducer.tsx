@@ -1,10 +1,10 @@
 import { Reducer } from "redux"
 import { iAccessTokenActions, iAccessTokenData } from "../redux"
 
-const initialState: iAccessTokenData = null
+const initial_state: iAccessTokenData = null
 
 const reducer: Reducer<iAccessTokenData, iAccessTokenActions> = (
-	state = initialState,
+	state = initial_state,
 	action: iAccessTokenActions
 ): iAccessTokenData => {
 	switch (action.type) {

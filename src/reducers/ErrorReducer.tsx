@@ -1,9 +1,9 @@
 import { Reducer } from "redux"
 import { iErrorActions, iErrorData } from "../redux"
 
-const initialState: iErrorData = null
+const initial_state: iErrorData = null
 
-const reducer: Reducer<iErrorData, iErrorActions> = (state = initialState, action: iErrorActions) => {
+const reducer: Reducer<iErrorData, iErrorActions> = (state = initial_state, action: iErrorActions) => {
 	switch (action.type) {
 		case "SET_ERROR":
 			return action.payload.error

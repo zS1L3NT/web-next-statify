@@ -1,10 +1,10 @@
 import { Reducer } from "redux"
 import { iSpotifyApiActions, iSpotifyApiData } from "../redux"
 
-const initialState: iSpotifyApiData = null
+const initial_state: iSpotifyApiData = null
 
 const reducer: Reducer<iSpotifyApiData, iSpotifyApiActions> = (
-	state = initialState,
+	state = initial_state,
 	action: iSpotifyApiActions
 ): iSpotifyApiData => {
 	switch (action.type) {
