@@ -12,6 +12,7 @@ import {
 import { DateTime } from "luxon"
 import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
+import { setError } from "../actions/ErrorActions"
 import { setStatisticsRecents } from "../actions/StatisticsActions"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 
@@ -33,7 +34,7 @@ const RecentlyPlayed = (): JSX.Element => {
 					set_images(res.tracks.map(track => track.album.images.at(-1)?.url || ""))
 				})
 				.catch(err => {
-					console.error(err)
+					dispatch(setError(err))
 				})
 		}
 	}, [dispatch, api])

@@ -43,6 +43,20 @@ export interface iSetSpotifyApi {
 export type iSpotifyApiActions = iSetSpotifyApi
 
 /**
+ * Error
+ */
+export type iErrorData = Error | null
+
+export interface iSetError {
+	type: "SET_ERROR"
+	payload: {
+		error: Error | null
+	}
+}
+
+export type iErrorActions = iSetError
+
+/**
  * Statistics
  */
 export interface iStatisticsData {
