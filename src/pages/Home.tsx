@@ -44,14 +44,15 @@ const Home = (): JSX.Element => {
 						Statify
 					</Typography>
 					<Typography variant="h5" align="center" color="text.secondary" paragraph>
-						Log in to see your Spotify Statistics
+						{access_token ? "View one of your Spotify Statistics" : "Log in to see your Spotify Statistics"}
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
 						<Button
 							size="large"
 							variant="contained"
-							onClick={() => history.push(access_token ? "/top-tracks" : "/login")}>
-							{access_token ? "Show me my top tracks!" : "Sign in with Spotify"}
+							disabled={!!access_token}
+							onClick={() => history.push("/login")}>
+							Sign in with Spotify
 						</Button>
 					</Stack>
 				</Container>
@@ -72,7 +73,7 @@ const Home = (): JSX.Element => {
 							</Typography>
 						</CardContent>
 						<CardActions>
-							<Button sx={{ ml: 1 }} size="medium" onClick={() => history.push(card.url)}>
+							<Button sx={{ ml: 1 }} size="medium" disabled={!access_token} onClick={() => history.push(card.url)}>
 								Bring me there!
 							</Button>
 						</CardActions>
