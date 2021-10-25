@@ -19,31 +19,40 @@ import useSpotifyApi from "../hooks/useSpotifyApi"
 const RecentlyPlayed = (): JSX.Element => {
 	const api = useSpotifyApi()
 	const [images, set_images] = useState<string[]>()
-
 	const dispatch = useDispatch()
 	const recents = useSelector(state => state.statistics.recents)
 
 	useEffect(() => {
-		if (api) {
-			api.getMyRecentlyPlayedTracks()
-				.then(res => {
-					dispatch(set_statistics_recents(res.items))
-					return api.getTracks(res.items.map(i => i.track.id))
-				})
-				.then(res => {
-					set_images(res.tracks.map(track => track.album.images.at(-1)?.url || ""))
-				})
-				.catch(err => {
-					dispatch(set_error(err))
-				})
-		}
-	}, [dispatch, api])
+		if (!api) return
+		if (recents) return
+
+		api.getMyRecentlyPlayedTracks({ limit: 50 })
+			.then(res => {
+				dispatch(set_statistics_recents(res.items))
+			})
+			.catch(err => {
+				dispatch(set_error(err))
+			})
+	}, [dispatch, api, recents])
+
+	useEffect(() => {
+		if (!api) return
+		if (!recents) return
+
+		api.getTracks(recents.map(r => r.track.id))
+			.then(res => {
+				set_images(res.tracks.map(t => t.album.images.at(-1)?.url || ""))
+			})
+			.catch(err => {
+				dispatch(set_error(err))
+			})
+	}, [dispatch, api, recents])
 
 	return (
 		<Container>
 			<Card sx={{ my: 3 }}>
 				<CardContent>
-					<Typography variant="h3" gutterBottom>
+					<Typography variant="h4" gutterBottom>
 						Recently Played Tracks
 					</Typography>
 					<Typography variant="body1">
