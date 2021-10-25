@@ -15,7 +15,7 @@ const Login = (): JSX.Element => {
 
 	useEffect(() => {
 		if (access_token) {
-			return history.push("/top-tracks")
+			return history.push("/")
 		}
 
 		const search = new URLSearchParams(history.location.search)
@@ -41,7 +41,7 @@ const Login = (): JSX.Element => {
 					spotify_api.setAccessToken(access_token)
 					dispatch(setSpotifyApi(spotify_api))
 
-					history.push("/top-tracks")
+					history.push("/")
 				})
 				.catch(err => {
 					console.error(err.response.data.error)

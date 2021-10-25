@@ -4,7 +4,8 @@ import {
 	iSetStatisticsTracksLongTerm,
 	iSetStatisticsArtistsShortTerm,
 	iSetStatisticsArtistsMediumTerm,
-	iSetStatisticsArtistsLongTerm
+	iSetStatisticsArtistsLongTerm,
+	iSetStatisticsRecents
 } from "../redux"
 
 export const setStatisticsTracksShortTerm = (
@@ -58,5 +59,14 @@ export const setStatisticsArtistsLongTerm = (
 	type: "SET_STATISTICS_ARTISTS_LONG_TERM",
 	payload: {
 		long_term
+	}
+})
+
+export const setStatisticsRecents = (
+	recents: SpotifyApi.PlayHistoryObject[] | null
+): iSetStatisticsRecents => ({
+	type: "SET_STATISTICS_RECENTS",
+	payload: {
+		recents
 	}
 })

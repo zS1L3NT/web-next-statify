@@ -11,7 +11,8 @@ const initialState: iStatisticsData = {
 		short_term: null,
 		medium_term: null,
 		long_term: null
-	}
+	},
+	recents: null
 }
 
 const reducer: Reducer<iStatisticsData, iStatisticsActions> = (state = initialState, action: iStatisticsActions) => {
@@ -63,6 +64,11 @@ const reducer: Reducer<iStatisticsData, iStatisticsActions> = (state = initialSt
 					...state.artists,
 					long_term: action.payload.long_term
 				}
+			}
+		case "SET_STATISTICS_RECENTS":
+			return {
+				...state,
+				recents: action.payload.recents
 			}
 		default:
 			return state
