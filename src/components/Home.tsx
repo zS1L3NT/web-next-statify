@@ -2,6 +2,7 @@ import React from "react"
 import { Box, Container, Typography, Stack, Button, Card, CardContent, CardActions } from "@mui/material"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
+import useThemeValue from "../hooks/useThemeValue"
 
 interface iCard {
 	id: string
@@ -37,7 +38,7 @@ const Home = (): JSX.Element => {
 
 	return (
 		<>
-			<Box sx={{ bgcolor: "background.paper", pt: 8, pb: 6 }}>
+			<Box sx={{ bgcolor: useThemeValue("#121212", "background.paper"), pt: 8, pb: 6 }}>
 				<Container maxWidth="sm">
 					<Typography variant="h1" align="center" color="text.primary" gutterBottom>
 						Statify
@@ -46,8 +47,11 @@ const Home = (): JSX.Element => {
 						Log in to see your Spotify Statistics
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-						<Button size="large" variant="contained" onClick={() => history.push(access_token ? "/top-tracks" :"/login")}>
-							{access_token ? "Show me my top tracks!" :"Sign in with Spotify"}
+						<Button
+							size="large"
+							variant="contained"
+							onClick={() => history.push(access_token ? "/top-tracks" : "/login")}>
+							{access_token ? "Show me my top tracks!" : "Sign in with Spotify"}
 						</Button>
 					</Stack>
 				</Container>

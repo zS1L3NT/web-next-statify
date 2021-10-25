@@ -1,6 +1,20 @@
 import Spotify from "spotify-web-api-js"
 
 /**
+ * Theme
+ */
+export type iThemeData = "light" | "dark"
+
+export interface iSetTheme {
+	type: "SET_THEME"
+	payload: {
+		theme: "light" | "dark"
+	}
+}
+
+export type iThemeActions = iSetTheme
+
+/**
  * Access Token
  */
 export type iAccessTokenData = string | null
@@ -42,6 +56,7 @@ export interface iStatisticsData {
 		medium_term: SpotifyApi.ArtistObjectFull[] | null
 		long_term: SpotifyApi.ArtistObjectFull[] | null
 	}
+	recents: SpotifyApi.PlayHistoryObject[] | null
 }
 
 export interface iSetStatisticsTracksShortTerm {
@@ -86,6 +101,13 @@ export interface iSetStatisticsArtistsLongTerm {
 	}
 }
 
+export interface iSetStatisticsRecents {
+	type: "SET_STATISTICS_RECENTS"
+	payload: {
+		recents: SpotifyApi.PlayHistoryObject[] | null
+	}
+}
+
 export type iStatisticsActions =
 	| iSetStatisticsTracksShortTerm
 	| iSetStatisticsTracksMediumTerm
@@ -93,3 +115,4 @@ export type iStatisticsActions =
 	| iSetStatisticsArtistsShortTerm
 	| iSetStatisticsArtistsMediumTerm
 	| iSetStatisticsArtistsLongTerm
+	| iSetStatisticsRecents

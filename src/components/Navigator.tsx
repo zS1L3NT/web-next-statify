@@ -156,7 +156,7 @@ const Navigator = (): JSX.Element => {
 
 	return (
 		<>
-			<AppBar position="relative">
+			<AppBar sx={{ bgcolor: "primary.main" }} position="relative">
 				<Toolbar>
 					<IconButton
 						onClick={() => setOpen(true)}
