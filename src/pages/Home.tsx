@@ -43,12 +43,12 @@ const Home = (): JSX.Element => {
 		<>
 			<Box sx={{ bgcolor: useThemeValue("#121212", "background.paper"), pt: 8, pb: 6 }}>
 				<Container maxWidth="sm">
-					<Typography variant="h1" align="center" color="text.primary" gutterBottom>
+					<Typography variant="h2" align="center" color="text.primary" gutterBottom>
 						Statify
 					</Typography>
-					<Typography variant="h5" align="center" color="text.secondary" paragraph>
+					<Typography variant="h6" align="center" color="text.secondary" paragraph>
 						{access_token
-							? "View one of your Spotify Statistics"
+							? "View your Spotify Statistics"
 							: "Log in to see your Spotify Statistics"}
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
@@ -57,7 +57,7 @@ const Home = (): JSX.Element => {
 							variant="contained"
 							disabled={!!access_token}
 							onClick={() => history.push("/login")}>
-							Sign in with Spotify
+							{access_token ? "You are signed in" : "Sign in with Spotify"}
 						</Button>
 					</Stack>
 				</Container>
@@ -65,7 +65,7 @@ const Home = (): JSX.Element => {
 			<Grid sx={{ my: 3 }} container spacing={5} justifyContent="center">
 				{cards.map(card => (
 					<Grid key={card.id} item>
-						<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
+						<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: 3 }}>
 							<CardContent>
 								<Typography variant="h4" gutterBottom>
 									{card.header}
@@ -80,7 +80,7 @@ const Home = (): JSX.Element => {
 									size="medium"
 									disabled={!access_token}
 									onClick={() => history.push(card.url)}>
-									Bring me there!
+									{access_token ? "Bring me there!" : "Sign in first!"}
 								</Button>
 							</CardActions>
 						</Card>
