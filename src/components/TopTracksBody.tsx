@@ -1,55 +1,70 @@
 import {
-	Container,
+	Avatar,
 	Card,
 	CardContent,
-	Typography,
+	Container,
 	List,
 	ListItem,
 	ListItemAvatar,
-	Avatar,
 	ListItemText,
-	useMediaQuery,
-	useTheme,
 	Paper,
 	Table,
 	TableBody,
 	TableCell,
 	TableContainer,
 	TableHead,
-	TableRow
+	TableRow,
+	Typography,
+	useMediaQuery,
+	useTheme
 } from "@mui/material"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { set_error } from "../actions/ErrorActions"
-import { set_statistics_tracks_long_term } from "../actions/StatisticsActions"
 import useSpotifyApi from "../hooks/useSpotifyApi"
+import {
+	iSetStatisticsTracksLongTerm,
+	iSetStatisticsTracksMediumTerm,
+	iSetStatisticsTracksShortTerm
+} from "../redux"
 import getDuration from "../utils/getDuration"
 
-const TopTracksLongTerm = (): JSX.Element => {
+interface Props {
+	term: "short_term" | "medium_term" | "long_term"
+	description: string
+	action: (
+		tracks: SpotifyApi.TrackObjectFull[] | null
+	) =>
+		| iSetStatisticsTracksShortTerm
+		| iSetStatisticsTracksMediumTerm
+		| iSetStatisticsTracksLongTerm
+}
+
+const TopTracksLongTerm = (props: Props): JSX.Element => {
 	const dispatch = useDispatch()
 	const theme = useTheme()
 	const show_list = useMediaQuery(theme.breakpoints.down("lg"))
-	const tracks = useSelector(state => state.statistics.tracks.long_term)
+	const tracks = useSelector(state => state.statistics.tracks)
 	const api = useSpotifyApi()
 
 	useEffect(() => {
 		if (!api) return
-		if (tracks) return
+		if (tracks[props.term]) return
 
 		const half_tracks: SpotifyApi.TrackObjectFull[] = []
 
-		api.getMyTopTracks({ limit: 50, time_range: "long_term" })
+		api.getMyTopTracks({ limit: 50, time_range: props.term })
 			.then(res => {
 				half_tracks.push(...res.items)
-				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: "long_term" })
+				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: props.term })
 			})
 			.then(res => {
-				dispatch(set_statistics_tracks_long_term([...half_tracks, ...res.items]))
+				dispatch(props.action([...half_tracks, ...res.items.slice(1)]))
 			})
 			.catch(err => {
 				dispatch(set_error(err))
 			})
-	}, [dispatch, api, tracks])
+	}, [dispatch, api, tracks, props])
 
 	return (
 		<Container>
@@ -57,18 +72,23 @@ const TopTracksLongTerm = (): JSX.Element => {
 				<CardContent>
 					<Typography variant="h4">Top Tracks</Typography>
 					<Typography variant="h6" gutterBottom>
-						All Time
+						{props.description}
 					</Typography>
-					<Typography variant="body1">These are the tracks you listen to the most</Typography>
+					<Typography variant="body1">
+						These are the tracks you listen to the most
+					</Typography>
 				</CardContent>
 			</Card>
 			<Card sx={{ my: 3 }}>
 				{show_list ? (
 					<List>
-						{tracks?.map(track => (
+						{tracks[props.term]?.map(track => (
 							<ListItem key={track.id}>
 								<ListItemAvatar>
-									<Avatar sx={{ width: 45, height: 45 }} src={track.album.images.at(-1)?.url || ""} />
+									<Avatar
+										sx={{ width: 45, height: 45 }}
+										src={track.album.images.at(-1)?.url || ""}
+									/>
 								</ListItemAvatar>
 								<ListItemText
 									primary={track.name}
@@ -90,14 +110,29 @@ const TopTracksLongTerm = (): JSX.Element => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{tracks?.map((track, i) => (
+								{tracks[props.term]?.map((track, i) => (
 									<TableRow key={track.id}>
-										<TableCell align="center">{i + 1}</TableCell>
-										<TableCell>
-											<Avatar sx={{ width: 45, height: 45 }} src={track.album.images.at(-1)?.url || ""} />
+										<TableCell align="center">
+											<Typography variant="subtitle1">
+												{i + 1}
+											</Typography>
 										</TableCell>
-										<TableCell>{track.name}</TableCell>
-										<TableCell>{track.artists.map(a => a.name).join(", ")}</TableCell>
+										<TableCell>
+											<Avatar
+												sx={{ width: 45, height: 45 }}
+												src={track.album.images.at(-1)?.url || ""}
+											/>
+										</TableCell>
+										<TableCell>
+											<Typography variant="h6">
+												{track.name}
+											</Typography>
+										</TableCell>
+										<TableCell>
+											<Typography variant="subtitle1">
+												{track.artists.map(a => a.name).join(", ")}
+											</Typography>
+										</TableCell>
 										<TableCell align="center">{getDuration(track)}</TableCell>
 									</TableRow>
 								))}

@@ -2,9 +2,12 @@ import { TabContext, TabPanel } from "@mui/lab"
 import { Tabs, Tab, Box } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
-import TopTracksLongTerm from "../components/TopTracksLongTerm"
-import TopTracksMediumTerm from "../components/TopTracksMediumTerm"
-import TopTracksShortTerm from "../components/TopTracksShortTerm"
+import {
+	set_statistics_tracks_long_term,
+	set_statistics_tracks_medium_term,
+	set_statistics_tracks_short_term
+} from "../actions/StatisticsActions"
+import TopTracksBody from "../components/TopTracksBody"
 
 type term = "short-term" | "medium-term" | "long-term"
 
@@ -17,7 +20,7 @@ const TopTracks = (): JSX.Element => {
 		if (tab === "short-term" || tab === "medium-term" || tab === "long-term") {
 			setTab(tab)
 		} else {
-			history.push("/short-term")
+			history.replace("/top-tracks/short-term")
 		}
 	}, [history, history.location])
 
@@ -30,13 +33,25 @@ const TopTracks = (): JSX.Element => {
 					<Tab label="All Time" value="long-term" />
 				</Tabs>
 				<TabPanel sx={{ px: 0 }} value="short-term">
-					<TopTracksShortTerm />
+					<TopTracksBody
+						term="short_term"
+						description="Past 4 Weeks"
+						action={set_statistics_tracks_short_term}
+					/>
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="medium-term">
-					<TopTracksMediumTerm />
+					<TopTracksBody
+						term="medium_term"
+						description="Past 6 Months"
+						action={set_statistics_tracks_medium_term}
+					/>
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="long-term">
-					<TopTracksLongTerm />
+					<TopTracksBody
+						term="long_term"
+						description="All Time"
+						action={set_statistics_tracks_long_term}
+					/>
 				</TabPanel>
 			</Box>
 		</TabContext>
