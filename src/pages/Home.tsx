@@ -1,17 +1,10 @@
-import React from "react"
 import {
-	Box,
-	Container,
-	Typography,
-	Stack,
-	Button,
-	Card,
-	CardContent,
-	CardActions,
-	Grid
+	Box, Button,
+	Card, CardActions, CardContent, Container, Grid, Stack, Typography
 } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import React from "react"
 import { useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 import useThemeValue from "../hooks/useThemeValue"
 
 interface iCard {

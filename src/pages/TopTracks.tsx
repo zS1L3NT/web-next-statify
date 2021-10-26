@@ -1,5 +1,5 @@
 import { TabContext, TabPanel } from "@mui/lab"
-import { Tabs, Tab, Box } from "@mui/material"
+import { Box, Tab, Tabs } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import {

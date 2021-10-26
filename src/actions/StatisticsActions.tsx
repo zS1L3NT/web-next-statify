@@ -62,7 +62,9 @@ export const set_statistics_artists_long_term = (
 	}
 })
 
-export const set_statistics_recents = (recents: SpotifyApi.PlayHistoryObject[] | null): iSetStatisticsRecents => ({
+export const set_statistics_recents = (
+	recents: SpotifyApi.PlayHistoryObject[] | null
+): iSetStatisticsRecents => ({
 	type: "SET_STATISTICS_RECENTS",
 	payload: {
 		recents

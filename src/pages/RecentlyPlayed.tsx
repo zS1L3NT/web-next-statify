@@ -2,6 +2,7 @@ import {
 	Avatar,
 	Card,
 	CardContent,
+	CircularProgress,
 	Container,
 	List,
 	ListItem,
@@ -70,61 +71,78 @@ const RecentlyPlayed = (): JSX.Element => {
 					<Typography variant="h4" gutterBottom>
 						Recently Played Tracks
 					</Typography>
-					<Typography variant="body1">These are the tracks you listened to most recently</Typography>
+					<Typography variant="body1">
+						These are the tracks you listened to most recently
+					</Typography>
 				</CardContent>
 			</Card>
-			<Card sx={{ my: 3 }}>
-				{show_list ? (
-					<List>
-						{recents?.map((recent, i) => (
-							<ListItem key={recent.played_at}>
-								<ListItemAvatar>
-									<Avatar src={images?.[i] || ""} />
-								</ListItemAvatar>
-								<ListItemText
-									primary={
-										recent.track.name + " - " + recent.track.artists.map(a => a.name).join(", ")
-									}
-									secondary={
-										getTimeSincePlayed(recent) +
-										" ago, " +
-										DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")
-									}
-								/>
-							</ListItem>
-						))}
-					</List>
-				) : recents ? (
-					<TableContainer component={Paper}>
-						<Table aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell>Cover</TableCell>
-									<TableCell>Title</TableCell>
-									<TableCell>Artist</TableCell>
-									<TableCell align="center">Time Since Last Played</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{recents?.map((recent, i) => (
-									<TableRow key={recent.played_at}>
-										<TableCell>
-											<Avatar sx={{ width: 45, height: 45 }} src={images?.[i] || ""} />
-										</TableCell>
-										<TableCell>{recent.track.name}</TableCell>
-										<TableCell>{recent.track.artists.map(a => a.name).join(", ")}</TableCell>
-										<TableCell align="center">
-											{getTimeSincePlayed(recent) +
-												" ago, " +
-												DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")}
-										</TableCell>
+			{recents ? (
+				<Card sx={{ my: 3 }}>
+					{show_list ? (
+						<List>
+							{recents!.map((recent, i) => (
+								<ListItem key={recent.played_at}>
+									<ListItemAvatar>
+										<Avatar src={images?.[i] || ""} />
+									</ListItemAvatar>
+									<ListItemText
+										primary={
+											recent.track.name +
+											" - " +
+											recent.track.artists.map(a => a.name).join(", ")
+										}
+										secondary={
+											getTimeSincePlayed(recent) +
+											" ago, " +
+											DateTime.fromISO(recent.played_at).toFormat(
+												"d LLLL yyyy"
+											)
+										}
+									/>
+								</ListItem>
+							))}
+						</List>
+					) : (
+						<TableContainer component={Paper}>
+							<Table aria-label="simple table">
+								<TableHead>
+									<TableRow>
+										<TableCell>Cover</TableCell>
+										<TableCell>Title</TableCell>
+										<TableCell>Artist</TableCell>
+										<TableCell align="center">Time Since Last Played</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				) : null}
-			</Card>
+								</TableHead>
+								<TableBody>
+									{recents!.map((recent, i) => (
+										<TableRow key={recent.played_at}>
+											<TableCell>
+												<Avatar
+													sx={{ width: 45, height: 45 }}
+													src={images?.[i] || ""}
+												/>
+											</TableCell>
+											<TableCell>{recent.track.name}</TableCell>
+											<TableCell>
+												{recent.track.artists.map(a => a.name).join(", ")}
+											</TableCell>
+											<TableCell align="center">
+												{getTimeSincePlayed(recent) +
+													" ago, " +
+													DateTime.fromISO(recent.played_at).toFormat(
+														"d LLLL yyyy"
+													)}
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					)}
+				</Card>
+			) : (
+				<CircularProgress sx={{ my: 5, mx: "auto", display: "block" }} />
+			)}
 		</Container>
 	)
 }

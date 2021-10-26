@@ -15,7 +15,10 @@ const initial_state: iStatisticsData = {
 	recents: null
 }
 
-const reducer: Reducer<iStatisticsData, iStatisticsActions> = (state = initial_state, action: iStatisticsActions) => {
+const reducer: Reducer<iStatisticsData, iStatisticsActions> = (
+	state = initial_state,
+	action: iStatisticsActions
+) => {
 	switch (action.type) {
 		case "SET_STATISTICS_TRACKS_SHORT_TERM":
 			return {

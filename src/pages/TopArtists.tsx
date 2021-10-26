@@ -1,11 +1,9 @@
 import { TabContext, TabPanel } from "@mui/lab"
-import { Tabs, Tab, Box } from "@mui/material"
+import { Box, Tab, Tabs } from "@mui/material"
 import React, { useEffect, useState } from "react"
 import { useHistory } from "react-router-dom"
 import {
-	set_statistics_artists_short_term,
-	set_statistics_artists_medium_term,
-	set_statistics_artists_long_term
+	set_statistics_artists_long_term, set_statistics_artists_medium_term, set_statistics_artists_short_term
 } from "../actions/StatisticsActions"
 import TopArtistsBody from "../components/TopArtistsBody"
 import useAuthenticated from "../hooks/useAthenticated"

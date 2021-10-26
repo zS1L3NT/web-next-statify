@@ -4,7 +4,8 @@ import {
 	CardContent,
 	Typography,
 	Grid,
-	CardMedia
+	CardMedia,
+	CircularProgress
 } from "@mui/material"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
@@ -30,7 +31,7 @@ interface Props {
 
 const TopArtistsLongTerm = (props: Props): JSX.Element => {
 	const { term, description, action } = props
-	
+
 	const dispatch = useDispatch()
 	const artists = useSelector(state => state.statistics.artists)
 	const api = useSpotifyApi()
@@ -67,29 +68,31 @@ const TopArtistsLongTerm = (props: Props): JSX.Element => {
 					</Typography>
 				</CardContent>
 			</Card>
-			<Grid sx={{ my: 1 }} container spacing={5} justifyContent="space-evenly">
-				{artists[term]?.map((artist, i) => (
-					<Grid key={artist.id} item>
-						<Card sx={{ p: 0, minWidth: 250 }}>
-							<CardMedia
-								component="img"
-								alt="Picture"
-								height={250}
-								width={250}
-								image={artist.images.at(0)?.url || ""}
-							/>
-							<CardContent>
-								<Typography variant="h5">
-									{(i + 1) + ". " + artist.name}
-								</Typography>
-								<Typography variant="body2">
-									{getFollowers(artist)}
-								</Typography>
-							</CardContent>
-						</Card>
-					</Grid>
-				))}
-			</Grid>
+			{artists[term] ? (
+				<Grid sx={{ my: 1 }} container spacing={5} justifyContent="space-evenly">
+					{artists[term]?.map((artist, i) => (
+						<Grid key={artist.id} item>
+							<Card sx={{ p: 0, minWidth: 250 }}>
+								<CardMedia
+									component="img"
+									alt="Picture"
+									height={250}
+									width={250}
+									image={artist.images.at(0)?.url || ""}
+								/>
+								<CardContent>
+									<Typography variant="h5">
+										{i + 1 + ". " + artist.name}
+									</Typography>
+									<Typography variant="body2">{getFollowers(artist)}</Typography>
+								</CardContent>
+							</Card>
+						</Grid>
+					))}
+				</Grid>
+			) : (
+				<CircularProgress sx={{ my: 5, mx: "auto", display: "block" }} />
+			)}
 		</Container>
 	)
 }

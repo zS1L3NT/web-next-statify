@@ -2,6 +2,7 @@ import {
 	Avatar,
 	Card,
 	CardContent,
+	CircularProgress,
 	Container,
 	List,
 	ListItem,
@@ -81,58 +82,64 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 					</Typography>
 				</CardContent>
 			</Card>
-			<Card sx={{ my: 3 }}>
-				{show_list ? (
-					<List>
-						{tracks[term]?.map(track => (
-							<ListItem key={track.id}>
-								<ListItemAvatar>
-									<Avatar
-										sx={{ width: 45, height: 45 }}
-										src={track.album.images.at(-1)?.url || ""}
+			{tracks[term] ? (
+				<Card sx={{ my: 3 }}>
+					{show_list ? (
+						<List>
+							{tracks[term]!.map(track => (
+								<ListItem key={track.id}>
+									<ListItemAvatar>
+										<Avatar
+											sx={{ width: 45, height: 45 }}
+											src={track.album.images.at(-1)?.url || ""}
+										/>
+									</ListItemAvatar>
+									<ListItemText
+										primary={track.name}
+										secondary={track.artists.map(a => a.name).join(", ")}
 									/>
-								</ListItemAvatar>
-								<ListItemText
-									primary={track.name}
-									secondary={track.artists.map(a => a.name).join(", ")}
-								/>
-							</ListItem>
-						))}
-					</List>
-				) : tracks[term] ? (
-					<TableContainer component={Paper}>
-						<Table aria-label="simple table">
-							<TableHead>
-								<TableRow>
-									<TableCell>Position</TableCell>
-									<TableCell>Cover</TableCell>
-									<TableCell>Title</TableCell>
-									<TableCell>Artist</TableCell>
-									<TableCell>Duration</TableCell>
-								</TableRow>
-							</TableHead>
-							<TableBody>
-								{tracks[term]?.map((track, i) => (
-									<TableRow key={track.id}>
-										<TableCell align="center">{i + 1}</TableCell>
-										<TableCell>
-											<Avatar
-												sx={{ width: 45, height: 45 }}
-												src={track.album.images.at(-1)?.url || ""}
-											/>
-										</TableCell>
-										<TableCell>{track.name}</TableCell>
-										<TableCell>
-											{track.artists.map(a => a.name).join(", ")}
-										</TableCell>
-										<TableCell align="center">{getDuration(track)}</TableCell>
+								</ListItem>
+							))}
+						</List>
+					) : (
+						<TableContainer component={Paper}>
+							<Table aria-label="simple table">
+								<TableHead>
+									<TableRow>
+										<TableCell>Position</TableCell>
+										<TableCell>Cover</TableCell>
+										<TableCell>Title</TableCell>
+										<TableCell>Artist</TableCell>
+										<TableCell>Duration</TableCell>
 									</TableRow>
-								))}
-							</TableBody>
-						</Table>
-					</TableContainer>
-				) : null}
-			</Card>
+								</TableHead>
+								<TableBody>
+									{tracks[term]!.map((track, i) => (
+										<TableRow key={track.id}>
+											<TableCell align="center">{i + 1}</TableCell>
+											<TableCell>
+												<Avatar
+													sx={{ width: 45, height: 45 }}
+													src={track.album.images.at(-1)?.url || ""}
+												/>
+											</TableCell>
+											<TableCell>{track.name}</TableCell>
+											<TableCell>
+												{track.artists.map(a => a.name).join(", ")}
+											</TableCell>
+											<TableCell align="center">
+												{getDuration(track)}
+											</TableCell>
+										</TableRow>
+									))}
+								</TableBody>
+							</Table>
+						</TableContainer>
+					)}
+				</Card>
+			) : (
+				<CircularProgress sx={{ my: 5, mx: "auto", display: "block" }} />
+			)}
 		</Container>
 	)
 }

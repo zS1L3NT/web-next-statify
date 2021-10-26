@@ -1,4 +1,9 @@
-import React, { useState } from "react"
+import {
+	AccessTime, AccessTimeFilled, Audiotrack, DarkMode, ExpandLess,
+	ExpandMore, History, Home, LightMode, Login,
+	Logout, Person, Timeline
+} from "@mui/icons-material"
+import MenuIcon from "@mui/icons-material/Menu"
 import {
 	AppBar,
 	Box,
@@ -12,24 +17,9 @@ import {
 	Toolbar,
 	Typography
 } from "@mui/material"
-import MenuIcon from "@mui/icons-material/Menu"
-import {
-	AccessTime,
-	Audiotrack,
-	Person,
-	History,
-	ExpandLess,
-	ExpandMore,
-	AccessTimeFilled,
-	Timeline,
-	Home,
-	Login,
-	Logout,
-	LightMode,
-	DarkMode
-} from "@mui/icons-material"
-import { useHistory } from "react-router-dom"
+import React, { useState } from "react"
 import { useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 
 interface iItem {
 	id: string

@@ -1,5 +1,5 @@
 function round(num: number, decimalPlaces = 0) {
-	num = Math.round(num + "e" + decimalPlaces as unknown as number)
+	num = Math.round((num + "e" + decimalPlaces) as unknown as number)
 	return Number(num + "e" + -decimalPlaces)
 }
 
