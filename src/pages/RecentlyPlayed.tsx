@@ -55,9 +55,7 @@ const RecentlyPlayed = (): JSX.Element => {
 					<Typography variant="h4" gutterBottom>
 						Recently Played Tracks
 					</Typography>
-					<Typography variant="body1">
-						See the recently played on Spotify. The song you listened to most recently is displayed first
-					</Typography>
+					<Typography variant="body1">These are the tracks you listened to most recently</Typography>
 				</CardContent>
 			</Card>
 			<Card sx={{ my: 3 }}>

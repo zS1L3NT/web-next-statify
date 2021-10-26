@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react"
 import { Backdrop, Box, CssBaseline, Fade, Modal, ThemeProvider, Typography } from "@mui/material"
-import { Route, Switch, useHistory } from "react-router-dom"
-import Home from "./pages/Home"
-import Login from "./pages/Login"
-import Logout from "./pages/Logout"
+import React, { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Redirect, Route, Switch, useHistory } from "react-router-dom"
+import { set_error } from "./actions/ErrorActions"
 import Navigator from "./components/Navigator"
-import RecentlyPlayed from "./pages/RecentlyPlayed"
-import TopArtistsLongTerm from "./pages/TopArtistsLongTerm"
-import TopArtistsMediumTerm from "./pages/TopArtistsMediumTerm"
-import TopArtistsShortTerm from "./pages/TopArtistsShortTerm"
-import TopTracksLongTerm from "./pages/TopTracksLongTerm"
-import TopTracksMediumTerm from "./pages/TopTracksMediumTerm"
-import TopTracksShortTerm from "./pages/TopTracksShortTerm"
-import { dark, light } from "./theme"
 import useThemeValue from "./hooks/useThemeValue"
 import Dark from "./pages/Dark"
+import Home from "./pages/Home"
 import Light from "./pages/Light"
-import { useDispatch, useSelector } from "react-redux"
-import { set_error } from "./actions/ErrorActions"
+import Login from "./pages/Login"
+import Logout from "./pages/Logout"
+import RecentlyPlayed from "./pages/RecentlyPlayed"
+import TopArtists from "./pages/TopArtists"
+import TopTracks from "./pages/TopTracks"
+import { dark, light } from "./theme"
 
 function App(): JSX.Element {
 	const [err, setErr] = useState<Error>()
@@ -38,12 +34,14 @@ function App(): JSX.Element {
 					<Route exact path="/" component={Home} />
 					<Route exact path="/login" component={Login} />
 					<Route exact path="/logout" component={Logout} />
-					<Route exact path="/top-tracks/short-term" component={TopTracksShortTerm} />
-					<Route exact path="/top-tracks/medium-term" component={TopTracksMediumTerm} />
-					<Route exact path="/top-tracks/long-term" component={TopTracksLongTerm} />
-					<Route exact path="/top-artists/short-term" component={TopArtistsShortTerm} />
-					<Route exact path="/top-artists/medium-term" component={TopArtistsMediumTerm} />
-					<Route exact path="/top-artists/long-term" component={TopArtistsLongTerm} />
+					<Route exact path="/top-tracks/short-term" component={TopTracks} />
+					<Redirect exact path="/top-tracks" to="/top-tracks/short-term" />
+					<Route exact path="/top-tracks/medium-term" component={TopTracks} />
+					<Route exact path="/top-tracks/long-term" component={TopTracks} />
+					<Route exact path="/top-artists/short-term" component={TopArtists} />
+					<Redirect exact path="/top-artists" to="/top-artists/short-term" />
+					<Route exact path="/top-artists/medium-term" component={TopArtists} />
+					<Route exact path="/top-artists/long-term" component={TopArtists} />
 					<Route exact path="/recently-played" component={RecentlyPlayed} />
 					<Route exact path="/dark" component={Dark} />
 					<Route exact path="/light" component={Light} />

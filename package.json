@@ -10,6 +10,7 @@
 	},
 	"dependencies": {
 		"@mui/icons-material": "^5.0.4",
+		"@mui/lab": "^5.0.0-alpha.51",
 		"@mui/material": "^5.0.4",
 		"@mui/styled-engine": "npm:@mui/styled-engine-sc@latest",
 		"@mui/styled-engine-sc": "^5.0.3",
