@@ -67,7 +67,7 @@ const TopArtistsLongTerm = (props: Props): JSX.Element => {
 					</Typography>
 				</CardContent>
 			</Card>
-			<Grid sx={{ my: 3 }} container spacing={5} justifyContent="space-evenly">
+			<Grid sx={{ my: 1 }} container spacing={5} justifyContent="space-evenly">
 				{artists[term]?.map((artist, i) => (
 					<Grid key={artist.id} item>
 						<Card sx={{ p: 0, minWidth: 250 }}>

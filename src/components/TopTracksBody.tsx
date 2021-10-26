@@ -99,7 +99,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 							</ListItem>
 						))}
 					</List>
-				) : (
+				) : tracks[term] ? (
 					<TableContainer component={Paper}>
 						<Table aria-label="simple table">
 							<TableHead>
@@ -114,26 +114,16 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 							<TableBody>
 								{tracks[term]?.map((track, i) => (
 									<TableRow key={track.id}>
-										<TableCell align="center">
-											<Typography variant="subtitle1">
-												{i + 1}
-											</Typography>
-										</TableCell>
+										<TableCell align="center">{i + 1}</TableCell>
 										<TableCell>
 											<Avatar
 												sx={{ width: 45, height: 45 }}
 												src={track.album.images.at(-1)?.url || ""}
 											/>
 										</TableCell>
+										<TableCell>{track.name}</TableCell>
 										<TableCell>
-											<Typography variant="h6">
-												{track.name}
-											</Typography>
-										</TableCell>
-										<TableCell>
-											<Typography variant="subtitle1">
-												{track.artists.map(a => a.name).join(", ")}
-											</Typography>
+											{track.artists.map(a => a.name).join(", ")}
 										</TableCell>
 										<TableCell align="center">{getDuration(track)}</TableCell>
 									</TableRow>
@@ -141,7 +131,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 							</TableBody>
 						</Table>
 					</TableContainer>
-				)}
+				) : null}
 			</Card>
 		</Container>
 	)

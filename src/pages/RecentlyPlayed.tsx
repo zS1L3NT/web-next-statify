@@ -94,7 +94,7 @@ const RecentlyPlayed = (): JSX.Element => {
 							</ListItem>
 						))}
 					</List>
-				) : (
+				) : recents ? (
 					<TableContainer component={Paper}>
 						<Table aria-label="simple table">
 							<TableHead>
@@ -123,7 +123,7 @@ const RecentlyPlayed = (): JSX.Element => {
 							</TableBody>
 						</Table>
 					</TableContainer>
-				)}
+				) : null}
 			</Card>
 		</Container>
 	)

@@ -201,7 +201,9 @@ const Navigator = (): JSX.Element => {
 									<React.Fragment key={item.id}>
 										<ListItemButton
 											onClick={() =>
-												"url" in item ? redirect(item.url) : toggleDropdown(item.drop)
+												"url" in item
+													? redirect(item.url)
+													: toggleDropdown(item.drop)
 											}>
 											<ListItemIcon>{item.icon}</ListItemIcon>
 											<ListItemText primary={item.title} />
@@ -212,7 +214,10 @@ const Navigator = (): JSX.Element => {
 											)}
 										</ListItemButton>
 										{"drop" in item && (
-											<Collapse in={dropdowns[item.drop]} timeout="auto" unmountOnExit>
+											<Collapse
+												in={dropdowns[item.drop]}
+												timeout="auto"
+												unmountOnExit>
 												<List component="div" disablePadding>
 													{item.items.map(
 														item =>
@@ -220,9 +225,15 @@ const Navigator = (): JSX.Element => {
 																<ListItemButton
 																	key={item.id}
 																	sx={{ pl: 4 }}
-																	onClick={() => redirect(item.url)}>
-																	<ListItemIcon>{item.icon}</ListItemIcon>
-																	<ListItemText primary={item.title} />
+																	onClick={() =>
+																		redirect(item.url)
+																	}>
+																	<ListItemIcon>
+																		{item.icon}
+																	</ListItemIcon>
+																	<ListItemText
+																		primary={item.title}
+																	/>
 																</ListItemButton>
 															)
 													)}
