@@ -9,7 +9,7 @@ const Logout = (): JSX.Element => {
 
 	useEffect(() => {
 		dispatch(set_access_token(null))
-		history.push("/")
+		history.push(sessionStorage.getItem("auth_redirect") ? "/login" : "/")
 	}, [dispatch, history])
 
 	return <></>

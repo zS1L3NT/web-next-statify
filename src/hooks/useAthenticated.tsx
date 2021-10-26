@@ -8,9 +8,10 @@ const useAuthenticated = (): void => {
 
 	useEffect(() => {
 		if (!access_token) {
+			sessionStorage.setItem("auth_redirect", history.location.pathname)
 			history.push("/logout")
 		}
-	}, [history, access_token])
+	}, [history, history.location.pathname, access_token])
 }
 
 export default useAuthenticated

@@ -13,7 +13,9 @@ const Login = (): JSX.Element => {
 
 	useEffect(() => {
 		if (access_token) {
-			return history.push("/")
+			history.push(sessionStorage.getItem("auth_redirect") || "/")
+			sessionStorage.removeItem("auth_redirect")
+			return
 		}
 
 		const search = new URLSearchParams(history.location.search)
@@ -35,7 +37,8 @@ const Login = (): JSX.Element => {
 					const { access_token } = res.data as any
 					dispatch(set_access_token(access_token))
 
-					history.push("/")
+					history.push(sessionStorage.getItem("auth_redirect") || "/")
+					sessionStorage.removeItem("auth_redirect")
 				})
 				.catch(err => {
 					console.error(err.response.data.error)
