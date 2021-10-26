@@ -29,13 +29,13 @@ const TopTracks = (): JSX.Element => {
 					<Tab label="Past 6 Months" value="medium-term" />
 					<Tab label="All Time" value="long-term" />
 				</Tabs>
-				<TabPanel value="short-term">
+				<TabPanel sx={{ px: 0 }} value="short-term">
 					<TopTracksShortTerm />
 				</TabPanel>
-				<TabPanel value="medium-term">
+				<TabPanel sx={{ px: 0 }} value="medium-term">
 					<TopTracksMediumTerm />
 				</TabPanel>
-				<TabPanel value="long-term">
+				<TabPanel sx={{ px: 0 }} value="long-term">
 					<TopTracksLongTerm />
 				</TabPanel>
 			</Box>
