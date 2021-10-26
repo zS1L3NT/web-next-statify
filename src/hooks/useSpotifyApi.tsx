@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux"
-import { useHistory } from "react-router-dom"
 import Spotify from "spotify-web-api-js"
 
-const useSpotifyApi = (): Spotify.SpotifyWebApiJs | undefined => {
-	const [api, setApi] = useState<Spotify.SpotifyWebApiJs>()
+const useSpotifyApi = (): Spotify.SpotifyWebApiJs | null => {
+	const [api, setApi] = useState<Spotify.SpotifyWebApiJs | null>(null)
 
-	const history = useHistory()
-	const spotify_api = useSelector(state => state.spotify_api)
+	const access_token = useSelector(state => state.access_token)
 
 	useEffect(() => {
-		if (!spotify_api) {
-			return history.push("/logout")
+		if (access_token) {
+			const spotifyApi = new Spotify()
+			spotifyApi.setAccessToken(access_token)
+			setApi(spotifyApi)
+		} else {
+			setApi(null)
 		}
-
-		setApi(Object.assign(new Spotify(), spotify_api))
-	}, [history, spotify_api])
+	}, [access_token])
 
 	return api
 }

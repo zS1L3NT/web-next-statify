@@ -8,12 +8,15 @@ import {
 	set_statistics_tracks_short_term
 } from "../actions/StatisticsActions"
 import TopTracksBody from "../components/TopTracksBody"
+import useAuthenticated from "../hooks/useAthenticated"
 
 type term = "short-term" | "medium-term" | "long-term"
 
 const TopTracks = (): JSX.Element => {
 	const [tab, setTab] = useState<term>("short-term")
 	const history = useHistory()
+
+	useAuthenticated()
 
 	useEffect(() => {
 		const tab = history.location.pathname.split("/").at(-1)

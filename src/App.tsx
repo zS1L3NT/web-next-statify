@@ -25,6 +25,13 @@ function App(): JSX.Element {
 		if (error) setErr(error)
 	}, [error])
 
+	const handleClose = () => {
+		dispatch(set_error(null))
+		setTimeout(() => {
+			history.push("/logout")
+		}, 500)
+	}
+
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>
 			<CssBaseline />
@@ -51,10 +58,7 @@ function App(): JSX.Element {
 				aria-labelledby="error-modal-title"
 				aria-describedby="error-modal-description"
 				open={!!error}
-				onClose={() => {
-					dispatch(set_error(null))
-					history.push("/logout")
-				}}
+				onClose={handleClose}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{ timeout: 500 }}>

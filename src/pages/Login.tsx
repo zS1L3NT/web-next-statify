@@ -1,10 +1,8 @@
 import axios from "axios"
-import Spotify from "spotify-web-api-js"
 import React, { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 import { set_access_token } from "../actions/AccessTokenActions"
-import { set_spotify_api } from "../actions/SpotifyApiActions"
 
 const config = require("../config.json")
 
@@ -36,10 +34,6 @@ const Login = (): JSX.Element => {
 				.then(res => {
 					const { access_token } = res.data as any
 					dispatch(set_access_token(access_token))
-
-					const spotify_api = new Spotify()
-					spotify_api.setAccessToken(access_token)
-					dispatch(set_spotify_api(spotify_api))
 
 					history.push("/")
 				})

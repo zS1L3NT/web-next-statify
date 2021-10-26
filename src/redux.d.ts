@@ -1,5 +1,3 @@
-import Spotify from "spotify-web-api-js"
-
 /**
  * Theme
  */
@@ -29,23 +27,12 @@ export interface iSetAccessToken {
 export type iAccessTokenActions = iSetAccessToken
 
 /**
- * Spotify Api
- */
-export type iSpotifyApiData = Spotify.SpotifyWebApiJs | null
-
-export interface iSetSpotifyApi {
-	type: "SET_SPOTIFY_API"
-	payload: {
-		spotify_api: Spotify.SpotifyWebApiJs | null
-	}
-}
-
-export type iSpotifyApiActions = iSetSpotifyApi
-
-/**
  * Error
  */
-export type iErrorData = Error | null
+export type iErrorData = {
+	name: string
+	message: string
+} | null
 
 export interface iSetError {
 	type: "SET_ERROR"

@@ -3,11 +3,10 @@ import { composeWithDevTools } from "redux-devtools-extension"
 import thunk from "redux-thunk"
 import theme from "./reducers/ThemeReducer"
 import access_token from "./reducers/AccessTokenReducer"
-import spotify_api from "./reducers/SpotifyApiReducer"
 import error from "./reducers/ErrorReducer"
 import statistics from "./reducers/StatisticsReducer"
 
-const rootReducer = combineReducers({ theme, access_token, spotify_api, error, statistics })
+const rootReducer = combineReducers({ theme, access_token, error, statistics })
 
 const composeEnhancers = composeWithDevTools({ trace: true })
 

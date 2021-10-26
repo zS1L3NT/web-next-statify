@@ -41,6 +41,8 @@ interface Props {
 }
 
 const TopTracksLongTerm = (props: Props): JSX.Element => {
+	const { term, description, action } = props
+
 	const dispatch = useDispatch()
 	const theme = useTheme()
 	const show_list = useMediaQuery(theme.breakpoints.down("lg"))
@@ -49,22 +51,22 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 
 	useEffect(() => {
 		if (!api) return
-		if (tracks[props.term]) return
+		if (tracks[term]) return
 
 		const half_tracks: SpotifyApi.TrackObjectFull[] = []
 
-		api.getMyTopTracks({ limit: 50, time_range: props.term })
+		api.getMyTopTracks({ limit: 50, time_range: term })
 			.then(res => {
 				half_tracks.push(...res.items)
-				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: props.term })
+				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: term })
 			})
 			.then(res => {
-				dispatch(props.action([...half_tracks, ...res.items.slice(1)]))
+				dispatch(action([...half_tracks, ...res.items.slice(1)]))
 			})
 			.catch(err => {
 				dispatch(set_error(err))
 			})
-	}, [dispatch, api, tracks, props])
+	}, [dispatch, api, tracks, term, action])
 
 	return (
 		<Container>
@@ -72,7 +74,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 				<CardContent>
 					<Typography variant="h4">Top Tracks</Typography>
 					<Typography variant="h6" gutterBottom>
-						{props.description}
+						{description}
 					</Typography>
 					<Typography variant="body1">
 						These are the tracks you listen to the most
@@ -82,7 +84,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 			<Card sx={{ my: 3 }}>
 				{show_list ? (
 					<List>
-						{tracks[props.term]?.map(track => (
+						{tracks[term]?.map(track => (
 							<ListItem key={track.id}>
 								<ListItemAvatar>
 									<Avatar
@@ -110,7 +112,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 								</TableRow>
 							</TableHead>
 							<TableBody>
-								{tracks[props.term]?.map((track, i) => (
+								{tracks[term]?.map((track, i) => (
 									<TableRow key={track.id}>
 										<TableCell align="center">
 											<Typography variant="subtitle1">

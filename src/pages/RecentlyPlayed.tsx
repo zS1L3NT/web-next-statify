@@ -23,6 +23,7 @@ import React, { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { set_error } from "../actions/ErrorActions"
 import { set_statistics_recents } from "../actions/StatisticsActions"
+import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import getTimeSincePlayed from "../utils/getTimeSincePlayed"
 
@@ -33,6 +34,8 @@ const RecentlyPlayed = (): JSX.Element => {
 	const show_list = useMediaQuery(theme.breakpoints.down("lg"))
 	const recents = useSelector(state => state.statistics.recents)
 	const api = useSpotifyApi()
+
+	useAuthenticated()
 
 	useEffect(() => {
 		if (!api) return
