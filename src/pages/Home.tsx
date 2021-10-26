@@ -26,7 +26,7 @@ const Home = (): JSX.Element => {
 			id: "home-top-artists",
 			header: "Top Artists",
 			body: "See the top 100 artists you played on Spotify in the past 4 weeks, 6 months and lifetime!",
-			url: "/top-tracks"
+			url: "/top-artists"
 		},
 		{
 			id: "home-recently-played",
