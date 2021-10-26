@@ -1,5 +1,15 @@
 import React from "react"
-import { Box, Container, Typography, Stack, Button, Card, CardContent, CardActions } from "@mui/material"
+import {
+	Box,
+	Container,
+	Typography,
+	Stack,
+	Button,
+	Card,
+	CardContent,
+	CardActions,
+	Grid
+} from "@mui/material"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 import useThemeValue from "../hooks/useThemeValue"
@@ -44,7 +54,9 @@ const Home = (): JSX.Element => {
 						Statify
 					</Typography>
 					<Typography variant="h5" align="center" color="text.secondary" paragraph>
-						{access_token ? "View one of your Spotify Statistics" : "Log in to see your Spotify Statistics"}
+						{access_token
+							? "View one of your Spotify Statistics"
+							: "Log in to see your Spotify Statistics"}
 					</Typography>
 					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
 						<Button
@@ -57,33 +69,31 @@ const Home = (): JSX.Element => {
 					</Stack>
 				</Container>
 			</Box>
-			<Stack
-				sx={{ p: { xs: 4, sm: 6 } }}
-				direction={{ xs: "column", sm: "column", md: "row" }}
-				spacing={10}
-				justifyContent="center">
+			<Grid sx={{ my: 3 }} container spacing={5} justifyContent="center">
 				{cards.map(card => (
-					<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
-						<CardContent>
-							<Typography variant="h4" gutterBottom>
-								{card.header}
-							</Typography>
-							<Typography variant="body1" color="text.secondary">
-								{card.body}
-							</Typography>
-						</CardContent>
-						<CardActions>
-							<Button
-								sx={{ ml: 1 }}
-								size="medium"
-								disabled={!access_token}
-								onClick={() => history.push(card.url)}>
-								Bring me there!
-							</Button>
-						</CardActions>
-					</Card>
+					<Grid key={card.id} item>
+						<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: "auto !important" }}>
+							<CardContent>
+								<Typography variant="h4" gutterBottom>
+									{card.header}
+								</Typography>
+								<Typography variant="body1" color="text.secondary">
+									{card.body}
+								</Typography>
+							</CardContent>
+							<CardActions>
+								<Button
+									sx={{ ml: 1 }}
+									size="medium"
+									disabled={!access_token}
+									onClick={() => history.push(card.url)}>
+									Bring me there!
+								</Button>
+							</CardActions>
+						</Card>
+					</Grid>
 				))}
-			</Stack>
+			</Grid>
 		</>
 	)
 }
