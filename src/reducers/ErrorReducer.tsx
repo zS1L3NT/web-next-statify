@@ -1,3 +1,4 @@
+import { useTry as uuseTry } from "no-try"
 import { Reducer } from "redux"
 import { iErrorActions, iErrorData } from "../redux"
 
@@ -12,10 +13,17 @@ const reducer: Reducer<iErrorData, iErrorActions> = (
 			if (action.payload.error) {
 				const response_str = (action.payload.error as any).response
 				if (response_str) {
-					const response = JSON.parse(response_str)
-					return {
-						name: `HTTP Error ${response.error.status}`,
-						message: response.error.message
+					const [err, response] = uuseTry(() => JSON.parse(response_str))
+					if (err) {
+						return {
+							name: "HTTP Error",
+							message: response
+						}
+					} else {
+						return {
+							name: `HTTP Error ${response.error.status}`,
+							message: response.error.message
+						}
 					}
 				} else {
 					return {
