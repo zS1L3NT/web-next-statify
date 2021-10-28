@@ -52,6 +52,7 @@ function App(): JSX.Element {
 					<Route exact path="/recently-played" component={RecentlyPlayed} />
 					<Route exact path="/dark" component={Dark} />
 					<Route exact path="/light" component={Light} />
+					<Redirect exact path="*" to="/" />
 				</Switch>
 			</div>
 			<Modal
