@@ -86,7 +86,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 				<Card sx={{ my: 3 }}>
 					{show_list ? (
 						<List>
-							{tracks[term]!.map(track => (
+							{tracks[term]!.map((track, i) => (
 								<ListItem key={track.id}>
 									<ListItemAvatar>
 										<Avatar
@@ -95,7 +95,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 										/>
 									</ListItemAvatar>
 									<ListItemText
-										primary={track.name}
+										primary={(i + 1) + ". " + track.name}
 										secondary={track.artists.map(a => a.name).join(", ")}
 									/>
 								</ListItem>
