@@ -8,10 +8,8 @@ import {
 import TopArtistsBody from "../components/TopArtistsBody"
 import useAuthenticated from "../hooks/useAthenticated"
 
-type term = "short-term" | "medium-term" | "long-term"
-
 const TopArtists = (): JSX.Element => {
-	const [tab, setTab] = useState<term>("short-term")
+	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
 	const history = useHistory()
 
 	useAuthenticated()

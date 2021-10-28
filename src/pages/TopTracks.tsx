@@ -10,10 +10,8 @@ import {
 import TopTracksBody from "../components/TopTracksBody"
 import useAuthenticated from "../hooks/useAthenticated"
 
-type term = "short-term" | "medium-term" | "long-term"
-
 const TopTracks = (): JSX.Element => {
-	const [tab, setTab] = useState<term>("short-term")
+	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
 	const history = useHistory()
 
 	useAuthenticated()
