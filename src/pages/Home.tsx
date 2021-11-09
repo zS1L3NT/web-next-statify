@@ -1,6 +1,13 @@
 import {
-	Box, Button,
-	Card, CardActions, CardContent, Container, Grid, Stack, Typography
+	Box,
+	Button,
+	Card,
+	CardActions,
+	CardContent,
+	Container,
+	Grid,
+	Stack,
+	Typography
 } from "@mui/material"
 import React from "react"
 import { useSelector } from "react-redux"
@@ -51,7 +58,7 @@ const Home = (): JSX.Element => {
 							? "View your Spotify Statistics"
 							: "Log in to see your Spotify Statistics"}
 					</Typography>
-					<Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
+					<Stack sx={{ pt: 4, mb: 2 }} direction="row" spacing={2} justifyContent="center">
 						<Button
 							size="large"
 							variant="contained"
@@ -60,6 +67,11 @@ const Home = (): JSX.Element => {
 							{access_token ? "You are signed in" : "Sign in with Spotify"}
 						</Button>
 					</Stack>
+					<Typography variant="subtitle2" align="center" color="text.secondary">
+						Statify does <b>NOT</b> store your
+						<br />
+						listening history in its servers
+					</Typography>
 				</Container>
 			</Box>
 			<Grid sx={{ my: 3 }} container spacing={5} justifyContent="center">
