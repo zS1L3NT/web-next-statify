@@ -28,11 +28,13 @@ const TopTracks = (): JSX.Element => {
 	return (
 		<TabContext value={tab}>
 			<Box sx={{ my: 2 }}>
-				<Tabs value={tab} onChange={(e, tab) => history.push(tab)} centered>
-					<Tab label="Past 4 Weeks" value="short-term" />
-					<Tab label="Past 6 Months" value="medium-term" />
-					<Tab label="All Time" value="long-term" />
-				</Tabs>
+				{tab && (
+					<Tabs value={tab} onChange={(e, tab) => history.push(tab)} centered>
+						<Tab label="Past 4 Weeks" value="short-term" />
+						<Tab label="Past 6 Months" value="medium-term" />
+						<Tab label="All Time" value="long-term" />
+					</Tabs>
+				)}
 				<TabPanel sx={{ px: 0 }} value="short-term">
 					<TopTracksBody
 						term="short_term"
