@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useHistory } from "react-router-dom"
 import { set_error } from "./actions/ErrorActions"
 import Navigator from "./components/Navigator"
 import useThemeValue from "./hooks/useThemeValue"
+import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
 import Home from "./pages/Home"
 import Light from "./pages/Light"
@@ -13,6 +14,7 @@ import Logout from "./pages/Logout"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
+import Track from "./pages/Track"
 import { dark, light } from "./theme"
 
 function App(): JSX.Element {
@@ -52,6 +54,8 @@ function App(): JSX.Element {
 					<Route exact path="/recently-played" component={RecentlyPlayed} />
 					<Route exact path="/dark" component={Dark} />
 					<Route exact path="/light" component={Light} />
+					<Route exact path="/track/:id" component={Track} />
+					<Route exact path="/artist/:id" component={Artist} />
 					<Redirect exact path="*" to="/" />
 				</Switch>
 			</div>
