@@ -1,3 +1,6 @@
+import getDuration from "../utils/getDuration"
+import React, { useEffect } from "react"
+import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
 	Avatar,
 	Card,
@@ -19,16 +22,13 @@ import {
 	useMediaQuery,
 	useTheme
 } from "@mui/material"
-import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { set_error } from "../actions/ErrorActions"
-import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
 	iSetStatisticsTracksLongTerm,
 	iSetStatisticsTracksMediumTerm,
 	iSetStatisticsTracksShortTerm
 } from "../redux"
-import getDuration from "../utils/getDuration"
+import { set_error } from "../actions/ErrorActions"
+import { useDispatch, useSelector } from "react-redux"
 
 interface Props {
 	term: "short_term" | "medium_term" | "long_term"
@@ -44,30 +44,34 @@ interface Props {
 const TopTracksLongTerm = (props: Props): JSX.Element => {
 	const { term, description, action } = props
 
+	//#region Hooks
 	const dispatch = useDispatch()
-	const theme = useTheme()
-	const show_list = useMediaQuery(theme.breakpoints.down("lg"))
 	const tracks = useSelector(state => state.statistics.tracks)
 	const api = useSpotifyApi()
+	const theme = useTheme()
+	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
+	//#endregion
 
+	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (tracks[term]) return
 
-		const half_tracks: SpotifyApi.TrackObjectFull[] = []
+		const halfTracks: SpotifyApi.TrackObjectFull[] = []
 
 		api.getMyTopTracks({ limit: 50, time_range: term })
 			.then(res => {
-				half_tracks.push(...res.items)
+				halfTracks.push(...res.items)
 				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: term })
 			})
 			.then(res => {
-				dispatch(action([...half_tracks, ...res.items.slice(1)]))
+				dispatch(action([...halfTracks, ...res.items.slice(1)]))
 			})
 			.catch(err => {
 				dispatch(set_error(err))
 			})
 	}, [dispatch, api, tracks, term, action])
+	//#endregion
 
 	return (
 		<Container>
@@ -84,7 +88,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 			</Card>
 			{tracks[term] ? (
 				<Card sx={{ my: 3 }}>
-					{show_list ? (
+					{showList ? (
 						<List>
 							{tracks[term]!.map((track, i) => (
 								<ListItem key={track.id}>
@@ -95,7 +99,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 										/>
 									</ListItemAvatar>
 									<ListItemText
-										primary={(i + 1) + ". " + track.name}
+										primary={i + 1 + ". " + track.name}
 										secondary={track.artists.map(a => a.name).join(", ")}
 									/>
 								</ListItem>

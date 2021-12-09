@@ -1,5 +1,5 @@
-import { Reducer } from "redux"
 import { iAccessTokenActions, iAccessTokenData } from "../redux"
+import { Reducer } from "redux"
 
 const initial_state: iAccessTokenData = sessionStorage.getItem("access_token")
 

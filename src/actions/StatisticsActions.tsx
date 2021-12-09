@@ -1,11 +1,11 @@
 import {
-	iSetStatisticsTracksShortTerm,
-	iSetStatisticsTracksMediumTerm,
-	iSetStatisticsTracksLongTerm,
-	iSetStatisticsArtistsShortTerm,
-	iSetStatisticsArtistsMediumTerm,
 	iSetStatisticsArtistsLongTerm,
-	iSetStatisticsRecents
+	iSetStatisticsArtistsMediumTerm,
+	iSetStatisticsArtistsShortTerm,
+	iSetStatisticsRecents,
+	iSetStatisticsTracksLongTerm,
+	iSetStatisticsTracksMediumTerm,
+	iSetStatisticsTracksShortTerm
 } from "../redux"
 
 export const set_statistics_tracks_short_term = (

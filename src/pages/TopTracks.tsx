@@ -1,19 +1,22 @@
-import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Tab, Tabs } from "@mui/material"
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import TopTracksBody from "../components/TopTracksBody"
+import useAuthenticated from "../hooks/useAthenticated"
+import { Box, Tab, Tabs } from "@mui/material"
 import {
 	set_statistics_tracks_long_term,
 	set_statistics_tracks_medium_term,
 	set_statistics_tracks_short_term
 } from "../actions/StatisticsActions"
-import TopTracksBody from "../components/TopTracksBody"
-import useAuthenticated from "../hooks/useAthenticated"
+import { TabContext, TabPanel } from "@mui/lab"
+import { useHistory } from "react-router-dom"
 
 const TopTracks = (): JSX.Element => {
-	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	//#region Hooks
 	const history = useHistory()
+	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	//#endregion
 
+	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -24,6 +27,7 @@ const TopTracks = (): JSX.Element => {
 			history.replace("/top-tracks/short-term")
 		}
 	}, [history, history.location])
+	//#endregion
 
 	return (
 		<TabContext value={tab}>

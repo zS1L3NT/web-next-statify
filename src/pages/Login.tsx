@@ -1,16 +1,19 @@
 import axios from "axios"
 import React, { useEffect } from "react"
+import { set_access_token } from "../actions/AccessTokenActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { set_access_token } from "../actions/AccessTokenActions"
 
 const config = require("../config.json")
 
 const Login = (): JSX.Element => {
+	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const access_token = useSelector(state => state.access_token)
+	//#endregion
 
+	//#region Effects
 	useEffect(() => {
 		if (access_token) {
 			history.push(sessionStorage.getItem("auth_redirect") || "/")
@@ -54,6 +57,7 @@ const Login = (): JSX.Element => {
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
 		}
 	}, [dispatch, history, access_token, history.location.search])
+	//#endregion
 
 	return <></>
 }

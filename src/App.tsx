@@ -1,38 +1,44 @@
-import { Backdrop, Box, CssBaseline, Fade, Modal, ThemeProvider, Typography } from "@mui/material"
-import React, { useEffect, useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { Redirect, Route, Switch, useHistory } from "react-router-dom"
-import { set_error } from "./actions/ErrorActions"
-import Navigator from "./components/Navigator"
-import useThemeValue from "./hooks/useThemeValue"
 import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
 import Home from "./pages/Home"
 import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
+import Navigator from "./components/Navigator"
+import React, { useEffect, useState } from "react"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
+import useThemeValue from "./hooks/useThemeValue"
+import { Backdrop, Box, CssBaseline, Fade, Modal, ThemeProvider, Typography } from "@mui/material"
 import { dark, light } from "./theme"
+import { Redirect, Route, Switch, useHistory } from "react-router-dom"
+import { set_error } from "./actions/ErrorActions"
+import { useDispatch, useSelector } from "react-redux"
 
 function App(): JSX.Element {
-	const [err, setErr] = useState<Error>()
+	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const error = useSelector(state => state.error)
+	const [err, setErr] = useState<Error>()
+	//#endregion
 
+	//#region Effects
 	useEffect(() => {
 		if (error) setErr(error)
 	}, [error])
+	//#endregion
 
+	//#region Functions
 	const handleClose = () => {
 		dispatch(set_error(null))
 		setTimeout(() => {
 			history.push("/logout")
 		}, 500)
 	}
+	//#endregion
 
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>

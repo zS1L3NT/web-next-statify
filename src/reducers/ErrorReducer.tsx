@@ -1,6 +1,6 @@
-import { useTry as uuseTry } from "no-try"
-import { Reducer } from "redux"
 import { iErrorActions, iErrorData } from "../redux"
+import { Reducer } from "redux"
+import { useTry as uuseTry } from "no-try"
 
 const initial_state: iErrorData = null
 

@@ -1,22 +1,22 @@
-import {
-	Container,
-	Card,
-	CardContent,
-	Typography,
-	Grid,
-	CardMedia,
-	CircularProgress
-} from "@mui/material"
+import getFollowers from "../utils/getFollowers"
 import React, { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import { set_error } from "../actions/ErrorActions"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
-	iSetStatisticsArtistsShortTerm,
+	Card,
+	CardContent,
+	CardMedia,
+	CircularProgress,
+	Container,
+	Grid,
+	Typography
+} from "@mui/material"
+import {
+	iSetStatisticsArtistsLongTerm,
 	iSetStatisticsArtistsMediumTerm,
-	iSetStatisticsArtistsLongTerm
+	iSetStatisticsArtistsShortTerm
 } from "../redux"
-import getFollowers from "../utils/getFollowers"
+import { set_error } from "../actions/ErrorActions"
+import { useDispatch, useSelector } from "react-redux"
 
 interface Props {
 	term: "short_term" | "medium_term" | "long_term"
@@ -32,28 +32,32 @@ interface Props {
 const TopArtistsLongTerm = (props: Props): JSX.Element => {
 	const { term, description, action } = props
 
+	//#region Hooks
 	const dispatch = useDispatch()
 	const artists = useSelector(state => state.statistics.artists)
 	const api = useSpotifyApi()
+	//#endregion
 
+	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (artists[term]) return
 
-		const half_artists: SpotifyApi.ArtistObjectFull[] = []
+		const halfArtists: SpotifyApi.ArtistObjectFull[] = []
 
 		api.getMyTopArtists({ limit: 50, time_range: term })
 			.then(res => {
-				half_artists.push(...res.items)
+				halfArtists.push(...res.items)
 				return api.getMyTopArtists({ offset: 49, limit: 50, time_range: term })
 			})
 			.then(res => {
-				dispatch(action([...half_artists, ...res.items.slice(1)]))
+				dispatch(action([...halfArtists, ...res.items.slice(1)]))
 			})
 			.catch(err => {
 				dispatch(set_error(err))
 			})
 	}, [dispatch, api, artists, term, action])
+	//#endregion
 
 	return (
 		<Container>

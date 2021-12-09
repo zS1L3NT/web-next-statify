@@ -40,4 +40,3 @@ const dark = createTheme({
 })
 
 export { light, dark }
-

@@ -1,19 +1,22 @@
-import { TabContext, TabPanel } from "@mui/lab"
-import { Box, Tab, Tabs } from "@mui/material"
 import React, { useEffect, useState } from "react"
-import { useHistory } from "react-router-dom"
+import TopArtistsBody from "../components/TopArtistsBody"
+import useAuthenticated from "../hooks/useAthenticated"
+import { Box, Tab, Tabs } from "@mui/material"
 import {
 	set_statistics_artists_long_term,
 	set_statistics_artists_medium_term,
 	set_statistics_artists_short_term
 } from "../actions/StatisticsActions"
-import TopArtistsBody from "../components/TopArtistsBody"
-import useAuthenticated from "../hooks/useAthenticated"
+import { TabContext, TabPanel } from "@mui/lab"
+import { useHistory } from "react-router-dom"
 
 const TopArtists = (): JSX.Element => {
-	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	//#region Hooks
 	const history = useHistory()
+	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	//#endregion
 
+	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -24,6 +27,7 @@ const TopArtists = (): JSX.Element => {
 			history.replace("/top-artists/short-term")
 		}
 	}, [history, history.location])
+	//#endregion
 
 	return (
 		<TabContext value={tab}>

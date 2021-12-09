@@ -1,3 +1,5 @@
+import React from "react"
+import useThemeValue from "../hooks/useThemeValue"
 import {
 	Box,
 	Button,
@@ -9,10 +11,8 @@ import {
 	Stack,
 	Typography
 } from "@mui/material"
-import React from "react"
-import { useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import useThemeValue from "../hooks/useThemeValue"
+import { useSelector } from "react-redux"
 
 interface iCard {
 	id: string
@@ -22,8 +22,10 @@ interface iCard {
 }
 
 const Home = (): JSX.Element => {
+	//#region Hooks
 	const history = useHistory()
 	const access_token = useSelector(state => state.access_token)
+	//#endregion
 
 	const cards: iCard[] = [
 		{
@@ -58,7 +60,11 @@ const Home = (): JSX.Element => {
 							? "View your Spotify Statistics"
 							: "Log in to see your Spotify Statistics"}
 					</Typography>
-					<Stack sx={{ pt: 4, mb: 2 }} direction="row" spacing={2} justifyContent="center">
+					<Stack
+						sx={{ pt: 4, mb: 2 }}
+						direction="row"
+						spacing={2}
+						justifyContent="center">
 						<Button
 							size="large"
 							variant="contained"
@@ -74,7 +80,7 @@ const Home = (): JSX.Element => {
 					</Typography>
 				</Container>
 			</Box>
-			<Grid sx={{ my: 3 }} container spacing={5} justifyContent="center">
+			<Grid sx={{ mt: 3, pb: 6 }} container spacing={5} justifyContent="center">
 				{cards.map(card => (
 					<Grid key={card.id} item>
 						<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: 3 }}>

@@ -1,5 +1,5 @@
-import { Reducer } from "redux"
 import { iStatisticsActions, iStatisticsData } from "../redux"
+import { Reducer } from "redux"
 
 const initial_state: iStatisticsData = {
 	tracks: {

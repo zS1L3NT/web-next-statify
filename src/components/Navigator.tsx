@@ -1,9 +1,20 @@
-import {
-	AccessTime, AccessTimeFilled, Audiotrack, DarkMode, ExpandLess,
-	ExpandMore, History, Home, LightMode, Login,
-	Logout, Person, Timeline
-} from "@mui/icons-material"
 import MenuIcon from "@mui/icons-material/Menu"
+import React, { useState } from "react"
+import {
+	AccessTime,
+	AccessTimeFilled,
+	Audiotrack,
+	DarkMode,
+	ExpandLess,
+	ExpandMore,
+	History,
+	Home,
+	LightMode,
+	Login,
+	Logout,
+	Person,
+	Timeline
+} from "@mui/icons-material"
 import {
 	AppBar,
 	Box,
@@ -17,9 +28,8 @@ import {
 	Toolbar,
 	Typography
 } from "@mui/material"
-import React, { useState } from "react"
-import { useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 interface iItem {
 	id: string
@@ -39,11 +49,13 @@ interface iDropdown {
 }
 
 const Navigator = (): JSX.Element => {
-	const [open, setOpen] = useState(false)
-	const [dropdowns, setDropdowns] = useState([false, false])
+	//#region Hooks
 	const history = useHistory()
-	const theme = useSelector(state => state.theme)
 	const access_token = useSelector(state => state.access_token)
+	const theme = useSelector(state => state.theme)
+	const [dropdowns, setDropdowns] = useState([false, false])
+	const [open, setOpen] = useState(false)
+	//#endregion
 
 	const data: (iItem | iDropdown)[] = [
 		{
@@ -150,6 +162,7 @@ const Navigator = (): JSX.Element => {
 		}
 	]
 
+	//#region Functions
 	const toggleDropdown = (i: number) => {
 		const drops_ = [...dropdowns]
 		drops_[i] = !drops_[i]
@@ -160,6 +173,7 @@ const Navigator = (): JSX.Element => {
 		history.push(url)
 		setOpen(false)
 	}
+	//#endregion
 
 	return (
 		<>
