@@ -32,8 +32,9 @@ function App(): JSX.Element {
 	//#endregion
 
 	//#region Functions
-	const handleClose = () => {
+	const handleErrorClose = () => {
 		dispatch(set_error(null))
+		sessionStorage.setItem("auth_redirect", history.location.pathname)
 		setTimeout(() => history.push("/logout"), 500)
 	}
 	//#endregion
@@ -67,7 +68,7 @@ function App(): JSX.Element {
 				aria-labelledby="error-modal-title"
 				aria-describedby="error-modal-description"
 				open={!!error}
-				onClose={handleClose}
+				onClose={handleErrorClose}
 				closeAfterTransition
 				BackdropComponent={Backdrop}
 				BackdropProps={{ timeout: 500 }}>
