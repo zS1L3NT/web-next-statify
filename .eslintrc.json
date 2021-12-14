@@ -19,13 +19,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        "indent": [
-            "error",
-            "tab",
-			{
-				"SwitchCase": 1
-			}
-        ],
+        "indent": "off",
         "linebreak-style": [
             "off",
             "windows"

@@ -6,8 +6,25 @@ import Recommendations from "../components/Recommendations"
 import TrackAppearances from "../components/TrackAppearances"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, Container, Dialog, Grid, IconButton, Skeleton, Tooltip, Typography } from "@mui/material"
+import {
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Container,
+	Dialog,
+	Grid,
+	IconButton,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography
+} from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
+import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
 
@@ -37,6 +54,7 @@ const Track = (): JSX.Element => {
 	const location = useLocation()
 	const api = useSpotifyApi()
 	const [showImage, setShowImage] = useState(false)
+	const [liked, setLiked] = useState<boolean | null>(null)
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse | null>()
 	//#endregion
 
@@ -49,9 +67,12 @@ const Track = (): JSX.Element => {
 		const [, , trackId] = location.pathname.split("/")
 		if (trackId) {
 			api.getTrack(trackId)
-				.then(setTrack)
+				.then(track => {
+					setTrack(track)
+					return api.containsMySavedTracks([track.id])
+				})
+				.then(likes => setLiked(likes[0]))
 				.catch(err => {
-					console.error(err)
 					setTrack(null)
 					dispatch(
 						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
@@ -76,6 +97,38 @@ const Track = (): JSX.Element => {
 
 	const handleImageClose = () => {
 		setShowImage(false)
+	}
+
+	const handleLike = () => {
+		if (api && track) {
+			setLiked(null)
+			api.addToMySavedTracks([track.id])
+				.then(() => {
+					setLiked(true)
+				})
+				.catch(err => {
+					setLiked(false)
+					dispatch(
+						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
+					)
+				})
+		}
+	}
+
+	const handleUnlike = () => {
+		if (api && track) {
+			setLiked(null)
+			api.removeFromMySavedTracks([track.id])
+				.then(() => {
+					setLiked(false)
+				})
+				.catch(err => {
+					setLiked(true)
+					dispatch(
+						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
+					)
+				})
+		}
 	}
 	//#endregion
 
@@ -132,17 +185,37 @@ const Track = (): JSX.Element => {
 							</>
 						)}
 
-						<Tooltip title="Open in Spotify">
-							<IconButton
-								sx={{ width: 46, mx: { xs: "auto", sm: 0 } }}
-								onClick={handleTrackOpen}>
-								<Avatar
-									sx={{ width: 30, height: 30 }}
-									src="/assets/spotify-logo.png"
-									alt="Spotify"
-								/>
-							</IconButton>
-						</Tooltip>
+						<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+							<Tooltip
+								title={
+									liked === null
+										? "Favourite this track"
+										: liked
+										? "Unfavourite this track"
+										: "Favourite this track"
+								}>
+								<IconButton
+									sx={{ width: 46 }}
+									onClick={liked ? handleUnlike : handleLike}>
+									{liked === null ? (
+										<CircularProgress size={30} />
+									) : liked ? (
+										<Star />
+									) : (
+										<StarBorder />
+									)}
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Open in Spotify">
+								<IconButton sx={{ width: 46 }} onClick={handleTrackOpen}>
+									<Avatar
+										sx={{ width: 30, height: 30 }}
+										src="/assets/spotify-logo.png"
+										alt="Spotify"
+									/>
+								</IconButton>
+							</Tooltip>
+						</Stack>
 					</Grid>
 				</Grid>
 				<Grid direction={{ xs: "column", sm: "row" }} container>

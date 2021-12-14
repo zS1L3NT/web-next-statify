@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react"
-import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Card, CardContent, Stack, Typography } from "@mui/material"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectFull
@@ -12,10 +10,7 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 	const { artist } = props
 
 	//#region Hooks
-	const dispatch = useDispatch()
-	const api = useSpotifyApi()
 	const statistics = useSelector(state => state.statistics)
-	const [following, setFollowing] = useState<boolean>()
 	const [shortTermArtistsIndex, setShortTermArtistsIndex] = useState(0)
 	const [mediumTermArtistsIndex, setMediumTermArtistsIndex] = useState(0)
 	const [longTermArtistsIndex, setLongTermArtistsIndex] = useState(0)
@@ -26,19 +21,6 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 	//#endregion
 
 	//#region Effects
-	useEffect(() => {
-		if (!api) return
-		if (!artist) return
-
-		api.isFollowingArtists([artist.id])
-			.then(res => setFollowing(res[0]))
-			.catch(err => {
-				dispatch(
-					set_error(err.message === "invalid id" ? new Error("Artist not found") : err)
-				)
-			})
-	}, [dispatch, api, artist])
-
 	useEffect(() => {
 		setShortTermArtistsIndex(
 			(statistics.artists.short_term
@@ -76,15 +58,6 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 
 	return artist ? (
 		<Stack sx={{ width: "fit-content", m: "auto", mt: 3 }}>
-			{following ? (
-				<Card sx={{ mb: 3 }}>
-					<CardContent>
-						<Typography color="primary.main" variant="h6">
-							You are following {artist.name}
-						</Typography>
-					</CardContent>
-				</Card>
-			) : null}
 			{shortTermArtistsIndex ? (
 				<Card sx={{ mb: 3 }}>
 					<CardContent>

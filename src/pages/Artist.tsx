@@ -4,8 +4,29 @@ import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, Container, Dialog, Grid, IconButton, List, ListItem, ListItemAvatar, ListItemText, Skeleton, Tooltip, Typography } from "@mui/material"
+import {
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Container,
+	Dialog,
+	Grid,
+	IconButton,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography
+} from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
+import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
 
@@ -19,7 +40,7 @@ import { useHistory, useLocation } from "react-router-dom"
  * * Position in Top Artists
  * * Appearances in Top Tracks
  * * Appearances in Recents
- * ? Recommended
+ * * Recommended
  */
 
 const Artist = (): JSX.Element => {
@@ -30,6 +51,7 @@ const Artist = (): JSX.Element => {
 	const api = useSpotifyApi()
 	const [showImage, setShowImage] = useState(false)
 	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse | null>()
+	const [followed, setFollowed] = useState<boolean | null>(null)
 	const [topTracks, setTopTracks] = useState<SpotifyApi.TrackObjectFull[]>([])
 	//#endregion
 
@@ -42,13 +64,8 @@ const Artist = (): JSX.Element => {
 		const [, , artistId] = location.pathname.split("/")
 		if (artistId) {
 			api.getArtist(artistId)
-				.then(artist => {
-					setArtist(artist)
-					return api.getArtistTopTracks(artist.id, "SG")
-				})
-				.then(res => setTopTracks(res.tracks.slice(0, 5)))
+				.then(setArtist)
 				.catch(err => {
-					console.error(err)
 					setArtist(null)
 					dispatch(
 						set_error(
@@ -60,6 +77,23 @@ const Artist = (): JSX.Element => {
 			dispatch(set_error(new Error("Artist not found")))
 		}
 	}, [dispatch, location, api])
+
+	useEffect(() => {
+		if (!api) return
+		if (!artist) return
+
+		api.isFollowingArtists([artist.id])
+			.then(res => setFollowed(res[0]))
+			.catch(err => {
+				dispatch(set_error(err))
+			})
+
+		api.getArtistTopTracks(artist.id, "SG")
+			.then(res => setTopTracks(res.tracks.slice(0, 5)))
+			.catch(err => {
+				dispatch(set_error(err))
+			})
+	}, [dispatch, api, artist])
 	//#endregion
 
 	//#region Functions
@@ -79,6 +113,34 @@ const Artist = (): JSX.Element => {
 
 	const handleImageClose = () => {
 		setShowImage(false)
+	}
+
+	const handleFollow = () => {
+		if (api && artist) {
+			setFollowed(null)
+			api.followArtists([artist.id])
+				.then(() => {
+					setFollowed(true)
+				})
+				.catch(err => {
+					setFollowed(false)
+					dispatch(set_error(err))
+				})
+		}
+	}
+
+	const handleUnfollow = () => {
+		if (api && artist) {
+			setFollowed(null)
+			api.unfollowArtists([artist.id])
+				.then(() => {
+					setFollowed(false)
+				})
+				.catch(err => {
+					setFollowed(true)
+					dispatch(set_error(err))
+				})
+		}
 	}
 	//#endregion
 
@@ -133,17 +195,37 @@ const Artist = (): JSX.Element => {
 							</>
 						)}
 
-						<Tooltip title="Open in Spotify">
-							<IconButton
-								sx={{ width: 46, mx: { xs: "auto", sm: 0 } }}
-								onClick={handleArtistOpen}>
-								<Avatar
-									sx={{ width: 30, height: 30 }}
-									src="/assets/spotify-logo.png"
-									alt="Spotify"
-								/>
-							</IconButton>
-						</Tooltip>
+						<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+							<Tooltip
+								title={
+									followed === null
+										? "Follow this artist"
+										: followed
+										? "Unfollow this artist"
+										: "Follow this artist"
+								}>
+								<IconButton
+									sx={{ width: 46 }}
+									onClick={followed ? handleUnfollow : handleFollow}>
+									{followed === null ? (
+										<CircularProgress size={30} />
+									) : followed ? (
+										<Star />
+									) : (
+										<StarBorder />
+									)}
+								</IconButton>
+							</Tooltip>
+							<Tooltip title="Open in Spotify">
+								<IconButton sx={{ width: 46 }} onClick={handleArtistOpen}>
+									<Avatar
+										sx={{ width: 30, height: 30 }}
+										src="/assets/spotify-logo.png"
+										alt="Spotify"
+									/>
+								</IconButton>
+							</Tooltip>
+						</Stack>
 					</Grid>
 				</Grid>
 
