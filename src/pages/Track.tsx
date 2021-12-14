@@ -1,8 +1,12 @@
-import ArrowBackIcon from "@mui/icons-material/ArrowBack"
+import AlbumCard from "../components/Cards/AlbumCard"
+import ArtistCard from "../components/Cards/ArtistCard"
+import getDuration from "../utils/getDuration"
 import React, { useEffect, useState } from "react"
+import Recommendations from "../components/Recommendations"
+import TopTracksCard from "../components/Cards/TopTrackCard"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Avatar, Container, Grid, Typography } from "@mui/material"
+import { Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, Container, Dialog, Grid, IconButton, Skeleton, Tooltip, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
@@ -10,20 +14,19 @@ import { useLocation } from "react-router-dom"
 /**
  * * Name
  * ! Popularity
- * Artists
- * - Name
- * - Link
- * Explicity
- * Album
- * - Name
+ * ! Explicity
+ * * Link
+ * * Artists[i]
+ * * - Name
+ * * - Link
+ * * Album
+ * * - Name
  * * - Picture
- * - Link
- * Link
+ * * - Link
  *
- * Position in Top Tracks
- * In Favourites
- * ? - In which playlists
- * ? - Recommendations
+ * * Position in Top Tracks
+ * * In Favourites
+ * * - Recommendations
  */
 
 const Track = (): JSX.Element => {
@@ -31,6 +34,7 @@ const Track = (): JSX.Element => {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
+	const [showImage, setShowImage] = useState(false)
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse | null>()
 	//#endregion
 
@@ -57,22 +61,120 @@ const Track = (): JSX.Element => {
 	}, [dispatch, location.pathname, api])
 	//#endregion
 
+	//#region Functions
+	const handleTrackOpen = () => {
+		if (track) {
+			window.open(track?.external_urls.spotify)
+		}
+	}
+
+	const handleImageOpen = () => {
+		setShowImage(true)
+	}
+
+	const handleImageClose = () => {
+		setShowImage(false)
+	}
+	//#endregion
+
 	return (
-		<Container>
-			<Grid sx={{ my: 1 }} container direction={{ xs: "column", sm: "row" }}>
-				<Grid item>
-					<ArrowBackIcon />
-					<Avatar
-						sx={{ width: 150, height: 150 }}
-						src={track?.album.images[0]?.url || ""}
-					/>
+		<>
+			<Container>
+				<Grid
+					sx={{ mt: { xs: 2, sm: 4 }, mb: { sm: 4 } }}
+					container
+					direction={{ xs: "column", sm: "row" }}>
+					<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
+						{track ? (
+							<Card sx={{ borderRadius: 5 }} onClick={handleImageOpen}>
+								<CardActionArea>
+									<CardMedia
+										component="img"
+										width={200}
+										height={200}
+										image={track.album.images[0]?.url || ""}
+										alt="Image"
+									/>
+								</CardActionArea>
+							</Card>
+						) : (
+							<Skeleton
+								sx={{ borderRadius: 5 }}
+								variant="rectangular"
+								width={200}
+								height={200}
+							/>
+						)}
+					</Grid>
+					<Grid
+						sx={{
+							my: { xs: 1, sm: 3 },
+							mx: { xs: "auto", sm: 3 },
+							textAlign: { xs: "center", sm: "start" }
+						}}
+						item
+						display="flex"
+						flexDirection="column"
+						justifyContent="center">
+						{track ? (
+							<>
+								<Typography variant="h4">{track.name}</Typography>
+								<Typography variant="h5">{track.artists[0].name}</Typography>
+								<Typography variant="subtitle1">{getDuration(track)}</Typography>
+							</>
+						) : (
+							<>
+								<Skeleton variant="text" width={200} height={45} />
+								<Skeleton variant="text" width={160} height={40} />
+								<Skeleton variant="text" width={80} height={30} />
+							</>
+						)}
+
+						<Tooltip title="Open in Spotify">
+							<IconButton
+								sx={{ width: 46, mx: { xs: "auto", sm: 0 } }}
+								onClick={handleTrackOpen}>
+								<Avatar
+									sx={{ width: 30, height: 30 }}
+									src="/assets/spotify-logo.png"
+									alt="Spotify"
+								/>
+							</IconButton>
+						</Tooltip>
+					</Grid>
 				</Grid>
-				<Grid item>
-					<Typography variant="h4">{track?.name}</Typography>
-					<Typography variant="h5">{track?.artists[0].name}</Typography>
+				<Grid direction={{ xs: "column", sm: "row" }} container>
+					<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
+						<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
+							Artists
+						</Typography>
+						{track ? (
+							track.artists.map(artist => (
+								<ArtistCard key={artist.id} artist={artist} />
+							))
+						) : (
+							<ArtistCard />
+						)}
+					</Grid>
+					<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
+						<Typography sx={{ mt: 1, mb: 2 }} variant="h5">
+							Album
+						</Typography>
+						<AlbumCard album={track?.album} position={track?.track_number} />
+					</Grid>
 				</Grid>
-			</Grid>
-		</Container>
+				<TopTracksCard track={track || undefined} />
+				<Recommendations track={track || undefined} />
+			</Container>
+			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
+				<Box
+					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
+					component="img"
+					src={track?.album.images[0]?.url || ""}
+					alt="Image"
+				/>
+			</Dialog>
+		</>
 	)
 }
 

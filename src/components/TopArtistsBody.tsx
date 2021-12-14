@@ -1,20 +1,8 @@
 import getFollowers from "../utils/getFollowers"
 import React, { useEffect } from "react"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import {
-	Card,
-	CardContent,
-	CardMedia,
-	CircularProgress,
-	Container,
-	Grid,
-	Typography
-} from "@mui/material"
-import {
-	iSetStatisticsArtistsLongTerm,
-	iSetStatisticsArtistsMediumTerm,
-	iSetStatisticsArtistsShortTerm
-} from "../redux"
+import { Card, CardContent, CardMedia, CircularProgress, Container, Grid, Typography } from "@mui/material"
+import { iSetStatisticsArtistsLongTerm, iSetStatisticsArtistsMediumTerm, iSetStatisticsArtistsShortTerm } from "../redux"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 
