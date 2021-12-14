@@ -3,7 +3,7 @@ import ArtistCard from "../components/Cards/ArtistCard"
 import getDuration from "../utils/getDuration"
 import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
-import TopTracksCard from "../components/Cards/TopTrackCard"
+import TrackAppearances from "../components/TrackAppearances"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, Container, Dialog, Grid, IconButton, Skeleton, Tooltip, Typography } from "@mui/material"
@@ -26,7 +26,9 @@ import { useLocation } from "react-router-dom"
  *
  * * Position in Top Tracks
  * * In Favourites
- * * - Recommendations
+ * * Recommendations
+ * ? Check if you liked this
+ * ? Appearances in Recents
  */
 
 const Track = (): JSX.Element => {
@@ -163,7 +165,7 @@ const Track = (): JSX.Element => {
 						<AlbumCard album={track?.album} position={track?.track_number} />
 					</Grid>
 				</Grid>
-				<TopTracksCard track={track || undefined} />
+				<TrackAppearances track={track || undefined} />
 				<Recommendations track={track || undefined} />
 			</Container>
 			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
