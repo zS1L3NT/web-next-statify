@@ -16,7 +16,7 @@ const reducer: Reducer<iErrorData, iErrorActions> = (
 					const [err, response] = uuseTry(() => JSON.parse(response_str))
 					if (err) {
 						return {
-							name: "HTTP Error",
+							name: "Error",
 							message: response
 						}
 					} else {

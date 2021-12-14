@@ -164,9 +164,9 @@ const Navigator = (): JSX.Element => {
 
 	//#region Functions
 	const toggleDropdown = (i: number) => {
-		const drops_ = [...dropdowns]
-		drops_[i] = !drops_[i]
-		setDropdowns(drops_)
+		const drops = [...dropdowns]
+		drops[i] = !drops[i]
+		setDropdowns(drops)
 	}
 
 	const redirect = (url: string) => {

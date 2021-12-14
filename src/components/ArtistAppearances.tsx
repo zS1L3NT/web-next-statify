@@ -101,8 +101,8 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 							{shortTermTracksCount}
 						</Typography>
 						<Typography variant="h6">
-							appearances from {artist.name} in your most streamed tracks in the last 4
-							weeks
+							appearances from {artist.name} in your most streamed tracks in the last
+							4 weeks
 						</Typography>
 					</CardContent>
 				</Card>
@@ -114,8 +114,8 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 							{mediumTermTracksCount}
 						</Typography>
 						<Typography variant="h6">
-							appearances from {artist.name} in your most streamed tracks in the last 6
-							months
+							appearances from {artist.name} in your most streamed tracks in the last
+							6 months
 						</Typography>
 					</CardContent>
 				</Card>

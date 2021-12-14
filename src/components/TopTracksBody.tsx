@@ -64,12 +64,8 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 				halfTracks.push(...res.items)
 				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: term })
 			})
-			.then(res => {
-				dispatch(action([...halfTracks, ...res.items.slice(1)]))
-			})
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.then(res => dispatch(action([...halfTracks, ...res.items.slice(1)])))
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, tracks, term, action])
 	//#endregion
 

@@ -43,9 +43,7 @@ const Login = (): JSX.Element => {
 					history.push(sessionStorage.getItem("auth_redirect") || "/")
 					sessionStorage.removeItem("auth_redirect")
 				})
-				.catch(err => {
-					console.error(err.response.data.error)
-				})
+				.catch(err => console.error(err.response.data.error))
 		} else {
 			const query = new URLSearchParams({
 				response_type: "code",

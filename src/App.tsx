@@ -34,9 +34,7 @@ function App(): JSX.Element {
 	//#region Functions
 	const handleClose = () => {
 		dispatch(set_error(null))
-		setTimeout(() => {
-			history.push("/logout")
-		}, 500)
+		setTimeout(() => history.push("/logout"), 500)
 	}
 	//#endregion
 

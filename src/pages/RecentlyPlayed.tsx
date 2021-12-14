@@ -46,12 +46,8 @@ const RecentlyPlayed = (): JSX.Element => {
 		if (recents) return
 
 		api.getMyRecentlyPlayedTracks({ limit: 50 })
-			.then(res => {
-				dispatch(set_statistics_recents(res.items))
-			})
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.then(res => dispatch(set_statistics_recents(res.items)))
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, recents])
 
 	useEffect(() => {
@@ -59,12 +55,8 @@ const RecentlyPlayed = (): JSX.Element => {
 		if (!recents) return
 
 		api.getTracks(recents.map(r => r.track.id))
-			.then(res => {
-				setImages(res.tracks.map(t => t.album.images.at(-1)?.url || ""))
-			})
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.then(res => setImages(res.tracks.map(t => t.album.images.at(-1)?.url || "")))
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, recents])
 	//#endregion
 

@@ -39,58 +39,56 @@ const TrackAppearances = (props: Props): JSX.Element => {
 	//#endregion
 
 	return track ? (
-		<>
-			<Stack sx={{ width: "fit-content", m: "auto", mt: 3 }}>
-				{shortTermTrackIndex ? (
-					<Card sx={{ mb: 3 }}>
-						<CardContent>
-							<Typography color="primary.main" variant="h3">
-								#{shortTermTrackIndex}
-							</Typography>
-							<Typography variant="h6">
-								of your most streamed tracks in the last 4 weeks
-							</Typography>
-						</CardContent>
-					</Card>
-				) : null}
-				{mediumTermTrackIndex ? (
-					<Card sx={{ mb: 3 }}>
-						<CardContent>
-							<Typography color="primary.main" variant="h3">
-								#{mediumTermTrackIndex}
-							</Typography>
-							<Typography variant="h6">
-								of your most streamed tracks in the last 6 months
-							</Typography>
-						</CardContent>
-					</Card>
-				) : null}
-				{longTermTrackIndex ? (
-					<Card sx={{ mb: 3 }}>
-						<CardContent>
-							<Typography color="primary.main" variant="h3">
-								#{longTermTrackIndex}
-							</Typography>
-							<Typography variant="h6">
-								of your most streamed tracks in your lifetime
-							</Typography>
-						</CardContent>
-					</Card>
-				) : null}
-				{recentTracksCount ? (
-					<Card sx={{ mb: 3 }}>
-						<CardContent>
-							<Typography color="primary.main" variant="h3">
-								{recentTracksCount}
-							</Typography>
-							<Typography variant="h6">
-								appearances of {track.name} in your last 50 streams
-							</Typography>
-						</CardContent>
-					</Card>
-				) : null}
-			</Stack>
-		</>
+		<Stack sx={{ width: "fit-content", m: "auto", mt: 3 }}>
+			{shortTermTrackIndex ? (
+				<Card sx={{ mb: 3 }}>
+					<CardContent>
+						<Typography color="primary.main" variant="h3">
+							#{shortTermTrackIndex}
+						</Typography>
+						<Typography variant="h6">
+							of your most streamed tracks in the last 4 weeks
+						</Typography>
+					</CardContent>
+				</Card>
+			) : null}
+			{mediumTermTrackIndex ? (
+				<Card sx={{ mb: 3 }}>
+					<CardContent>
+						<Typography color="primary.main" variant="h3">
+							#{mediumTermTrackIndex}
+						</Typography>
+						<Typography variant="h6">
+							of your most streamed tracks in the last 6 months
+						</Typography>
+					</CardContent>
+				</Card>
+			) : null}
+			{longTermTrackIndex ? (
+				<Card sx={{ mb: 3 }}>
+					<CardContent>
+						<Typography color="primary.main" variant="h3">
+							#{longTermTrackIndex}
+						</Typography>
+						<Typography variant="h6">
+							of your most streamed tracks in your lifetime
+						</Typography>
+					</CardContent>
+				</Card>
+			) : null}
+			{recentTracksCount ? (
+				<Card sx={{ mb: 3 }}>
+					<CardContent>
+						<Typography color="primary.main" variant="h3">
+							{recentTracksCount}
+						</Typography>
+						<Typography variant="h6">
+							appearances of {track.name} in your last 50 streams
+						</Typography>
+					</CardContent>
+				</Card>
+			) : null}
+		</Stack>
 	) : (
 		<></>
 	)

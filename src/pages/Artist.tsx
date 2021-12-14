@@ -49,9 +49,9 @@ const Artist = (): JSX.Element => {
 	const history = useHistory()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [showImage, setShowImage] = useState(false)
 	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse | null>()
 	const [followed, setFollowed] = useState<boolean | null>(null)
+	const [showImage, setShowImage] = useState(false)
 	const [topTracks, setTopTracks] = useState<SpotifyApi.TrackObjectFull[]>([])
 	//#endregion
 
@@ -67,11 +67,7 @@ const Artist = (): JSX.Element => {
 				.then(setArtist)
 				.catch(err => {
 					setArtist(null)
-					dispatch(
-						set_error(
-							err.message === "invalid id" ? new Error("Artist not found") : err
-						)
-					)
+					dispatch(set_error(err))
 				})
 		} else {
 			dispatch(set_error(new Error("Artist not found")))
@@ -84,15 +80,11 @@ const Artist = (): JSX.Element => {
 
 		api.isFollowingArtists([artist.id])
 			.then(res => setFollowed(res[0]))
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.catch(err => dispatch(set_error(err)))
 
 		api.getArtistTopTracks(artist.id, "SG")
 			.then(res => setTopTracks(res.tracks.slice(0, 5)))
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
 	//#endregion
 
@@ -119,9 +111,7 @@ const Artist = (): JSX.Element => {
 		if (api && artist) {
 			setFollowed(null)
 			api.followArtists([artist.id])
-				.then(() => {
-					setFollowed(true)
-				})
+				.then(() => setFollowed(true))
 				.catch(err => {
 					setFollowed(false)
 					dispatch(set_error(err))
@@ -133,9 +123,7 @@ const Artist = (): JSX.Element => {
 		if (api && artist) {
 			setFollowed(null)
 			api.unfollowArtists([artist.id])
-				.then(() => {
-					setFollowed(false)
-				})
+				.then(() => setFollowed(false))
 				.catch(err => {
 					setFollowed(true)
 					dispatch(set_error(err))

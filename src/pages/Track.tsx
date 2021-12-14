@@ -53,8 +53,8 @@ const Track = (): JSX.Element => {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [showImage, setShowImage] = useState(false)
 	const [liked, setLiked] = useState<boolean | null>(null)
+	const [showImage, setShowImage] = useState(false)
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse | null>()
 	//#endregion
 
@@ -74,9 +74,7 @@ const Track = (): JSX.Element => {
 				.then(likes => setLiked(likes[0]))
 				.catch(err => {
 					setTrack(null)
-					dispatch(
-						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
-					)
+					dispatch(set_error(err))
 				})
 		} else {
 			dispatch(set_error(new Error("Track not found")))
@@ -87,7 +85,7 @@ const Track = (): JSX.Element => {
 	//#region Functions
 	const handleTrackOpen = () => {
 		if (track) {
-			window.open(track?.external_urls.spotify)
+			window.open(track.external_urls.spotify)
 		}
 	}
 
@@ -103,14 +101,10 @@ const Track = (): JSX.Element => {
 		if (api && track) {
 			setLiked(null)
 			api.addToMySavedTracks([track.id])
-				.then(() => {
-					setLiked(true)
-				})
+				.then(() => setLiked(true))
 				.catch(err => {
 					setLiked(false)
-					dispatch(
-						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
-					)
+					dispatch(set_error(err))
 				})
 		}
 	}
@@ -119,14 +113,10 @@ const Track = (): JSX.Element => {
 		if (api && track) {
 			setLiked(null)
 			api.removeFromMySavedTracks([track.id])
-				.then(() => {
-					setLiked(false)
-				})
+				.then(() => setLiked(false))
 				.catch(err => {
 					setLiked(true)
-					dispatch(
-						set_error(err.message === "invalid id" ? new Error("Track not found") : err)
-					)
+					dispatch(set_error(err))
 				})
 		}
 	}

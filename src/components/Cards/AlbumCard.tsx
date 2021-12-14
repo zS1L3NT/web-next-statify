@@ -27,9 +27,7 @@ const AlbumCard = (props: Props): JSX.Element => {
 
 		api.getAlbum(album.id)
 			.then(setData)
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, album])
 	//#endregion
 
@@ -69,9 +67,7 @@ const AlbumCard = (props: Props): JSX.Element => {
 						{data ? (
 							<>
 								<Typography variant="h5">{data.name}</Typography>
-								<Typography variant="subtitle1">
-									Track #{position}
-								</Typography>
+								<Typography variant="subtitle1">Track #{position}</Typography>
 							</>
 						) : (
 							<>

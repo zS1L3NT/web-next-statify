@@ -1,6 +1,15 @@
 import React, { useState } from "react"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Avatar, Card, CardActionArea, List, ListItem, ListItemAvatar, ListItemText, Typography } from "@mui/material"
+import {
+	Avatar,
+	Card,
+	CardActionArea,
+	List,
+	ListItem,
+	ListItemAvatar,
+	ListItemText,
+	Typography
+} from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
 import { useEffect } from "react"
@@ -41,9 +50,7 @@ const Recommendations = (props: Props): JSX.Element => {
 		api.getRecommendations(options)
 			.then(res => api.getTracks(res.tracks.map(t => t.id)))
 			.then(res => setTracks(res.tracks))
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, track, artist])
 	//#endregion
 

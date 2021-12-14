@@ -27,9 +27,7 @@ const ArtistCard = (props: Props): JSX.Element => {
 
 		api.getArtist(artist.id)
 			.then(setData)
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
 	//#endregion
 
@@ -69,9 +67,7 @@ const ArtistCard = (props: Props): JSX.Element => {
 						{data ? (
 							<>
 								<Typography variant="h5">{data.name}</Typography>
-								<Typography variant="subtitle1">
-									{data && getFollowers(data)}
-								</Typography>
+								<Typography variant="subtitle1">{getFollowers(data)}</Typography>
 							</>
 						) : (
 							<>

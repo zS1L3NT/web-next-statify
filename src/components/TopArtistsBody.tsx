@@ -1,8 +1,20 @@
 import getFollowers from "../utils/getFollowers"
 import React, { useEffect } from "react"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Card, CardContent, CardMedia, CircularProgress, Container, Grid, Typography } from "@mui/material"
-import { iSetStatisticsArtistsLongTerm, iSetStatisticsArtistsMediumTerm, iSetStatisticsArtistsShortTerm } from "../redux"
+import {
+	Card,
+	CardContent,
+	CardMedia,
+	CircularProgress,
+	Container,
+	Grid,
+	Typography
+} from "@mui/material"
+import {
+	iSetStatisticsArtistsLongTerm,
+	iSetStatisticsArtistsMediumTerm,
+	iSetStatisticsArtistsShortTerm
+} from "../redux"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -38,12 +50,8 @@ const TopArtistsLongTerm = (props: Props): JSX.Element => {
 				halfArtists.push(...res.items)
 				return api.getMyTopArtists({ offset: 49, limit: 50, time_range: term })
 			})
-			.then(res => {
-				dispatch(action([...halfArtists, ...res.items.slice(1)]))
-			})
-			.catch(err => {
-				dispatch(set_error(err))
-			})
+			.then(res => dispatch(action([...halfArtists, ...res.items.slice(1)])))
+			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artists, term, action])
 	//#endregion
 
