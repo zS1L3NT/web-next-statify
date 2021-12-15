@@ -6,6 +6,7 @@ import { set_error } from "../actions/ErrorActions"
 import { set_statistics } from "../actions/StatisticsActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
+import { LinearProgress } from "@mui/material"
 
 const config = require("../config.json")
 
@@ -103,7 +104,7 @@ const Login = (): JSX.Element => {
 	}, [dispatch, history, api, access_token])
 	//#endregion
 
-	return <></>
+	return <LinearProgress />
 }
 
 export default Login
