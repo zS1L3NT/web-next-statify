@@ -6,9 +6,11 @@ import {
 	CardContent,
 	CircularProgress,
 	Container,
+	Link,
 	List,
 	ListItem,
 	ListItemAvatar,
+	ListItemButton,
 	ListItemText,
 	Paper,
 	Table,
@@ -42,8 +44,19 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 	//#region Effects
 	useEffect(() => {
 		if (tracks[term]) return
+
 		history.push("/login")
 	}, [history, tracks, term])
+	//#endregion
+
+	//#region Functions
+	const handleTrackClick = (track: SpotifyApi.TrackObjectFull) => {
+		history.push("/track/" + track.id)
+	}
+
+	const handleArtistClick = (artist: SpotifyApi.ArtistObjectSimplified) => {
+		history.push("/artist/" + artist.id)
+	}
 	//#endregion
 
 	return (
@@ -64,17 +77,19 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 					{showList ? (
 						<List>
 							{tracks[term]!.map((track, i) => (
-								<ListItem key={track.id}>
-									<ListItemAvatar>
-										<Avatar
-											sx={{ width: 45, height: 45 }}
-											src={track.album.images.at(-1)?.url || ""}
+								<ListItem key={track.id} onClick={() => handleTrackClick(track)} disablePadding>
+									<ListItemButton>
+										<ListItemAvatar>
+											<Avatar
+												sx={{ width: 45, height: 45 }}
+												src={track.album.images.at(-1)?.url || ""}
+											/>
+										</ListItemAvatar>
+										<ListItemText
+											primary={i + 1 + ". " + track.name}
+											secondary={track.artists.map(a => a.name).join(", ")}
 										/>
-									</ListItemAvatar>
-									<ListItemText
-										primary={i + 1 + ". " + track.name}
-										secondary={track.artists.map(a => a.name).join(", ")}
-									/>
+									</ListItemButton>
 								</ListItem>
 							))}
 						</List>
@@ -92,7 +107,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 								</TableHead>
 								<TableBody>
 									{tracks[term]!.map((track, i) => (
-										<TableRow key={track.id}>
+										<TableRow key={track.id} hover>
 											<TableCell align="center">{i + 1}</TableCell>
 											<TableCell>
 												<Avatar
@@ -100,9 +115,34 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 													src={track.album.images.at(-1)?.url || ""}
 												/>
 											</TableCell>
-											<TableCell>{track.name}</TableCell>
 											<TableCell>
-												{track.artists.map(a => a.name).join(", ")}
+												<Link
+													sx={{ cursor: "pointer" }}
+													color="inherit"
+													onClick={() => handleTrackClick(track)}
+													underline="hover">
+													{track.name}
+												</Link>
+											</TableCell>
+											<TableCell>
+												{track.artists
+													.map(artist => (
+														<Link
+															sx={{ cursor: "pointer" }}
+															key={artist.id}
+															color="inherit"
+															onClick={() =>
+																handleArtistClick(artist)
+															}
+															underline="hover">
+															{artist.name}
+														</Link>
+													))
+													.reduce<(JSX.Element | string)[]>(
+														(r, a) => r.concat(a, ", "),
+														[]
+													)
+													.slice(0, -1)}
 											</TableCell>
 											<TableCell align="center">
 												{getDuration(track)}

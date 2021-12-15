@@ -8,9 +8,11 @@ import {
 	CardContent,
 	CircularProgress,
 	Container,
+	Link,
 	List,
 	ListItem,
 	ListItemAvatar,
+	ListItemButton,
 	ListItemText,
 	Paper,
 	Table,
@@ -59,6 +61,16 @@ const RecentlyPlayed = (): JSX.Element => {
 	}, [dispatch, api, recents])
 	//#endregion
 
+	//#region Functions
+	const handleTrackClick = (track: SpotifyApi.TrackObjectSimplified) => {
+		history.push("/track/" + track.id)
+	}
+
+	const handleArtistClick = (artist: SpotifyApi.ArtistObjectSimplified) => {
+		history.push("/artist/" + artist.id)
+	}
+	//#endregion
+
 	return (
 		<Container>
 			<Card sx={{ my: 3 }}>
@@ -76,24 +88,29 @@ const RecentlyPlayed = (): JSX.Element => {
 					{show_list ? (
 						<List>
 							{recents!.map((recent, i) => (
-								<ListItem key={recent.played_at}>
-									<ListItemAvatar>
-										<Avatar src={images?.[i] || ""} />
-									</ListItemAvatar>
-									<ListItemText
-										primary={
-											recent.track.name +
-											" - " +
-											recent.track.artists.map(a => a.name).join(", ")
-										}
-										secondary={
-											getTimeSincePlayed(recent) +
-											" ago, " +
-											DateTime.fromISO(recent.played_at).toFormat(
-												"d LLLL yyyy"
-											)
-										}
-									/>
+								<ListItem
+									key={recent.played_at}
+									onClick={() => handleTrackClick(recent.track)}
+									disablePadding>
+									<ListItemButton>
+										<ListItemAvatar>
+											<Avatar src={images?.[i] || ""} />
+										</ListItemAvatar>
+										<ListItemText
+											primary={
+												recent.track.name +
+												" - " +
+												recent.track.artists.map(a => a.name).join(", ")
+											}
+											secondary={
+												getTimeSincePlayed(recent) +
+												" ago, " +
+												DateTime.fromISO(recent.played_at).toFormat(
+													"d LLLL yyyy"
+												)
+											}
+										/>
+									</ListItemButton>
 								</ListItem>
 							))}
 						</List>
@@ -110,16 +127,41 @@ const RecentlyPlayed = (): JSX.Element => {
 								</TableHead>
 								<TableBody>
 									{recents!.map((recent, i) => (
-										<TableRow key={recent.played_at}>
+										<TableRow key={recent.played_at} hover>
 											<TableCell>
 												<Avatar
 													sx={{ width: 45, height: 45 }}
 													src={images?.[i] || ""}
 												/>
 											</TableCell>
-											<TableCell>{recent.track.name}</TableCell>
 											<TableCell>
-												{recent.track.artists.map(a => a.name).join(", ")}
+												<Link
+													sx={{ cursor: "pointer" }}
+													color="inherit"
+													onClick={() => handleTrackClick(recent.track)}
+													underline="hover">
+													{recent.track.name}
+												</Link>
+											</TableCell>
+											<TableCell>
+												{recent.track.artists
+													.map(artist => (
+														<Link
+															sx={{ cursor: "pointer" }}
+															key={artist.id}
+															color="inherit"
+															onClick={() =>
+																handleArtistClick(artist)
+															}
+															underline="hover">
+															{artist.name}
+														</Link>
+													))
+													.reduce<(JSX.Element | string)[]>(
+														(r, a) => r.concat(a, ", "),
+														[]
+													)
+													.slice(0, -1)}
 											</TableCell>
 											<TableCell align="center">
 												{getTimeSincePlayed(recent) +
