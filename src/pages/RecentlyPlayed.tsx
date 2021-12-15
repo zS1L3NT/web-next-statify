@@ -56,7 +56,7 @@ const RecentlyPlayed = (): JSX.Element => {
 		if (!recents) return
 
 		api.getTracks(recents.map(r => r.track.id))
-			.then(res => setImages(res.tracks.map(t => t.album.images.at(-1)?.url || "")))
+			.then(res => setImages(res.tracks.map(t => t.album.images.at(0)?.url || "")))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, recents])
 	//#endregion

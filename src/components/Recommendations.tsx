@@ -86,7 +86,7 @@ const Recommendations = (props: Props): JSX.Element => {
 									{track ? (
 										<Avatar
 											sx={{ width: 45, height: 45 }}
-											src={track.album.images.at(-1)?.url || ""}
+											src={track.album.images.at(0)?.url || ""}
 										/>
 									) : (
 										<Skeleton variant="circular" width={45} height={45} />

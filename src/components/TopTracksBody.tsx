@@ -82,7 +82,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 										<ListItemAvatar>
 											<Avatar
 												sx={{ width: 45, height: 45 }}
-												src={track.album.images.at(-1)?.url || ""}
+												src={track.album.images.at(0)?.url || ""}
 											/>
 										</ListItemAvatar>
 										<ListItemText
@@ -112,7 +112,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 											<TableCell>
 												<Avatar
 													sx={{ width: 45, height: 45 }}
-													src={track.album.images.at(-1)?.url || ""}
+													src={track.album.images.at(0)?.url || ""}
 												/>
 											</TableCell>
 											<TableCell>
