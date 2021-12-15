@@ -71,8 +71,8 @@ const AlbumCard = (props: Props): JSX.Element => {
 							</>
 						) : (
 							<>
-								<Skeleton height={40} variant="text" width={200} />
-								<Skeleton height={30} variant="text" width={160} />
+								<Skeleton variant="text" width={200} height={40} />
+								<Skeleton variant="text" width={160} height={30} />
 							</>
 						)}
 					</CardMedia>

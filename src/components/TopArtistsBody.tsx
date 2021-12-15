@@ -64,8 +64,8 @@ const TopArtistsLongTerm = (props: Props): JSX.Element => {
 									<CardMedia
 										component="img"
 										alt="Picture"
-										height={250}
 										width={250}
+										height={250}
 										image={artist.images.at(0)?.url || ""}
 									/>
 									<CardContent>

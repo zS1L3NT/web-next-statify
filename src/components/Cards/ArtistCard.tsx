@@ -71,8 +71,8 @@ const ArtistCard = (props: Props): JSX.Element => {
 							</>
 						) : (
 							<>
-								<Skeleton variant="text" height={40} width={200} />
-								<Skeleton variant="text" height={30} width={160} />
+								<Skeleton variant="text" width={200} height={40} />
+								<Skeleton variant="text" width={160} height={30} />
 							</>
 						)}
 					</CardMedia>
