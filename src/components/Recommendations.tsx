@@ -8,6 +8,8 @@ import {
 	ListItem,
 	ListItemAvatar,
 	ListItemText,
+	Skeleton,
+	Stack,
 	Typography
 } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
@@ -27,7 +29,9 @@ const Recommendations = (props: Props): JSX.Element => {
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const api = useSpotifyApi()
-	const [tracks, setTracks] = useState<SpotifyApi.TrackObjectFull[]>([])
+	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
+		Array(10).fill(undefined)
+	)
 	//#endregion
 
 	//#region Effects
@@ -55,11 +59,13 @@ const Recommendations = (props: Props): JSX.Element => {
 	//#endregion
 
 	//#region Functions
-	const handleTrackClick = (track: SpotifyApi.TrackObjectFull) => {
-		history.push("/track/" + track.id)
-		window.scrollTo({
-			top: 0
-		})
+	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
+		if (track) {
+			history.push("/track/" + track.id)
+			window.scrollTo({
+				top: 0
+			})
+		}
 	}
 	//#endregion
 
@@ -72,20 +78,31 @@ const Recommendations = (props: Props): JSX.Element => {
 				Tracks like this
 			</Typography>
 			<List>
-				{tracks.map(track => (
-					<Card sx={{ my: 1 }} key={track.id} onClick={() => handleTrackClick(track)}>
+				{tracks.map((track, i) => (
+					<Card sx={{ my: 1 }} key={i} onClick={() => handleTrackClick(track)}>
 						<CardActionArea>
 							<ListItem>
 								<ListItemAvatar>
-									<Avatar
-										sx={{ width: 45, height: 45 }}
-										src={track.album.images.at(-1)?.url || ""}
-									/>
+									{track ? (
+										<Avatar
+											sx={{ width: 45, height: 45 }}
+											src={track.album.images.at(-1)?.url || ""}
+										/>
+									) : (
+										<Skeleton variant="circular" width={45} height={45} />
+									)}
 								</ListItemAvatar>
-								<ListItemText
-									primary={track.name}
-									secondary={track.artists.map(a => a.name).join(", ")}
-								/>
+								{track ? (
+									<ListItemText
+										primary={track.name}
+										secondary={track.artists.map(a => a.name).join(", ")}
+									/>
+								) : (
+									<Stack my="6px">
+										<Skeleton variant="text" width={200} height={24} />
+										<Skeleton variant="text" width={160} height={20} />
+									</Stack>
+								)}
 							</ListItem>
 						</CardActionArea>
 					</Card>
