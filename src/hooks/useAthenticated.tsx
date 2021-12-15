@@ -11,10 +11,10 @@ const useAuthenticated = (): void => {
 	//#region Effects
 	useEffect(() => {
 		if (!access_token) {
-			sessionStorage.setItem("auth_redirect", history.location.pathname)
+			sessionStorage.setItem("redirect", history.location.pathname)
 			history.push("/logout")
 		}
-	}, [history, history.location.pathname, access_token])
+	}, [history, access_token])
 	//#endregion
 }
 

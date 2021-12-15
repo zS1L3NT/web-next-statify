@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react"
 import TopTracksBody from "../components/TopTracksBody"
 import useAuthenticated from "../hooks/useAthenticated"
 import { Box, Tab, Tabs } from "@mui/material"
-import {
-	set_statistics_tracks_long_term,
-	set_statistics_tracks_medium_term,
-	set_statistics_tracks_short_term
-} from "../actions/StatisticsActions"
 import { TabContext, TabPanel } from "@mui/lab"
 import { useHistory } from "react-router-dom"
 
@@ -40,25 +35,13 @@ const TopTracks = (): JSX.Element => {
 					</Tabs>
 				)}
 				<TabPanel sx={{ px: 0 }} value="short-term">
-					<TopTracksBody
-						term="short_term"
-						description="Past 4 Weeks"
-						action={set_statistics_tracks_short_term}
-					/>
+					<TopTracksBody term="short_term" description="Past 4 Weeks" />
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="medium-term">
-					<TopTracksBody
-						term="medium_term"
-						description="Past 6 Months"
-						action={set_statistics_tracks_medium_term}
-					/>
+					<TopTracksBody term="medium_term" description="Past 6 Months" />
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="long-term">
-					<TopTracksBody
-						term="long_term"
-						description="All Time"
-						action={set_statistics_tracks_long_term}
-					/>
+					<TopTracksBody term="long_term" description="All Time" />
 				</TabPanel>
 			</Box>
 		</TabContext>

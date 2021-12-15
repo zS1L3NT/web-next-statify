@@ -34,7 +34,7 @@ function App(): JSX.Element {
 	//#region Functions
 	const handleErrorClose = () => {
 		dispatch(set_error(null))
-		sessionStorage.setItem("auth_redirect", history.location.pathname)
+		sessionStorage.setItem("redirect", history.location.pathname)
 		setTimeout(() => history.push("/logout"), 500)
 	}
 	//#endregion

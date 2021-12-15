@@ -12,7 +12,7 @@ const Logout = (): JSX.Element => {
 	//#region Effects
 	useEffect(() => {
 		dispatch(set_access_token(null))
-		history.push(sessionStorage.getItem("auth_redirect") ? "/login" : "/")
+		history.push(sessionStorage.getItem("redirect") ? "/login" : "/")
 	}, [dispatch, history])
 	//#endregion
 

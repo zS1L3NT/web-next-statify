@@ -60,60 +60,21 @@ export interface iStatisticsData {
 	recents: SpotifyApi.PlayHistoryObject[] | null
 }
 
-export interface iSetStatisticsTracksShortTerm {
-	type: "SET_STATISTICS_TRACKS_SHORT_TERM"
+export interface iSetStatistics {
+	type: "SET_STATISTICS"
 	payload: {
-		short_term: SpotifyApi.TrackObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsTracksMediumTerm {
-	type: "SET_STATISTICS_TRACKS_MEDIUM_TERM"
-	payload: {
-		medium_term: SpotifyApi.TrackObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsTracksLongTerm {
-	type: "SET_STATISTICS_TRACKS_LONG_TERM"
-	payload: {
-		long_term: SpotifyApi.TrackObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsArtistsShortTerm {
-	type: "SET_STATISTICS_ARTISTS_SHORT_TERM"
-	payload: {
-		short_term: SpotifyApi.ArtistObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsArtistsMediumTerm {
-	type: "SET_STATISTICS_ARTISTS_MEDIUM_TERM"
-	payload: {
-		medium_term: SpotifyApi.ArtistObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsArtistsLongTerm {
-	type: "SET_STATISTICS_ARTISTS_LONG_TERM"
-	payload: {
-		long_term: SpotifyApi.ArtistObjectFull[] | null
-	}
-}
-
-export interface iSetStatisticsRecents {
-	type: "SET_STATISTICS_RECENTS"
-	payload: {
+		tracks: {
+			short_term: SpotifyApi.TrackObjectFull[] | null
+			medium_term: SpotifyApi.TrackObjectFull[] | null
+			long_term: SpotifyApi.TrackObjectFull[] | null
+		}
+		artists: {
+			short_term: SpotifyApi.ArtistObjectFull[] | null
+			medium_term: SpotifyApi.ArtistObjectFull[] | null
+			long_term: SpotifyApi.ArtistObjectFull[] | null
+		}
 		recents: SpotifyApi.PlayHistoryObject[] | null
 	}
 }
 
-export type iStatisticsActions =
-	| iSetStatisticsTracksShortTerm
-	| iSetStatisticsTracksMediumTerm
-	| iSetStatisticsTracksLongTerm
-	| iSetStatisticsArtistsShortTerm
-	| iSetStatisticsArtistsMediumTerm
-	| iSetStatisticsArtistsLongTerm
-	| iSetStatisticsRecents
+export type iStatisticsActions = iSetStatistics

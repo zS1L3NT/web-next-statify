@@ -25,12 +25,13 @@ import {
 } from "@mui/material"
 import { DateTime } from "luxon"
 import { set_error } from "../actions/ErrorActions"
-import { set_statistics_recents } from "../actions/StatisticsActions"
 import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 
 const RecentlyPlayed = (): JSX.Element => {
 	//#region Hooks
 	const dispatch = useDispatch()
+	const history = useHistory()
 	const recents = useSelector(state => state.statistics.recents)
 	const api = useSpotifyApi()
 	const [images, setImages] = useState<string[]>()
@@ -45,10 +46,8 @@ const RecentlyPlayed = (): JSX.Element => {
 		if (!api) return
 		if (recents) return
 
-		api.getMyRecentlyPlayedTracks({ limit: 50 })
-			.then(res => dispatch(set_statistics_recents(res.items)))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, recents])
+		history.push("/login")
+	}, [dispatch, history, api, recents])
 
 	useEffect(() => {
 		if (!api) return

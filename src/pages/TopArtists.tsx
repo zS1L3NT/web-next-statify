@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react"
 import TopArtistsBody from "../components/TopArtistsBody"
 import useAuthenticated from "../hooks/useAthenticated"
 import { Box, Tab, Tabs } from "@mui/material"
-import {
-	set_statistics_artists_long_term,
-	set_statistics_artists_medium_term,
-	set_statistics_artists_short_term
-} from "../actions/StatisticsActions"
 import { TabContext, TabPanel } from "@mui/lab"
 import { useHistory } from "react-router-dom"
 
@@ -40,25 +35,13 @@ const TopArtists = (): JSX.Element => {
 					</Tabs>
 				)}
 				<TabPanel sx={{ px: 0 }} value="short-term">
-					<TopArtistsBody
-						term="short_term"
-						description="Past 4 Weeks"
-						action={set_statistics_artists_short_term}
-					/>
+					<TopArtistsBody term="short_term" description="Past 4 Weeks" />
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="medium-term">
-					<TopArtistsBody
-						term="medium_term"
-						description="Past 6 Months"
-						action={set_statistics_artists_medium_term}
-					/>
+					<TopArtistsBody term="medium_term" description="Past 6 Months" />
 				</TabPanel>
 				<TabPanel sx={{ px: 0 }} value="long-term">
-					<TopArtistsBody
-						term="long_term"
-						description="All Time"
-						action={set_statistics_artists_long_term}
-					/>
+					<TopArtistsBody term="long_term" description="All Time" />
 				</TabPanel>
 			</Box>
 		</TabContext>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Card, CardContent, Stack, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
 
 interface Props {
 	track?: SpotifyApi.TrackObjectFull
@@ -10,6 +11,7 @@ const TrackAppearances = (props: Props): JSX.Element => {
 	const { track } = props
 
 	//#region Hooks
+	const history = useHistory()
 	const statistics = useSelector(state => state.statistics)
 	const [shortTermTrackIndex, setShortTermTrackIndex] = useState(0)
 	const [mediumTermTrackIndex, setMediumTermTrackIndex] = useState(0)
@@ -19,23 +21,24 @@ const TrackAppearances = (props: Props): JSX.Element => {
 
 	//#region Effects
 	useEffect(() => {
-		setShortTermTrackIndex(
-			(statistics.tracks.short_term
-				? statistics.tracks.short_term.findIndex(t => t.id === track?.id)
-				: -1) + 1
-		)
+		if (
+			!statistics.tracks.short_term ||
+			!statistics.tracks.medium_term ||
+			!statistics.tracks.long_term ||
+			!statistics.recents
+		) {
+			sessionStorage.setItem("redirect", history.location.pathname)
+			history.push("/login")
+			return
+		}
+
+		setShortTermTrackIndex(statistics.tracks.short_term.findIndex(t => t.id === track?.id) + 1)
 		setMediumTermTrackIndex(
-			(statistics.tracks.medium_term
-				? statistics.tracks.medium_term.findIndex(t => t.id === track?.id)
-				: -1) + 1
+			statistics.tracks.medium_term.findIndex(t => t.id === track?.id) + 1
 		)
-		setLongTermTrackIndex(
-			(statistics.tracks.long_term
-				? statistics.tracks.long_term.findIndex(t => t.id === track?.id)
-				: -1) + 1
-		)
-		setRecentTracksCount(statistics.recents?.filter(t => t.track.id === track?.id).length || 0)
-	}, [track, statistics])
+		setLongTermTrackIndex(statistics.tracks.long_term.findIndex(t => t.id === track?.id) + 1)
+		setRecentTracksCount(statistics.recents.filter(t => t.track.id === track?.id).length)
+	}, [history, track, statistics])
 	//#endregion
 
 	return track ? (

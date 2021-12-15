@@ -1,6 +1,5 @@
 import getDuration from "../utils/getDuration"
 import React, { useEffect } from "react"
-import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
 	Avatar,
 	Card,
@@ -22,51 +21,29 @@ import {
 	useMediaQuery,
 	useTheme
 } from "@mui/material"
-import {
-	iSetStatisticsTracksLongTerm,
-	iSetStatisticsTracksMediumTerm,
-	iSetStatisticsTracksShortTerm
-} from "../redux"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch, useSelector } from "react-redux"
+import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 interface Props {
 	term: "short_term" | "medium_term" | "long_term"
 	description: string
-	action: (
-		tracks: SpotifyApi.TrackObjectFull[] | null
-	) =>
-		| iSetStatisticsTracksShortTerm
-		| iSetStatisticsTracksMediumTerm
-		| iSetStatisticsTracksLongTerm
 }
 
 const TopTracksLongTerm = (props: Props): JSX.Element => {
-	const { term, description, action } = props
+	const { term, description } = props
 
 	//#region Hooks
-	const dispatch = useDispatch()
+	const history = useHistory()
 	const tracks = useSelector(state => state.statistics.tracks)
-	const api = useSpotifyApi()
 	const theme = useTheme()
 	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Effects
 	useEffect(() => {
-		if (!api) return
 		if (tracks[term]) return
-
-		const halfTracks: SpotifyApi.TrackObjectFull[] = []
-
-		api.getMyTopTracks({ limit: 50, time_range: term })
-			.then(res => {
-				halfTracks.push(...res.items)
-				return api.getMyTopTracks({ offset: 49, limit: 50, time_range: term })
-			})
-			.then(res => dispatch(action([...halfTracks, ...res.items.slice(1)])))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, tracks, term, action])
+		history.push("/login")
+	}, [history, tracks, term])
 	//#endregion
 
 	return (

@@ -20,59 +20,8 @@ const reducer: Reducer<iStatisticsData, iStatisticsActions> = (
 	action: iStatisticsActions
 ) => {
 	switch (action.type) {
-		case "SET_STATISTICS_TRACKS_SHORT_TERM":
-			return {
-				...state,
-				tracks: {
-					...state.tracks,
-					short_term: action.payload.short_term
-				}
-			}
-		case "SET_STATISTICS_TRACKS_MEDIUM_TERM":
-			return {
-				...state,
-				tracks: {
-					...state.tracks,
-					medium_term: action.payload.medium_term
-				}
-			}
-		case "SET_STATISTICS_TRACKS_LONG_TERM":
-			return {
-				...state,
-				tracks: {
-					...state.tracks,
-					long_term: action.payload.long_term
-				}
-			}
-		case "SET_STATISTICS_ARTISTS_SHORT_TERM":
-			return {
-				...state,
-				artists: {
-					...state.artists,
-					short_term: action.payload.short_term
-				}
-			}
-		case "SET_STATISTICS_ARTISTS_MEDIUM_TERM":
-			return {
-				...state,
-				artists: {
-					...state.artists,
-					medium_term: action.payload.medium_term
-				}
-			}
-		case "SET_STATISTICS_ARTISTS_LONG_TERM":
-			return {
-				...state,
-				artists: {
-					...state.artists,
-					long_term: action.payload.long_term
-				}
-			}
-		case "SET_STATISTICS_RECENTS":
-			return {
-				...state,
-				recents: action.payload.recents
-			}
+		case "SET_STATISTICS":
+			return action.payload
 		default:
 			return state
 	}
