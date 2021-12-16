@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Card, CardContent, Stack, Typography } from "@mui/material"
+import { Card, CardContent, Grid, Typography } from "@mui/material"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 
@@ -65,45 +65,51 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 	//#endregion
 
 	return artist ? (
-		<Stack sx={{ width: "fit-content", m: "auto", mt: 3 }}>
+		<Grid sx={{ m: "auto", mt: 3 }} spacing={1} justifyContent="space-evenly" container>
 			{shortTermArtistsIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{shortTermArtistsIndex}
 						</Typography>
 						<Typography variant="h6">
-							of your most streamed artists in the last 4 weeks
+							of your most streamed artists
+							<br />
+							in the last 4 weeks
 						</Typography>
 					</CardContent>
 				</Card>
 			) : null}
 			{mediumTermArtistsIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{mediumTermArtistsIndex}
 						</Typography>
 						<Typography variant="h6">
-							of your most streamed artists in the last 6 months
+							of your most streamed artists
+							<br />
+							in the last 6 months
 						</Typography>
 					</CardContent>
 				</Card>
 			) : null}
 			{longTermArtistsIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{longTermArtistsIndex}
 						</Typography>
 						<Typography variant="h6">
-							of your most streamed artists in your lifetime
+							of your most streamed artists
+							<br />
+							in your lifetime
 						</Typography>
 					</CardContent>
 				</Card>
 			) : null}
 			{shortTermTracksCount ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							{shortTermTracksCount}
@@ -116,7 +122,7 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{mediumTermTracksCount ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							{mediumTermTracksCount}
@@ -129,7 +135,7 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{longTermTracksCount ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							{longTermTracksCount}
@@ -142,7 +148,7 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{recentArtistsCount ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							{recentArtistsCount}
@@ -153,7 +159,7 @@ const ArtistAppearances = (props: Props): JSX.Element => {
 					</CardContent>
 				</Card>
 			) : null}
-		</Stack>
+		</Grid>
 	) : (
 		<></>
 	)

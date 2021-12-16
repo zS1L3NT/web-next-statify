@@ -44,8 +44,8 @@ import { useLocation } from "react-router-dom"
  * * Position in Top Tracks
  * * In Favourites
  * * Recommendations
- * ? Check if you liked this
- * ? Appearances in Recents
+ * * Check if you liked this
+ * * Appearances in Recents
  */
 
 const Track = (): JSX.Element => {

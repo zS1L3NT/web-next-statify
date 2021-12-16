@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { Card, CardContent, Stack, Typography } from "@mui/material"
+import { Card, CardContent, Grid, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 
@@ -42,9 +42,9 @@ const TrackAppearances = (props: Props): JSX.Element => {
 	//#endregion
 
 	return track ? (
-		<Stack sx={{ width: "fit-content", m: "auto", mt: 3 }}>
+		<Grid sx={{ m: "auto", mt: 3 }} spacing={1} justifyContent="space-evenly" container>
 			{shortTermTrackIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{shortTermTrackIndex}
@@ -56,7 +56,7 @@ const TrackAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{mediumTermTrackIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{mediumTermTrackIndex}
@@ -68,7 +68,7 @@ const TrackAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{longTermTrackIndex ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							#{longTermTrackIndex}
@@ -80,7 +80,7 @@ const TrackAppearances = (props: Props): JSX.Element => {
 				</Card>
 			) : null}
 			{recentTracksCount ? (
-				<Card sx={{ mb: 3 }}>
+				<Card sx={{ width: 250, mb: 3 }}>
 					<CardContent>
 						<Typography color="primary.main" variant="h3">
 							{recentTracksCount}
@@ -91,7 +91,7 @@ const TrackAppearances = (props: Props): JSX.Element => {
 					</CardContent>
 				</Card>
 			) : null}
-		</Stack>
+		</Grid>
 	) : (
 		<></>
 	)
