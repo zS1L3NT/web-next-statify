@@ -1,5 +1,6 @@
 import ArtistAppearances from "../components/ArtistAppearances"
 import getFollowers from "../utils/getFollowers"
+import PageIndicator from "../components/PageIndicator"
 import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
 import useAuthenticated from "../hooks/useAthenticated"
@@ -29,7 +30,6 @@ import { set_error } from "../actions/ErrorActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
-import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -104,14 +104,6 @@ const Artist: React.FC = () => {
 		}
 	}
 
-	const handleImageOpen = () => {
-		setShowImage(true)
-	}
-
-	const handleImageClose = () => {
-		setShowImage(false)
-	}
-
 	const handleFollow = () => {
 		if (api && artist) {
 			setFollowed(null)
@@ -146,7 +138,7 @@ const Artist: React.FC = () => {
 					direction={{ xs: "column", sm: "row" }}>
 					<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
 						{artist ? (
-							<Card sx={{ borderRadius: 5 }} onClick={handleImageOpen}>
+							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -264,7 +256,10 @@ const Artist: React.FC = () => {
 				<ArtistAppearances artist={artist || undefined} />
 				<Recommendations artist={artist || undefined} />
 			</Container>
-			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
+			<Dialog
+				open={showImage}
+				onClose={() => setShowImage(false)}
+				BackdropComponent={Backdrop}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"

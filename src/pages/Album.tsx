@@ -1,5 +1,6 @@
 import ArtistCard from "../components/Cards/ArtistCard"
 import getDuration from "../utils/getDuration"
+import PageIndicator from "../components/PageIndicator"
 import React, { useEffect, useState } from "react"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
@@ -29,7 +30,6 @@ import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
 import { useTryAsync as _useTryAsync } from "no-try"
-import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -121,14 +121,6 @@ const Album: React.FC = () => {
 		}
 	}
 
-	const handleImageOpen = () => {
-		setShowImage(true)
-	}
-
-	const handleImageClose = () => {
-		setShowImage(false)
-	}
-
 	const handleLike = () => {
 		if (api && album) {
 			setLiked(null)
@@ -163,7 +155,7 @@ const Album: React.FC = () => {
 					direction={{ xs: "column", sm: "row" }}>
 					<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
 						{album ? (
-							<Card sx={{ borderRadius: 5 }} onClick={handleImageOpen}>
+							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -305,7 +297,10 @@ const Album: React.FC = () => {
 					))}
 				</List>
 			</Container>
-			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
+			<Dialog
+				open={showImage}
+				onClose={() => setShowImage(false)}
+				BackdropComponent={Backdrop}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"

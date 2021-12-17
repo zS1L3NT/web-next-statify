@@ -1,6 +1,7 @@
 import AlbumCard from "../components/Cards/AlbumCard"
 import ArtistCard from "../components/Cards/ArtistCard"
 import getDuration from "../utils/getDuration"
+import PageIndicator from "../components/PageIndicator"
 import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
 import TrackAppearances from "../components/TrackAppearances"
@@ -27,7 +28,6 @@ import { set_error } from "../actions/ErrorActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
-import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -90,14 +90,6 @@ const Track: React.FC = () => {
 		}
 	}
 
-	const handleImageOpen = () => {
-		setShowImage(true)
-	}
-
-	const handleImageClose = () => {
-		setShowImage(false)
-	}
-
 	const handleLike = () => {
 		if (api && track) {
 			setLiked(null)
@@ -132,7 +124,7 @@ const Track: React.FC = () => {
 					direction={{ xs: "column", sm: "row" }}>
 					<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
 						{track ? (
-							<Card sx={{ borderRadius: 5 }} onClick={handleImageOpen}>
+							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -238,7 +230,10 @@ const Track: React.FC = () => {
 				<TrackAppearances track={track || undefined} />
 				<Recommendations track={track || undefined} />
 			</Container>
-			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
+			<Dialog
+				open={showImage}
+				onClose={() => setShowImage(false)}
+				BackdropComponent={Backdrop}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"
