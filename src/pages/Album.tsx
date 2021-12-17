@@ -29,6 +29,7 @@ import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
 import { useTryAsync as _useTryAsync } from "no-try"
+import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -192,6 +193,7 @@ const Album: React.FC = () => {
 						display="flex"
 						flexDirection="column"
 						justifyContent="center">
+						<PageIndicator>ALBUM</PageIndicator>
 						{album ? (
 							<>
 								<Typography variant="h4">{album.name}</Typography>

@@ -29,6 +29,7 @@ import { set_error } from "../actions/ErrorActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
+import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -175,6 +176,7 @@ const Artist: React.FC = () => {
 						display="flex"
 						flexDirection="column"
 						justifyContent="center">
+						<PageIndicator>ARTIST</PageIndicator>
 						{artist ? (
 							<>
 								<Typography variant="h4">{artist.name}</Typography>

@@ -27,6 +27,7 @@ import { set_error } from "../actions/ErrorActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import PageIndicator from "../components/PageIndicator"
 
 /**
  * * Name
@@ -161,6 +162,7 @@ const Track: React.FC = () => {
 						display="flex"
 						flexDirection="column"
 						justifyContent="center">
+						<PageIndicator>TRACK</PageIndicator>
 						{track ? (
 							<>
 								<Typography variant="h4">{track.name}</Typography>
