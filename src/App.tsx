@@ -35,8 +35,12 @@ function App(): JSX.Element {
 	//#region Functions
 	const handleErrorClose = () => {
 		dispatch(set_error(null))
-		sessionStorage.setItem("redirect", history.location.pathname)
-		setTimeout(() => history.push("/logout"), 500)
+
+		// If is a id not found error, don't set the redirect path and don't logout
+		if (!err?.message.endsWith(" not found")) {
+			sessionStorage.setItem("redirect", history.location.pathname)
+			setTimeout(() => history.push("/logout"), 500)
+		}
 	}
 	//#endregion
 
