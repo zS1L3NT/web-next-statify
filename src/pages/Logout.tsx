@@ -3,7 +3,7 @@ import { set_access_token } from "../actions/AccessTokenActions"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 
-const Logout = (): JSX.Element => {
+const Logout: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()

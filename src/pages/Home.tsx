@@ -21,7 +21,7 @@ interface iCard {
 	url: string
 }
 
-const Home = (): JSX.Element => {
+const Home: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
 	const access_token = useSelector(state => state.access_token)

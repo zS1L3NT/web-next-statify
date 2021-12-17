@@ -48,7 +48,7 @@ interface iDropdown {
 	condition: () => boolean
 }
 
-const Navigator = (): JSX.Element => {
+const Navigator: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
 	const access_token = useSelector(state => state.access_token)

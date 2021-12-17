@@ -31,7 +31,7 @@ interface Props {
 	description: string
 }
 
-const TopTracksLongTerm = (props: Props): JSX.Element => {
+const TopTracksLongTerm: React.FC<Props> = (props: Props) => {
 	const { term, description } = props
 
 	//#region Hooks
@@ -77,7 +77,10 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 					{showList ? (
 						<List>
 							{tracks[term]!.map((track, i) => (
-								<ListItem key={track.id} onClick={() => handleTrackClick(track)} disablePadding>
+								<ListItem
+									key={track.id}
+									onClick={() => handleTrackClick(track)}
+									disablePadding>
 									<ListItemButton>
 										<ListItemAvatar>
 											<Avatar

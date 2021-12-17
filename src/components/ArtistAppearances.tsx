@@ -7,7 +7,7 @@ interface Props {
 	artist?: SpotifyApi.ArtistObjectFull
 }
 
-const ArtistAppearances = (props: Props): JSX.Element => {
+const ArtistAppearances: React.FC<Props> = (props: Props) => {
 	const { artist } = props
 
 	//#region Hooks

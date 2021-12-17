@@ -5,7 +5,7 @@ import { Box, Tab, Tabs } from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"
 import { useHistory } from "react-router-dom"
 
-const TopTracks = (): JSX.Element => {
+const TopTracks: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
 	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")

@@ -10,7 +10,7 @@ interface Props {
 	position?: number
 }
 
-const AlbumCard = (props: Props): JSX.Element => {
+const AlbumCard: React.FC<Props> = (props: Props) => {
 	const { position, album } = props
 
 	//#region Hooks

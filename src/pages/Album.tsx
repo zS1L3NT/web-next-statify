@@ -44,7 +44,7 @@ import { useTryAsync as _useTryAsync } from "no-try"
  * * - Picture
  */
 
-const Album = (): JSX.Element => {
+const Album: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()

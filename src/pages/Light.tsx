@@ -3,7 +3,7 @@ import { set_theme } from "../actions/ThemeActions"
 import { useDispatch } from "react-redux"
 import { useHistory } from "react-router-dom"
 
-const Light = (): JSX.Element => {
+const Light: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()

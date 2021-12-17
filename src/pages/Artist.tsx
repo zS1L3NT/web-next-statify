@@ -43,7 +43,7 @@ import { useHistory, useLocation } from "react-router-dom"
  * * Recommended
  */
 
-const Artist = (): JSX.Element => {
+const Artist: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()

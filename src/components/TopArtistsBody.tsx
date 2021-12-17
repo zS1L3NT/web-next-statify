@@ -18,7 +18,7 @@ interface Props {
 	description: string
 }
 
-const TopArtistsLongTerm = (props: Props): JSX.Element => {
+const TopArtistsLongTerm: React.FC<Props> = (props: Props) => {
 	const { term, description } = props
 
 	//#region Hooks

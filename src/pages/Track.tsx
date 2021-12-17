@@ -48,7 +48,7 @@ import { useLocation } from "react-router-dom"
  * * Appearances in Recents
  */
 
-const Track = (): JSX.Element => {
+const Track: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const location = useLocation()

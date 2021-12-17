@@ -10,7 +10,7 @@ import { useHistory } from "react-router-dom"
 
 const config = require("../config.json")
 
-const Login = (): JSX.Element => {
+const Login: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()

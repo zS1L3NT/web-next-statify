@@ -10,7 +10,7 @@ interface Props {
 	artist?: SpotifyApi.ArtistObjectSimplified
 }
 
-const ArtistCard = (props: Props): JSX.Element => {
+const ArtistCard: React.FC<Props> = (props: Props) => {
 	const { artist } = props
 
 	//#region Hooks

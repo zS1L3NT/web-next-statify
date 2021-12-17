@@ -22,7 +22,7 @@ interface Props {
 	track?: SpotifyApi.TrackObjectFull
 }
 
-const Recommendations = (props: Props): JSX.Element => {
+const Recommendations: React.FC<Props> = (props: Props) => {
 	const { track, artist } = props
 
 	//#region Hooks

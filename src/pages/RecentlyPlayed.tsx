@@ -30,7 +30,7 @@ import { set_error } from "../actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
 
-const RecentlyPlayed = (): JSX.Element => {
+const RecentlyPlayed: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
