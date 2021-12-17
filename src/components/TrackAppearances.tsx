@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { Card, CardContent, Grid, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 interface Props {
 	track?: SpotifyApi.TrackObjectFull

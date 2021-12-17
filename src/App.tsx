@@ -1,3 +1,4 @@
+import Album from "./pages/Album"
 import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
 import Home from "./pages/Home"
@@ -61,6 +62,7 @@ function App(): JSX.Element {
 					<Route exact path="/light" component={Light} />
 					<Route exact path="/track/:id" component={Track} />
 					<Route exact path="/artist/:id" component={Artist} />
+					<Route exact path="/album/:id" component={Album} />
 					<Redirect exact path="*" to="/" />
 				</Switch>
 			</div>

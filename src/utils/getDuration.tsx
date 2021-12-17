@@ -1,7 +1,7 @@
 import { Duration } from "luxon"
 
-const getDuration = (track: SpotifyApi.TrackObjectFull): string => {
-	const duration = Duration.fromMillis(track.duration_ms)
+const getDuration = (duration_ms: number): string => {
+	const duration = Duration.fromMillis(duration_ms)
 
 	const [years, months, days, hours, minutes, seconds] = duration
 		.toFormat("y M d h m s")

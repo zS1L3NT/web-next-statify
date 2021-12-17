@@ -1,12 +1,12 @@
 import axios from "axios"
 import React, { useEffect } from "react"
 import useSpotifyApi from "../hooks/useSpotifyApi"
+import { LinearProgress } from "@mui/material"
 import { set_access_token } from "../actions/AccessTokenActions"
 import { set_error } from "../actions/ErrorActions"
 import { set_statistics } from "../actions/StatisticsActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
-import { LinearProgress } from "@mui/material"
 
 const config = require("../config.json")
 
@@ -38,7 +38,7 @@ const Login = (): JSX.Element => {
 					}
 				})
 				.then(res => dispatch(set_access_token((res.data as any).access_token)))
-				.catch(err => dispatch(set_error(err.response.data.error)))
+				.catch(err => dispatch(set_error(err.response?.data?.message || err.message)))
 		} else {
 			const query = new URLSearchParams({
 				response_type: "code",

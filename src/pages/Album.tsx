@@ -1,7 +1,6 @@
-import ArtistAppearances from "../components/ArtistAppearances"
-import getFollowers from "../utils/getFollowers"
+import ArtistCard from "../components/Cards/ArtistCard"
+import getDuration from "../utils/getDuration"
 import React, { useEffect, useState } from "react"
-import Recommendations from "../components/Recommendations"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
@@ -29,31 +28,33 @@ import { set_error } from "../actions/ErrorActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 import { useHistory, useLocation } from "react-router-dom"
+import { useTryAsync as _useTryAsync } from "no-try"
 
 /**
  * * Name
- * * Followers
- * * Image
- * * Link
- * * Top Tracks
- * * Check if you are following this
- * * Position in Top Artists
- * * Appearances in Top Tracks
- * * Appearances in Recents
- * * Recommended
+ * ! Release Date
+ * * Length
+ * * Artists
+ * * - Name
+ * * - Link
+ * * - Picture
+ * * Tracks
+ * * - Name
+ * * - Artists
+ * * - Picture
  */
 
-const Artist = (): JSX.Element => {
+const Album = (): JSX.Element => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse | null>()
-	const [followed, setFollowed] = useState<boolean | null>(null)
+	const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse | null>()
+	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-	const [topTracks, setTopTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
-		Array(5).fill(undefined)
+	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectSimplified | undefined)[]>(
+		Array(10).fill(undefined)
 	)
 	//#endregion
 
@@ -63,41 +64,57 @@ const Artist = (): JSX.Element => {
 	useEffect(() => {
 		if (!api) return
 
-		const [, , artistId] = location.pathname.split("/")
-		if (artistId) {
-			api.getArtist(artistId)
-				.then(setArtist)
+		const [, , albumId] = location.pathname.split("/")
+		if (albumId) {
+			api.getAlbum(albumId)
+				.then(setAlbum)
 				.catch(err => {
-					setArtist(null)
+					setAlbum(null)
 					dispatch(set_error(err))
 				})
 		} else {
-			dispatch(set_error(new Error("Artist not found")))
+			dispatch(set_error(new Error("Album not found")))
 		}
 	}, [dispatch, location, api])
 
 	useEffect(() => {
 		if (!api) return
-		if (!artist) return
+		if (!album) return
 
-		api.isFollowingArtists([artist.id])
-			.then(res => setFollowed(res[0]))
+		api.containsMySavedAlbums([album.id])
+			.then(res => setLiked(res[0]))
 			.catch(err => dispatch(set_error(err)))
 
-		api.getArtistTopTracks(artist.id, "SG")
-			.then(res => setTopTracks(res.tracks.slice(0, 5)))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, artist])
+		_useTryAsync(async () => {
+			const tracks: SpotifyApi.TrackObjectSimplified[] = []
+			const total = (await api.getAlbumTracks(album.id)).total
+
+			while (tracks.length < total) {
+				tracks.push(
+					...(await api.getAlbumTracks(album.id, { limit: 50, offset: tracks.length }))
+						.items
+				)
+			}
+
+			return tracks
+		}).then(([err, tracks]) => {
+			if (err) {
+				dispatch(set_error(err))
+			} else {
+				setTracks(tracks)
+			}
+		})
+	}, [dispatch, api, album])
 	//#endregion
 
 	//#region Functions
-	const handleArtistOpen = () => {
-		if (artist) {
-			window.open(artist.external_urls.spotify)
+	const handleAlbumOpen = () => {
+		if (album) {
+			window.open(album.external_urls.spotify)
 		}
 	}
 
-	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
+	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
 			history.push("/track/" + track.id)
 		}
@@ -111,25 +128,25 @@ const Artist = (): JSX.Element => {
 		setShowImage(false)
 	}
 
-	const handleFollow = () => {
-		if (api && artist) {
-			setFollowed(null)
-			api.followArtists([artist.id])
-				.then(() => setFollowed(true))
+	const handleLike = () => {
+		if (api && album) {
+			setLiked(null)
+			api.addToMySavedAlbums([album.id])
+				.then(() => setLiked(true))
 				.catch(err => {
-					setFollowed(false)
+					setLiked(false)
 					dispatch(set_error(err))
 				})
 		}
 	}
 
-	const handleUnfollow = () => {
-		if (api && artist) {
-			setFollowed(null)
-			api.unfollowArtists([artist.id])
-				.then(() => setFollowed(false))
+	const handleUnlike = () => {
+		if (api && album) {
+			setLiked(null)
+			api.removeFromMySavedAlbums([album.id])
+				.then(() => setLiked(false))
 				.catch(err => {
-					setFollowed(true)
+					setLiked(true)
 					dispatch(set_error(err))
 				})
 		}
@@ -144,14 +161,14 @@ const Artist = (): JSX.Element => {
 					container
 					direction={{ xs: "column", sm: "row" }}>
 					<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
-						{artist ? (
+						{album ? (
 							<Card sx={{ borderRadius: 5 }} onClick={handleImageOpen}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
 										width={200}
 										height={200}
-										image={artist.images[0]?.url || ""}
+										image={album.images[0]?.url || ""}
 										alt="Image"
 									/>
 								</CardActionArea>
@@ -175,33 +192,43 @@ const Artist = (): JSX.Element => {
 						display="flex"
 						flexDirection="column"
 						justifyContent="center">
-						{artist ? (
+						{album ? (
 							<>
-								<Typography variant="h4">{artist.name}</Typography>
-								<Typography variant="h5">{getFollowers(artist)}</Typography>
+								<Typography variant="h4">{album.name}</Typography>
+								<Typography variant="h5">
+									{album.artists.map(a => a.name).join(", ")}
+								</Typography>
+								<Typography variant="subtitle1">
+									{getDuration(
+										tracks
+											.map(t => t?.duration_ms || 0)
+											.reduce((v, a) => v + a, 0)
+									)}
+								</Typography>
 							</>
 						) : (
 							<>
 								<Skeleton variant="text" width={200} height={45} />
 								<Skeleton variant="text" width={160} height={40} />
+								<Skeleton variant="text" width={80} height={30} />
 							</>
 						)}
 
 						<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
 							<Tooltip
 								title={
-									followed === null
+									liked === null
 										? ""
-										: followed
-										? "Unfollow this artist"
-										: "Follow this artist"
+										: liked
+										? "Unfavourite this album"
+										: "Favourite this album"
 								}>
 								<IconButton
 									sx={{ width: 46 }}
-									onClick={followed ? handleUnfollow : handleFollow}>
-									{followed === null ? (
+									onClick={liked ? handleUnlike : handleLike}>
+									{liked === null ? (
 										<CircularProgress size={30} />
-									) : followed ? (
+									) : liked ? (
 										<Star />
 									) : (
 										<StarBorder />
@@ -209,7 +236,7 @@ const Artist = (): JSX.Element => {
 								</IconButton>
 							</Tooltip>
 							<Tooltip title="Open in Spotify">
-								<IconButton sx={{ width: 46 }} onClick={handleArtistOpen}>
+								<IconButton sx={{ width: 46 }} onClick={handleAlbumOpen}>
 									<Avatar
 										sx={{ width: 30, height: 30 }}
 										src="/assets/spotify-logo.png"
@@ -221,14 +248,31 @@ const Artist = (): JSX.Element => {
 					</Grid>
 				</Grid>
 
-				<Stack sx={{ mt: 2 }} spacing={1} direction="row">
-					{!artist ? <Skeleton variant="text" width={100} height={40} /> : null}
-					<Typography sx={{ height: "fit-content", my: "auto !important" }} variant="h5">
-						{artist ? artist.name + "'s" : ""} Top Tracks
-					</Typography>
-				</Stack>
+				<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
+					Artists
+				</Typography>
+				<Grid direction={{ xs: "column", sm: "row" }} container>
+					{album ? (
+						album.artists.map(artist => (
+							<Grid
+								sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }}
+								key={artist.id}
+								item>
+								<ArtistCard artist={artist} />
+							</Grid>
+						))
+					) : (
+						<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
+							<ArtistCard />
+						</Grid>
+					)}
+				</Grid>
+
+				<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
+					Tracks
+				</Typography>
 				<List>
-					{topTracks.map((track, i) => (
+					{tracks.map((track, i) => (
 						<Card sx={{ my: 1 }} key={i} onClick={() => handleTrackClick(track)}>
 							<CardActionArea>
 								<ListItem>
@@ -236,7 +280,7 @@ const Artist = (): JSX.Element => {
 										{track ? (
 											<Avatar
 												sx={{ width: 45, height: 45 }}
-												src={track.album.images.at(0)?.url || ""}
+												src={album?.images.at(0)?.url || ""}
 											/>
 										) : (
 											<Skeleton variant="circular" width={45} height={45} />
@@ -244,7 +288,7 @@ const Artist = (): JSX.Element => {
 									</ListItemAvatar>
 									{track ? (
 										<ListItemText
-											primary={track.name}
+											primary={i + 1 + ". " + track.name}
 											secondary={track.artists.map(a => a.name).join(", ")}
 										/>
 									) : (
@@ -258,15 +302,12 @@ const Artist = (): JSX.Element => {
 						</Card>
 					))}
 				</List>
-
-				<ArtistAppearances artist={artist || undefined} />
-				<Recommendations artist={artist || undefined} />
 			</Container>
 			<Dialog open={showImage} onClose={handleImageClose} BackdropComponent={Backdrop}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"
-					src={artist?.images[0]?.url || ""}
+					src={album?.images[0]?.url || ""}
 					alt="Image"
 				/>
 			</Dialog>
@@ -274,4 +315,4 @@ const Artist = (): JSX.Element => {
 	)
 }
 
-export default Artist
+export default Album

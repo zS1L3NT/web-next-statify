@@ -164,8 +164,12 @@ const Track = (): JSX.Element => {
 						{track ? (
 							<>
 								<Typography variant="h4">{track.name}</Typography>
-								<Typography variant="h5">{track.artists[0].name}</Typography>
-								<Typography variant="subtitle1">{getDuration(track)}</Typography>
+								<Typography variant="h5">
+									{track.artists.map(a => a.name).join(", ")}
+								</Typography>
+								<Typography variant="subtitle1">
+									{getDuration(track.duration_ms)}
+								</Typography>
 							</>
 						) : (
 							<>
@@ -179,7 +183,7 @@ const Track = (): JSX.Element => {
 							<Tooltip
 								title={
 									liked === null
-										? "Favourite this track"
+										? ""
 										: liked
 										? "Unfavourite this track"
 										: "Favourite this track"
@@ -208,6 +212,7 @@ const Track = (): JSX.Element => {
 						</Stack>
 					</Grid>
 				</Grid>
+
 				<Grid direction={{ xs: "column", sm: "row" }} container>
 					<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
 						<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">

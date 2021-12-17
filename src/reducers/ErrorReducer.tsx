@@ -1,6 +1,6 @@
 import { iErrorActions, iErrorData } from "../redux"
 import { Reducer } from "redux"
-import { useTry as uuseTry } from "no-try"
+import { useTry as _useTry } from "no-try"
 
 const initial_state: iErrorData = null
 
@@ -13,7 +13,7 @@ const reducer: Reducer<iErrorData, iErrorActions> = (
 			if (action.payload.error) {
 				const response_str = (action.payload.error as any).response
 				if (response_str) {
-					const [err, response] = uuseTry(() => JSON.parse(response_str))
+					const [err, response] = _useTry(() => JSON.parse(response_str))
 					if (err) {
 						return {
 							name: "Error",

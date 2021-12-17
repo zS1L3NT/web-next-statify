@@ -145,7 +145,7 @@ const TopTracksLongTerm = (props: Props): JSX.Element => {
 													.slice(0, -1)}
 											</TableCell>
 											<TableCell align="center">
-												{getDuration(track)}
+												{getDuration(track.duration_ms)}
 											</TableCell>
 										</TableRow>
 									))}
