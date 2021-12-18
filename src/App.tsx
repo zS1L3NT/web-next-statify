@@ -5,7 +5,7 @@ import Home from "./pages/Home"
 import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
-import Navigator from "./components/Navigator"
+import Navigator from "./components/Navigation/Navigator"
 import React, { useEffect, useState } from "react"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
@@ -24,7 +24,7 @@ import {
 	ThemeProvider
 } from "@mui/material"
 import { dark, light } from "./theme"
-import { Redirect, Route, Switch, useHistory } from "react-router-dom"
+import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
 import { set_error } from "./actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 
@@ -32,6 +32,7 @@ function App(): JSX.Element {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
+	const location = useLocation()
 	const error = useSelector(state => state.error)
 	const [err, setErr] = useState<Error>()
 	//#endregion
@@ -40,6 +41,10 @@ function App(): JSX.Element {
 	useEffect(() => {
 		if (error) setErr(error)
 	}, [error])
+
+	useEffect(() => {
+		window.scrollTo({ top: 0 })
+	}, [location])
 	//#endregion
 
 	//#region Functions
@@ -71,7 +76,7 @@ function App(): JSX.Element {
 					<Redirect exact path="/top-artists" to="/top-artists/short-term" />
 					<Route exact path="/top-artists/medium-term" component={TopArtists} />
 					<Route exact path="/top-artists/long-term" component={TopArtists} />
-					<Route exact path="/recently-played" component={RecentlyPlayed} />
+					<Route exact path="/recents" component={RecentlyPlayed} />
 					<Route exact path="/dark" component={Dark} />
 					<Route exact path="/light" component={Light} />
 					<Route exact path="/track/:id" component={Track} />

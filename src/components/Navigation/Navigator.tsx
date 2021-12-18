@@ -1,3 +1,5 @@
+import DrawerDropdown from "./DrawerDropdown"
+import DrawerItem from "./DrawerItem"
 import MenuIcon from "@mui/icons-material/Menu"
 import React, { useState } from "react"
 import {
@@ -5,8 +7,6 @@ import {
 	AccessTimeFilled,
 	Audiotrack,
 	DarkMode,
-	ExpandLess,
-	ExpandMore,
 	History,
 	Home,
 	LightMode,
@@ -15,49 +15,17 @@ import {
 	Person,
 	Timeline
 } from "@mui/icons-material"
-import {
-	AppBar,
-	Box,
-	Collapse,
-	Drawer,
-	IconButton,
-	List,
-	ListItemButton,
-	ListItemIcon,
-	ListItemText,
-	Toolbar,
-	Typography
-} from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { AppBar, Box, Drawer, IconButton, List, Toolbar, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
-
-interface iItem {
-	id: string
-	icon: JSX.Element
-	title: string
-	url: string
-	condition: () => boolean
-}
-
-interface iDropdown {
-	id: string
-	icon: JSX.Element
-	title: string
-	drop: number
-	items: iItem[]
-	condition: () => boolean
-}
 
 const Navigator: React.FC = () => {
 	//#region Hooks
-	const history = useHistory()
 	const access_token = useSelector(state => state.access_token)
 	const theme = useSelector(state => state.theme)
-	const [dropdowns, setDropdowns] = useState([false, false])
 	const [open, setOpen] = useState(false)
 	//#endregion
 
-	const data: (iItem | iDropdown)[] = [
+	const data: (iDrawerItem | iDrawerDropdown)[] = [
 		{
 			id: "nav-home",
 			icon: <Home />,
@@ -133,10 +101,10 @@ const Navigator: React.FC = () => {
 			condition: () => !!access_token
 		},
 		{
-			id: "nav-recently-played",
+			id: "nav-recents",
 			icon: <History />,
 			title: "Recently Played",
-			url: "/recently-played",
+			url: "/recents",
 			condition: () => !!access_token
 		},
 		{
@@ -162,19 +130,6 @@ const Navigator: React.FC = () => {
 		}
 	]
 
-	//#region Functions
-	const toggleDropdown = (i: number) => {
-		const drops = [...dropdowns]
-		drops[i] = !drops[i]
-		setDropdowns(drops)
-	}
-
-	const redirect = (url: string) => {
-		history.push(url)
-		setOpen(false)
-	}
-	//#endregion
-
 	return (
 		<>
 			<AppBar sx={{ bgcolor: "primary.main" }} position="relative">
@@ -199,53 +154,12 @@ const Navigator: React.FC = () => {
 								Statify
 							</Typography>
 						}>
-						{data.map(
-							item =>
-								item.condition() && (
-									<React.Fragment key={item.id}>
-										<ListItemButton
-											onClick={() =>
-												"url" in item
-													? redirect(item.url)
-													: toggleDropdown(item.drop)
-											}>
-											<ListItemIcon>{item.icon}</ListItemIcon>
-											<ListItemText primary={item.title} />
-											{!("drop" in item) ? null : dropdowns[item.drop] ? (
-												<ExpandLess />
-											) : (
-												<ExpandMore />
-											)}
-										</ListItemButton>
-										{"drop" in item && (
-											<Collapse
-												in={dropdowns[item.drop]}
-												timeout="auto"
-												unmountOnExit>
-												<List component="div" disablePadding>
-													{item.items.map(
-														item =>
-															item.condition() && (
-																<ListItemButton
-																	key={item.id}
-																	sx={{ pl: 4 }}
-																	onClick={() =>
-																		redirect(item.url)
-																	}>
-																	<ListItemIcon>
-																		{item.icon}
-																	</ListItemIcon>
-																	<ListItemText
-																		primary={item.title}
-																	/>
-																</ListItemButton>
-															)
-													)}
-												</List>
-											</Collapse>
-										)}
-									</React.Fragment>
-								)
+						{data.map(el =>
+							"drop" in el ? (
+								<DrawerDropdown setOpen={setOpen} dropdown={el} />
+							) : (
+								<DrawerItem setOpen={setOpen} item={el} />
+							)
 						)}
 					</List>
 				</Box>

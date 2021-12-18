@@ -62,9 +62,6 @@ const Recommendations: React.FC<Props> = (props: Props) => {
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
 		if (track) {
 			history.push("/track/" + track.id)
-			window.scrollTo({
-				top: 0
-			})
 		}
 	}
 	//#endregion

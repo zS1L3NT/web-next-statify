@@ -1,25 +1,9 @@
+import HomeCard from "../components/Cards/HomeCard"
 import React from "react"
 import useThemeValue from "../hooks/useThemeValue"
-import {
-	Box,
-	Button,
-	Card,
-	CardActions,
-	CardContent,
-	Container,
-	Grid,
-	Stack,
-	Typography
-} from "@mui/material"
+import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material"
 import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
-
-interface iCard {
-	id: string
-	header: string
-	body: string
-	url: string
-}
 
 const Home: React.FC = () => {
 	//#region Hooks
@@ -27,7 +11,7 @@ const Home: React.FC = () => {
 	const access_token = useSelector(state => state.access_token)
 	//#endregion
 
-	const cards: iCard[] = [
+	const cards: iHomeCard[] = [
 		{
 			id: "home-top-tracks",
 			header: "Top Tracks",
@@ -41,10 +25,10 @@ const Home: React.FC = () => {
 			url: "/top-artists"
 		},
 		{
-			id: "home-recently-played",
+			id: "home-recents",
 			header: "Recently Played",
 			body: "See the last 50 tracks that you played and when you played them on Spotify!",
-			url: "/recently-played"
+			url: "/recents"
 		}
 	]
 
@@ -82,27 +66,7 @@ const Home: React.FC = () => {
 			</Box>
 			<Grid sx={{ mt: 3, pb: 6 }} container spacing={5} justifyContent="center">
 				{cards.map(card => (
-					<Grid key={card.id} item>
-						<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: 3 }}>
-							<CardContent>
-								<Typography variant="h4" gutterBottom>
-									{card.header}
-								</Typography>
-								<Typography variant="body1" color="text.secondary">
-									{card.body}
-								</Typography>
-							</CardContent>
-							<CardActions>
-								<Button
-									sx={{ ml: 1 }}
-									size="medium"
-									disabled={!access_token}
-									onClick={() => history.push(card.url)}>
-									{access_token ? "Bring me there!" : "Sign in first!"}
-								</Button>
-							</CardActions>
-						</Card>
-					</Grid>
+					<HomeCard key={card.id} card={card} />
 				))}
 			</Grid>
 		</>

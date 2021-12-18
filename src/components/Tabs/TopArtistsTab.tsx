@@ -1,4 +1,4 @@
-import getFollowers from "../utils/getFollowers"
+import getFollowers from "../../utils/getFollowers"
 import React, { useEffect } from "react"
 import {
 	Card,
@@ -18,7 +18,7 @@ interface Props {
 	description: string
 }
 
-const TopArtistsLongTerm: React.FC<Props> = (props: Props) => {
+const TopArtistsTab: React.FC<Props> = (props: Props) => {
 	const { term, description } = props
 
 	//#region Hooks
@@ -88,4 +88,4 @@ const TopArtistsLongTerm: React.FC<Props> = (props: Props) => {
 	)
 }
 
-export default TopArtistsLongTerm
+export default TopArtistsTab

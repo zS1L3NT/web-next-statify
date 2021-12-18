@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import TopArtistsBody from "../components/TopArtistsBody"
+import TopArtistsBody from "../components/Tabs/TopArtistsTab"
 import useAuthenticated from "../hooks/useAthenticated"
 import { Box, Tab, Tabs } from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"

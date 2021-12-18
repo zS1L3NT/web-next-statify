@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import TopTracksBody from "../components/TopTracksBody"
+import TopTracksBody from "../components/Tabs/TopTracksTab"
 import useAuthenticated from "../hooks/useAthenticated"
 import { Box, Tab, Tabs } from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"

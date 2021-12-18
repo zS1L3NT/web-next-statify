@@ -1,4 +1,4 @@
-import getDuration from "../utils/getDuration"
+import getDuration from "../../utils/getDuration"
 import React, { useEffect } from "react"
 import {
 	Avatar,
