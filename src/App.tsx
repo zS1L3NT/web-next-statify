@@ -103,6 +103,9 @@ const App = (): JSX.Element => {
 					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
+					{err?.message.endsWith(" not found") ? null : (
+						<Button onClick={() => history.push("/")}>Home</Button>
+					)}
 					<Button onClick={handleErrorClose}>Okay</Button>
 				</DialogActions>
 			</Dialog>
