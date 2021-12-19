@@ -40,8 +40,15 @@ const Recommendations: React.FC<Props> = (props: Props) => {
 		}
 
 		api.getRecommendations(options)
-			.then(res => api.getTracks(res.tracks.map(t => t.id)))
-			.then(res => setTracks(res.tracks))
+			.then(res => {
+				if (!res.tracks.length) {
+					return setTracks([])
+				}
+				
+				api.getTracks(res.tracks.map(t => t.id))
+					.then(res => setTracks(res.tracks))
+					.catch(err => dispatch(set_error(err)))
+			})
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, track, artist])
 	//#endregion
