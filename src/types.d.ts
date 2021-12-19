@@ -1,3 +1,10 @@
+interface iAppearanceCard {
+	text: string
+	hash: boolean
+	link: string
+	condition: () => any
+}
+
 interface iDrawerItem {
 	id: string
 	icon: JSX.Element

@@ -1,14 +1,14 @@
 import AlbumCard from "../components/Cards/AlbumCard"
+import AppearanceCard from "../components/Cards/AppearanceCard"
 import ArtistCard from "../components/Cards/ArtistCard"
 import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
-import TrackAppearances from "../components/Appearances/TrackAppearances"
 import TrackDetails from "../components/Details/TrackDetails"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Container, Grid, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { useLocation } from "react-router-dom"
 import { useTry as _useTry } from "no-try"
 
@@ -36,6 +36,7 @@ const Track: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const location = useLocation()
+	const statistics = useSelector(state => state.statistics)
 	const api = useSpotifyApi()
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse>()
 	//#endregion
@@ -62,6 +63,37 @@ const Track: React.FC = () => {
 	}, [dispatch, location.pathname, api])
 	//#endregion
 
+	const appearances: iAppearanceCard[] = [
+		{
+			hash: false,
+			link: "/top-artists/short-term",
+			text: "of your most streamed tracks in the last 4 weeks",
+			condition: () =>
+				(statistics.tracks.short_term?.findIndex(t => t.id === track?.id) || 0) + 1
+		},
+		{
+			hash: false,
+			link: "/top-artists/medium-term",
+			text: "of your most streamed tracks in the last 6 months",
+			condition: () =>
+				(statistics.tracks.medium_term?.findIndex(t => t.id === track?.id) || 0) + 1
+		},
+		{
+			hash: false,
+			link: "/top-artists/long-term",
+			text: "of your most streamed tracks in your lifetime",
+			condition: () =>
+				(statistics.tracks.long_term?.findIndex(t => t.id === track?.id) || 0) + 1
+		},
+		{
+			hash: false,
+			link: "/recents",
+			text: "appearances of this Track in your last 50 streams",
+			condition: () =>
+				(statistics.recents?.filter(t => t.track.id === track?.id).length || 0) + 1
+		}
+	]
+
 	return (
 		<Container>
 			<TrackDetails track={track} />
@@ -84,7 +116,13 @@ const Track: React.FC = () => {
 					<AlbumCard album={track?.album} position={track?.track_number} />
 				</Grid>
 			</Grid>
-			<TrackAppearances track={track} />
+
+			<Grid sx={{ m: "auto", mt: 3 }} spacing={1} justifyContent="space-evenly" container>
+				{appearances.map((appearance, i) => (
+					<AppearanceCard key={i} appearance={appearance} />
+				))}
+			</Grid>
+
 			<Recommendations track={track} />
 		</Container>
 	)
