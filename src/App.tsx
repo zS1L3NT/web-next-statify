@@ -55,6 +55,8 @@ const App = (): JSX.Element => {
 		if (!err?.message.endsWith(" not found")) {
 			sessionStorage.setItem("redirect", history.location.pathname)
 			setTimeout(() => history.push("/logout"), 500)
+		} else {
+			setTimeout(() => history.push("/"), 500)
 		}
 	}
 	//#endregion
@@ -92,7 +94,13 @@ const App = (): JSX.Element => {
 				fullWidth>
 				<DialogTitle>{err?.name || ""}</DialogTitle>
 				<DialogContent>
-					<DialogContentText>{err?.message || ""}</DialogContentText>
+					<DialogContentText>
+						{err?.message || ""}
+						<br />
+						{err?.message.endsWith(" not found")
+							? "You will be redirected home"
+							: "You will be signed out"}
+					</DialogContentText>
 				</DialogContent>
 				<DialogActions>
 					<Button onClick={handleErrorClose}>Okay</Button>
