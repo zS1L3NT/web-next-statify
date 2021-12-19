@@ -10,6 +10,7 @@ import { Container, Grid, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { useTry as _useTry } from "no-try"
 
 /**
  * * Name
@@ -36,7 +37,7 @@ const Track: React.FC = () => {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse | null>()
+	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse>()
 	//#endregion
 
 	//#region Effects
@@ -49,7 +50,12 @@ const Track: React.FC = () => {
 		if (trackId) {
 			api.getTrack(trackId)
 				.then(setTrack)
-				.catch(err => dispatch(set_error(err)))
+				.catch(err => {
+					const [, message] = _useTry(() => JSON.parse(err.response).error.message)
+					dispatch(
+						set_error(message === "invalid id" ? new Error("Track not found") : err)
+					)
+				})
 		} else {
 			dispatch(set_error(new Error("Track not found")))
 		}
@@ -58,7 +64,7 @@ const Track: React.FC = () => {
 
 	return (
 		<Container>
-			<TrackDetails track={track || undefined} />
+			<TrackDetails track={track} />
 
 			<Grid direction={{ xs: "column", sm: "row" }} container>
 				<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
@@ -78,8 +84,8 @@ const Track: React.FC = () => {
 					<AlbumCard album={track?.album} position={track?.track_number} />
 				</Grid>
 			</Grid>
-			<TrackAppearances track={track || undefined} />
-			<Recommendations track={track || undefined} />
+			<TrackAppearances track={track} />
+			<Recommendations track={track} />
 		</Container>
 	)
 }

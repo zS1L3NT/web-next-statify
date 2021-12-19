@@ -9,6 +9,7 @@ import { Container, List, Skeleton, Stack, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
+import { useTry as _useTry } from "no-try"
 
 /**
  * * Name
@@ -28,7 +29,7 @@ const Artist: React.FC = () => {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse | null>()
+	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse>()
 	const [topTracks, setTopTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
 		Array(5).fill(undefined)
 	)
@@ -45,8 +46,10 @@ const Artist: React.FC = () => {
 			api.getArtist(artistId)
 				.then(setArtist)
 				.catch(err => {
-					setArtist(null)
-					dispatch(set_error(err))
+					const [, message] = _useTry(() => JSON.parse(err.response).error.message)
+					dispatch(
+						set_error(message === "invalid id" ? new Error("Artist not found") : err)
+					)
 				})
 		} else {
 			dispatch(set_error(new Error("Artist not found")))
@@ -65,7 +68,7 @@ const Artist: React.FC = () => {
 
 	return (
 		<Container>
-			<ArtistDetails artist={artist || undefined} />
+			<ArtistDetails artist={artist} />
 
 			<Stack sx={{ mt: 2 }} spacing={1} direction="row">
 				{!artist ? <Skeleton variant="text" width={100} height={40} /> : null}
@@ -75,12 +78,12 @@ const Artist: React.FC = () => {
 			</Stack>
 			<List>
 				{topTracks.map((track, i) => (
-					<Track key={i} track={track || undefined} i={i} />
+					<Track key={i} track={track} i={i} />
 				))}
 			</List>
 
-			<ArtistAppearances artist={artist || undefined} />
-			<Recommendations artist={artist || undefined} />
+			<ArtistAppearances artist={artist} />
+			<Recommendations artist={artist} />
 		</Container>
 	)
 }

@@ -8,7 +8,7 @@ import { Container, Grid, List, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
 import { useLocation } from "react-router-dom"
-import { useTryAsync as _useTryAsync } from "no-try"
+import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
 
 /**
  * * Name
@@ -29,7 +29,7 @@ const Album: React.FC = () => {
 	const dispatch = useDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
-	const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse | null>()
+	const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse>()
 	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectSimplified | undefined)[]>(
 		Array(10).fill(undefined)
 	)
@@ -46,8 +46,10 @@ const Album: React.FC = () => {
 			api.getAlbum(albumId)
 				.then(setAlbum)
 				.catch(err => {
-					setAlbum(null)
-					dispatch(set_error(err))
+					const [, message] = _useTry(() => JSON.parse(err.response).error.message)
+					dispatch(
+						set_error(message === "invalid id" ? new Error("Album not found") : err)
+					)
 				})
 		} else {
 			dispatch(set_error(new Error("Album not found")))
@@ -82,7 +84,7 @@ const Album: React.FC = () => {
 
 	return (
 		<Container>
-			<AlbumDetails album={album || undefined} tracks={tracks} />
+			<AlbumDetails album={album} tracks={tracks} />
 
 			<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
 				Artists
@@ -106,7 +108,7 @@ const Album: React.FC = () => {
 			</Typography>
 			<List>
 				{tracks.map((track, i) => (
-					<Track key={i} track={track || undefined} album={album || undefined} i={i} />
+					<Track key={i} track={track} album={album} i={i} />
 				))}
 			</List>
 		</Container>
