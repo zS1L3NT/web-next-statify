@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 interface Props {
-	artist?: SpotifyApi.ArtistObjectFull
+	artist?: SpotifyApi.ArtistObjectSimplified
 }
 
 const ArtistAppearances: React.FC<Props> = (props: Props) => {

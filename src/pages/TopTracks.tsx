@@ -1,14 +1,38 @@
 import React, { useEffect, useState } from "react"
-import TopTracksBody from "../components/Tabs/TopTracksTab"
+import TopTrackCard from "../components/Cards/TopTrackCard"
 import useAuthenticated from "../hooks/useAthenticated"
-import { Box, Tab, Tabs } from "@mui/material"
+import {
+	Box,
+	Card,
+	CardContent,
+	CircularProgress,
+	Container,
+	List,
+	Paper,
+	Tab,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Tabs,
+	Typography,
+	useMediaQuery,
+	useTheme
+} from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"
+import { tabs } from "../App"
 import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const TopTracks: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
+	const tracks = useSelector(state => state.statistics.tracks)
 	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	const theme = useTheme()
+	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Effects
@@ -34,15 +58,55 @@ const TopTracks: React.FC = () => {
 						<Tab label="All Time" value="long-term" />
 					</Tabs>
 				)}
-				<TabPanel sx={{ px: 0 }} value="short-term">
-					<TopTracksBody term="short_term" description="Past 4 Weeks" />
-				</TabPanel>
-				<TabPanel sx={{ px: 0 }} value="medium-term">
-					<TopTracksBody term="medium_term" description="Past 6 Months" />
-				</TabPanel>
-				<TabPanel sx={{ px: 0 }} value="long-term">
-					<TopTracksBody term="long_term" description="All Time" />
-				</TabPanel>
+				{tabs.map(tab => (
+					<TabPanel sx={{ px: 0 }} key={tab.term} value={tab.term.replace("_", "-")}>
+						<Container>
+							<Card>
+								<CardContent>
+									<Typography variant="h4">Top Tracks</Typography>
+									<Typography variant="h6" gutterBottom>
+										{tab.description}
+									</Typography>
+									<Typography variant="body1">
+										These are the tracks you listen to the most
+									</Typography>
+								</CardContent>
+							</Card>
+							{tracks[tab.term] ? (
+								<Card sx={{ my: 3 }}>
+									{showList ? (
+										<List>
+											{tracks[tab.term]!.map((track, i) => (
+												<TopTrackCard key={i} track={track} i={i} />
+											))}
+										</List>
+									) : (
+										<TableContainer component={Paper}>
+											<Table>
+												<TableHead>
+													<TableRow>
+														<TableCell>Position</TableCell>
+														<TableCell>Cover</TableCell>
+														<TableCell>Title</TableCell>
+														<TableCell>Artist</TableCell>
+														<TableCell>Duration</TableCell>
+													</TableRow>
+												</TableHead>
+												<TableBody>
+													{tracks[tab.term]!.map((track, i) => (
+														<TopTrackCard key={i} track={track} i={i} />
+													))}
+												</TableBody>
+											</Table>
+										</TableContainer>
+									)}
+								</Card>
+							) : (
+								<CircularProgress sx={{ my: 5, mx: "auto", display: "block" }} />
+							)}
+						</Container>
+					</TabPanel>
+				))}
 			</Box>
 		</TabContext>
 	)

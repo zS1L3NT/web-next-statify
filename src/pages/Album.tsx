@@ -1,25 +1,13 @@
 import AlbumDetails from "../components/Details/AlbumDetails"
 import ArtistCard from "../components/Cards/ArtistCard"
 import React, { useEffect, useState } from "react"
+import Track from "../components/Track"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import {
-	Avatar,
-	Card,
-	CardActionArea,
-	Container,
-	Grid,
-	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
-	Skeleton,
-	Stack,
-	Typography
-} from "@mui/material"
+import { Container, Grid, List, Typography } from "@mui/material"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch } from "react-redux"
-import { useHistory, useLocation } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 import { useTryAsync as _useTryAsync } from "no-try"
 
 /**
@@ -39,7 +27,6 @@ import { useTryAsync as _useTryAsync } from "no-try"
 const Album: React.FC = () => {
 	//#region Hooks
 	const dispatch = useDispatch()
-	const history = useHistory()
 	const location = useLocation()
 	const api = useSpotifyApi()
 	const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse | null>()
@@ -93,14 +80,6 @@ const Album: React.FC = () => {
 	}, [dispatch, api, album])
 	//#endregion
 
-	//#region Functions
-	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
-		if (track) {
-			history.push("/track/" + track.id)
-		}
-	}
-	//#endregion
-
 	return (
 		<Container>
 			<AlbumDetails album={album || undefined} tracks={tracks} />
@@ -127,33 +106,7 @@ const Album: React.FC = () => {
 			</Typography>
 			<List>
 				{tracks.map((track, i) => (
-					<Card sx={{ my: 1 }} key={i} onClick={() => handleTrackClick(track)}>
-						<CardActionArea>
-							<ListItem>
-								<ListItemAvatar>
-									{track ? (
-										<Avatar
-											sx={{ width: 45, height: 45 }}
-											src={album?.images.at(0)?.url || ""}
-										/>
-									) : (
-										<Skeleton variant="circular" width={45} height={45} />
-									)}
-								</ListItemAvatar>
-								{track ? (
-									<ListItemText
-										primary={i + 1 + ". " + track.name}
-										secondary={track.artists.map(a => a.name).join(", ")}
-									/>
-								) : (
-									<Stack my="6px">
-										<Skeleton variant="text" width={200} height={24} />
-										<Skeleton variant="text" width={160} height={20} />
-									</Stack>
-								)}
-							</ListItem>
-						</CardActionArea>
-					</Card>
+					<Track key={i} track={track || undefined} album={album || undefined} i={i} />
 				))}
 			</List>
 		</Container>

@@ -28,7 +28,7 @@ import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-d
 import { set_error } from "./actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
@@ -101,5 +101,20 @@ function App(): JSX.Element {
 		</ThemeProvider>
 	)
 }
+
+export const tabs = [
+	{
+		term: "short_term",
+		description: "Past 4 Weeks"
+	},
+	{
+		term: "medium_term",
+		description: "Past 6 Months"
+	},
+	{
+		term: "long_term",
+		description: "All Time"
+	}
+] as const
 
 export default App

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 interface Props {
-	track?: SpotifyApi.TrackObjectFull
+	track?: SpotifyApi.TrackObjectSimplified
 }
 
 const TrackAppearances: React.FC<Props> = (props: Props) => {
