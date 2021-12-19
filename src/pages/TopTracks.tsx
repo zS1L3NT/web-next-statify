@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import TopTrackCard from "../components/Cards/TopTrackCard"
+import TopTrackItem from "../components/Items/TopTrackItem"
 import useAuthenticated from "../hooks/useAthenticated"
 import {
 	Box,
@@ -77,7 +77,7 @@ const TopTracks: React.FC = () => {
 									{showList ? (
 										<List>
 											{tracks[tab.term]!.map((track, i) => (
-												<TopTrackCard key={i} track={track} i={i} />
+												<TopTrackItem key={i} track={track} i={i} />
 											))}
 										</List>
 									) : (
@@ -94,7 +94,7 @@ const TopTracks: React.FC = () => {
 												</TableHead>
 												<TableBody>
 													{tracks[tab.term]!.map((track, i) => (
-														<TopTrackCard key={i} track={track} i={i} />
+														<TopTrackItem key={i} track={track} i={i} />
 													))}
 												</TableBody>
 											</Table>

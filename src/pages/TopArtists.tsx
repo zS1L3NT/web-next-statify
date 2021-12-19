@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import TopArtistCard from "../components/Cards/TopArtistCard"
+import TopArtistItem from "../components/Items/TopArtistItem"
 import useAuthenticated from "../hooks/useAthenticated"
 import { Box, Card, CardContent, Container, Grid, Tab, Tabs, Typography } from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"
@@ -58,7 +58,7 @@ const TopArtists: React.FC = () => {
 								justifyContent="space-evenly">
 								{(artists[tab.term] || Array(5).fill(undefined)).map(
 									(artist, i) => (
-										<TopArtistCard key={i} artist={artist} i={i} />
+										<TopArtistItem key={i} artist={artist} i={i} />
 									)
 								)}
 							</Grid>

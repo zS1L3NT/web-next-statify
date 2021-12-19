@@ -1,19 +1,13 @@
-import getTimeSincePlayed from "../utils/getTimeSincePlayed"
 import React, { useEffect, useState } from "react"
+import RecentItem from "../components/Items/RecentItem"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
-	Avatar,
 	Card,
 	CardContent,
 	CircularProgress,
 	Container,
-	Link,
 	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemButton,
-	ListItemText,
 	Paper,
 	Table,
 	TableBody,
@@ -25,7 +19,6 @@ import {
 	useMediaQuery,
 	useTheme
 } from "@mui/material"
-import { DateTime } from "luxon"
 import { set_error } from "../actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 import { useHistory } from "react-router-dom"
@@ -38,7 +31,7 @@ const RecentlyPlayed: React.FC = () => {
 	const api = useSpotifyApi()
 	const [images, setImages] = useState<string[]>()
 	const theme = useTheme()
-	const show_list = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
+	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Effects
@@ -61,16 +54,6 @@ const RecentlyPlayed: React.FC = () => {
 	}, [dispatch, api, recents])
 	//#endregion
 
-	//#region Functions
-	const handleTrackClick = (track: SpotifyApi.TrackObjectSimplified) => {
-		history.push("/track/" + track.id)
-	}
-
-	const handleArtistClick = (artist: SpotifyApi.ArtistObjectSimplified) => {
-		history.push("/artist/" + artist.id)
-	}
-	//#endregion
-
 	return (
 		<Container>
 			<Card sx={{ my: 3 }}>
@@ -85,33 +68,10 @@ const RecentlyPlayed: React.FC = () => {
 			</Card>
 			{recents ? (
 				<Card sx={{ my: 3 }}>
-					{show_list ? (
+					{showList ? (
 						<List>
 							{recents!.map((recent, i) => (
-								<ListItem
-									key={recent.played_at}
-									onClick={() => handleTrackClick(recent.track)}
-									disablePadding>
-									<ListItemButton>
-										<ListItemAvatar>
-											<Avatar src={images?.[i] || ""} />
-										</ListItemAvatar>
-										<ListItemText
-											primary={
-												recent.track.name +
-												" - " +
-												recent.track.artists.map(a => a.name).join(", ")
-											}
-											secondary={
-												getTimeSincePlayed(recent) +
-												" ago, " +
-												DateTime.fromISO(recent.played_at).toFormat(
-													"d LLLL yyyy"
-												)
-											}
-										/>
-									</ListItemButton>
-								</ListItem>
+								<RecentItem key={i} images={images} recent={recent} i={i} />
 							))}
 						</List>
 					) : (
@@ -127,50 +87,7 @@ const RecentlyPlayed: React.FC = () => {
 								</TableHead>
 								<TableBody>
 									{recents!.map((recent, i) => (
-										<TableRow key={recent.played_at} hover>
-											<TableCell>
-												<Avatar
-													sx={{ width: 45, height: 45 }}
-													src={images?.[i] || ""}
-												/>
-											</TableCell>
-											<TableCell>
-												<Link
-													sx={{ cursor: "pointer" }}
-													color="inherit"
-													onClick={() => handleTrackClick(recent.track)}
-													underline="hover">
-													{recent.track.name}
-												</Link>
-											</TableCell>
-											<TableCell>
-												{recent.track.artists
-													.map(artist => (
-														<Link
-															sx={{ cursor: "pointer" }}
-															key={artist.id}
-															color="inherit"
-															onClick={() =>
-																handleArtistClick(artist)
-															}
-															underline="hover">
-															{artist.name}
-														</Link>
-													))
-													.reduce<(JSX.Element | string)[]>(
-														(r, a) => r.concat(a, ", "),
-														[]
-													)
-													.slice(0, -1)}
-											</TableCell>
-											<TableCell align="center">
-												{getTimeSincePlayed(recent) +
-													" ago, " +
-													DateTime.fromISO(recent.played_at).toFormat(
-														"d LLLL yyyy"
-													)}
-											</TableCell>
-										</TableRow>
+										<RecentItem key={i} images={images} recent={recent} i={i} />
 									))}
 								</TableBody>
 							</Table>

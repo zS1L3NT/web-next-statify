@@ -22,7 +22,7 @@ interface Props {
 	i?: number
 }
 
-const TopTrackCard: React.FC<Props> = (props: Props) => {
+const TopTrackItem: React.FC<Props> = (props: Props) => {
 	const { track, i } = props
 
 	//#region Hooks
@@ -133,4 +133,4 @@ const TopTrackCard: React.FC<Props> = (props: Props) => {
 	)
 }
 
-export default TopTrackCard
+export default TopTrackItem

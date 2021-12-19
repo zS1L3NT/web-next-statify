@@ -8,7 +8,7 @@ interface Props {
 	i: number
 }
 
-const TopArtistCard: React.FC<Props> = (props: Props) => {
+const TopArtistItem: React.FC<Props> = (props: Props) => {
 	const { artist, i } = props
 
 	//#region Hooks
@@ -59,4 +59,4 @@ const TopArtistCard: React.FC<Props> = (props: Props) => {
 	)
 }
 
-export default TopArtistCard
+export default TopArtistItem
