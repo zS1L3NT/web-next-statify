@@ -48,7 +48,7 @@ const App = (): JSX.Element => {
 	//#endregion
 
 	//#region Functions
-	const handleErrorClose = () => {
+	const handleRetry = () => {
 		dispatch(set_error(null))
 
 		// If is a id not found error, don't set the redirect path and don't logout
@@ -58,6 +58,11 @@ const App = (): JSX.Element => {
 		} else {
 			setTimeout(() => history.push("/"), 500)
 		}
+	}
+
+	const handleHome = () => {
+		dispatch(set_error(null))
+		history.push("/")
 	}
 	//#endregion
 
@@ -87,11 +92,7 @@ const App = (): JSX.Element => {
 					<Redirect exact path="*" to="/" />
 				</Switch>
 			</div>
-			<Dialog
-				open={!!error}
-				onClose={handleErrorClose}
-				BackdropComponent={Backdrop}
-				fullWidth>
+			<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
 				<DialogTitle>{err?.name || ""}</DialogTitle>
 				<DialogContent>
 					<DialogContentText>
@@ -104,9 +105,9 @@ const App = (): JSX.Element => {
 				</DialogContent>
 				<DialogActions>
 					{err?.message.endsWith(" not found") ? null : (
-						<Button onClick={() => history.push("/")}>Home</Button>
+						<Button onClick={handleHome}>Home</Button>
 					)}
-					<Button onClick={handleErrorClose}>Okay</Button>
+					<Button onClick={handleRetry}>Retry</Button>
 				</DialogActions>
 			</Dialog>
 		</ThemeProvider>
