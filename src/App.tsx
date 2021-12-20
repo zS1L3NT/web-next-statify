@@ -1,26 +1,38 @@
+import Album from "./pages/Album"
 import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
 import Home from "./pages/Home"
 import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
-import Navigator from "./components/Navigator"
+import Navigator from "./components/Navigation/Navigator"
 import React, { useEffect, useState } from "react"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
 import useThemeValue from "./hooks/useThemeValue"
-import { Backdrop, Box, CssBaseline, Fade, Modal, ThemeProvider, Typography } from "@mui/material"
+import {
+	Backdrop,
+	Button,
+	CssBaseline,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
+	ThemeProvider
+} from "@mui/material"
 import { dark, light } from "./theme"
-import { Redirect, Route, Switch, useHistory } from "react-router-dom"
+import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
 import { set_error } from "./actions/ErrorActions"
 import { useDispatch, useSelector } from "react-redux"
 
-function App(): JSX.Element {
+const App = (): JSX.Element => {
 	//#region Hooks
 	const dispatch = useDispatch()
 	const history = useHistory()
+	const location = useLocation()
 	const error = useSelector(state => state.error)
 	const [err, setErr] = useState<Error>()
 	//#endregion
@@ -29,14 +41,28 @@ function App(): JSX.Element {
 	useEffect(() => {
 		if (error) setErr(error)
 	}, [error])
+
+	useEffect(() => {
+		window.scrollTo({ top: 0 })
+	}, [location])
 	//#endregion
 
 	//#region Functions
-	const handleClose = () => {
+	const handleRetry = () => {
 		dispatch(set_error(null))
-		setTimeout(() => {
-			history.push("/logout")
-		}, 500)
+
+		// If is a id not found error, don't set the redirect path and don't logout
+		if (!err?.message.endsWith(" not found")) {
+			sessionStorage.setItem("redirect", history.location.pathname)
+			setTimeout(() => history.push("/logout"), 500)
+		} else {
+			setTimeout(() => history.push("/"), 500)
+		}
+	}
+
+	const handleHome = () => {
+		dispatch(set_error(null))
+		history.push("/")
 	}
 	//#endregion
 
@@ -57,46 +83,50 @@ function App(): JSX.Element {
 					<Redirect exact path="/top-artists" to="/top-artists/short-term" />
 					<Route exact path="/top-artists/medium-term" component={TopArtists} />
 					<Route exact path="/top-artists/long-term" component={TopArtists} />
-					<Route exact path="/recently-played" component={RecentlyPlayed} />
+					<Route exact path="/recents" component={RecentlyPlayed} />
 					<Route exact path="/dark" component={Dark} />
 					<Route exact path="/light" component={Light} />
 					<Route exact path="/track/:id" component={Track} />
 					<Route exact path="/artist/:id" component={Artist} />
+					<Route exact path="/album/:id" component={Album} />
 					<Redirect exact path="*" to="/" />
 				</Switch>
 			</div>
-			<Modal
-				aria-labelledby="error-modal-title"
-				aria-describedby="error-modal-description"
-				open={!!error}
-				onClose={handleClose}
-				closeAfterTransition
-				BackdropComponent={Backdrop}
-				BackdropProps={{ timeout: 500 }}>
-				<Fade in={!!error}>
-					<Box
-						sx={{
-							position: "absolute",
-							top: "50%",
-							left: "50%",
-							transform: "translate(-50%, -50%)",
-							width: 400,
-							bgcolor: "background.paper",
-							border: "2px solid #000",
-							boxShadow: 24,
-							p: 4
-						}}>
-						<Typography id="error-modal-title" variant="h6" component="h2">
-							{err?.name || ""}
-						</Typography>
-						<Typography id="error-modal-description" sx={{ mt: 2 }}>
-							{err?.message || ""}
-						</Typography>
-					</Box>
-				</Fade>
-			</Modal>
+			<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
+				<DialogTitle>{err?.name || ""}</DialogTitle>
+				<DialogContent>
+					<DialogContentText>
+						{err?.message || ""}
+						<br />
+						{err?.message.endsWith(" not found")
+							? "You will be redirected home"
+							: "You will be signed out"}
+					</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					{err?.message.endsWith(" not found") ? null : (
+						<Button onClick={handleHome}>Home</Button>
+					)}
+					<Button onClick={handleRetry}>Retry</Button>
+				</DialogActions>
+			</Dialog>
 		</ThemeProvider>
 	)
 }
+
+export const tabs = [
+	{
+		term: "short_term",
+		description: "Past 4 Weeks"
+	},
+	{
+		term: "medium_term",
+		description: "Past 6 Months"
+	},
+	{
+		term: "long_term",
+		description: "All Time"
+	}
+] as const
 
 export default App

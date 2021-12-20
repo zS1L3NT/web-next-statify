@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from "react"
-import TopArtistsBody from "../components/TopArtistsBody"
+import TopArtistItem from "../components/Items/TopArtistItem"
 import useAuthenticated from "../hooks/useAthenticated"
-import { Box, Tab, Tabs } from "@mui/material"
-import {
-	set_statistics_artists_long_term,
-	set_statistics_artists_medium_term,
-	set_statistics_artists_short_term
-} from "../actions/StatisticsActions"
+import { Box, Card, CardContent, Container, Grid, Tab, Tabs, Typography } from "@mui/material"
 import { TabContext, TabPanel } from "@mui/lab"
+import { tabs } from "../App"
 import { useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
 
-const TopArtists = (): JSX.Element => {
+const TopArtists: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
+	const artists = useSelector(state => state.statistics.artists)
 	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
 	//#endregion
 
@@ -26,7 +24,7 @@ const TopArtists = (): JSX.Element => {
 		} else {
 			history.replace("/top-artists/short-term")
 		}
-	}, [history, history.location])
+	}, [history])
 	//#endregion
 
 	return (
@@ -39,27 +37,34 @@ const TopArtists = (): JSX.Element => {
 						<Tab label="All Time" value="long-term" />
 					</Tabs>
 				)}
-				<TabPanel sx={{ px: 0 }} value="short-term">
-					<TopArtistsBody
-						term="short_term"
-						description="Past 4 Weeks"
-						action={set_statistics_artists_short_term}
-					/>
-				</TabPanel>
-				<TabPanel sx={{ px: 0 }} value="medium-term">
-					<TopArtistsBody
-						term="medium_term"
-						description="Past 6 Months"
-						action={set_statistics_artists_medium_term}
-					/>
-				</TabPanel>
-				<TabPanel sx={{ px: 0 }} value="long-term">
-					<TopArtistsBody
-						term="long_term"
-						description="All Time"
-						action={set_statistics_artists_long_term}
-					/>
-				</TabPanel>
+				{tabs.map(tab => (
+					<TabPanel sx={{ px: 0 }} key={tab.term} value={tab.term.replace("_", "-")}>
+						<Container>
+							<Card>
+								<CardContent>
+									<Typography variant="h4">Top Artists</Typography>
+									<Typography variant="h6" gutterBottom>
+										{tab.description}
+									</Typography>
+									<Typography variant="body1">
+										These are the artists you listen to the most
+									</Typography>
+								</CardContent>
+							</Card>
+							<Grid
+								sx={{ my: 1 }}
+								container
+								spacing={5}
+								justifyContent="space-evenly">
+								{(artists[tab.term] || Array(5).fill(undefined)).map(
+									(artist, i) => (
+										<TopArtistItem key={i} artist={artist} i={i} />
+									)
+								)}
+							</Grid>
+						</Container>
+					</TabPanel>
+				))}
 			</Box>
 		</TabContext>
 	)
