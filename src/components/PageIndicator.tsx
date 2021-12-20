@@ -9,7 +9,8 @@ const PageIndicator: React.FC = (props: { children?: React.ReactNode }) => (
 			borderRadius: 1,
 			lineHeight: 1,
 			p: 0.5,
-			mb: 0.5
+			mb: 0.5,
+			mx: { xs: "auto", sm: 0 }
 		}}
 		variant="body2">
 		{props.children}
