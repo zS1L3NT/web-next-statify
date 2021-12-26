@@ -107,7 +107,7 @@ const Artist: React.FC = () => {
 		},
 		{
 			hash: false,
-			link: "/top-artists/short-term",
+			link: "/top-tracks/short-term",
 			text: "appearances from this Artist in your most streamed tracks in the last 4 weeks",
 			condition: () =>
 				statistics.tracks.short_term?.filter(t => t.artists.find(a => a.id === artist?.id))
@@ -115,7 +115,7 @@ const Artist: React.FC = () => {
 		},
 		{
 			hash: false,
-			link: "/top-artists/medium-term",
+			link: "/top-tracks/medium-term",
 			text: "appearances from this Artist in your most streamed tracks in the last 6 months",
 			condition: () =>
 				statistics.tracks.medium_term?.filter(t => t.artists.find(a => a.id === artist?.id))
@@ -123,7 +123,7 @@ const Artist: React.FC = () => {
 		},
 		{
 			hash: false,
-			link: "/top-artists/long-term",
+			link: "/top-tracks/long-term",
 			text: "appearances from this Artist in your most streamed tracks in your lifetime",
 			condition: () =>
 				statistics.tracks.long_term?.filter(t => t.artists.find(a => a.id === artist?.id))
