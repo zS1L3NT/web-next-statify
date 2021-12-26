@@ -9364,6 +9364,11 @@ react-scripts@4.0.3:
   optionalDependencies:
     fsevents "^2.1.3"
 
+react-service-worker@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-service-worker/-/react-service-worker-0.1.1.tgz#866dd5d7245e4688796d3697e439e946f9c87cbd"
+  integrity sha512-NNv1QfF7lpH6ir/J3TrRTcLqP/veE+qRnCyvnZujo2lVCSpszYZRigceNhic+x9FwsBGsvkGrgZiXiq4C+VbxA==
+
 react-transition-group@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.2.tgz#8b59a56f09ced7b55cbd53c36768b922890d5470"
