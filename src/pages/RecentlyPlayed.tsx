@@ -31,18 +31,18 @@ const RecentlyPlayed: React.FC = () => {
 	const api = useSpotifyApi()
 	const [images, setImages] = useState<string[]>()
 	const theme = useTheme()
-	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
+	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
-		if (!api) return
-		if (recents) return
-
-		history.push("/login")
-	}, [dispatch, history, api, recents])
+		if (recents === null) {
+			sessionStorage.setItem("redirect", history.location.pathname)
+			history.push("/login")
+		}
+	}, [history, recents])
 
 	useEffect(() => {
 		if (!api) return
@@ -68,10 +68,16 @@ const RecentlyPlayed: React.FC = () => {
 			</Card>
 			{recents ? (
 				<Card sx={{ my: 3 }}>
-					{showList ? (
+					{smallScreen ? (
 						<List>
 							{recents!.map((recent, i) => (
-								<RecentItem key={i} images={images} recent={recent} i={i} />
+								<RecentItem
+									key={i}
+									smallScreen={smallScreen}
+									images={images}
+									recent={recent}
+									i={i}
+								/>
 							))}
 						</List>
 					) : (
@@ -87,7 +93,13 @@ const RecentlyPlayed: React.FC = () => {
 								</TableHead>
 								<TableBody>
 									{recents!.map((recent, i) => (
-										<RecentItem key={i} images={images} recent={recent} i={i} />
+										<RecentItem
+											key={i}
+											smallScreen={smallScreen}
+											images={images}
+											recent={recent}
+											i={i}
+										/>
 									))}
 								</TableBody>
 							</Table>

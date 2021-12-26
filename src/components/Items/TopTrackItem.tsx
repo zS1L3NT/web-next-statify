@@ -11,24 +11,21 @@ import {
 	Stack,
 	TableCell,
 	TableRow,
-	Typography,
-	useMediaQuery,
-	useTheme
+	Typography
 } from "@mui/material"
 import { useHistory } from "react-router-dom"
 
 interface Props {
+	smallScreen: boolean
 	track?: SpotifyApi.TrackObjectFull
 	i?: number
 }
 
 const TopTrackItem: React.FC<Props> = (props: Props) => {
-	const { track, i } = props
+	const { smallScreen, track, i } = props
 
 	//#region Hooks
 	const history = useHistory()
-	const theme = useTheme()
-	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Functions
@@ -45,7 +42,7 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 	}
 	//#endregion
 
-	return showList ? (
+	return smallScreen ? (
 		<ListItem onClick={() => handleTrackClick(track)} disablePadding>
 			<ListItemButton>
 				<ListItemAvatar>

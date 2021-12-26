@@ -11,26 +11,23 @@ import {
 	Stack,
 	TableCell,
 	TableRow,
-	Typography,
-	useMediaQuery,
-	useTheme
+	Typography
 } from "@mui/material"
 import { DateTime } from "luxon"
 import { useHistory } from "react-router-dom"
 
 interface Props {
+	smallScreen: boolean
 	images?: string[]
 	recent?: SpotifyApi.PlayHistoryObject
 	i?: number
 }
 
 const RecentItem: React.FC<Props> = (props: Props) => {
-	const { images, recent, i } = props
+	const { smallScreen, images, recent, i } = props
 
 	//#region Hooks
 	const history = useHistory()
-	const theme = useTheme()
-	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Functions
@@ -45,7 +42,7 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	}
 	//#endregion
 
-	return showList ? (
+	return smallScreen ? (
 		<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
 			<ListItemButton>
 				<ListItemAvatar>

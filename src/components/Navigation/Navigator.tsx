@@ -156,9 +156,9 @@ const Navigator: React.FC = () => {
 						}>
 						{data.map(el =>
 							"drop" in el ? (
-								<DrawerDropdown setOpen={setOpen} dropdown={el} />
+								<DrawerDropdown key={el.id} setOpen={setOpen} dropdown={el} />
 							) : (
-								<DrawerItem setOpen={setOpen} item={el} />
+								<DrawerItem key={el.id} setOpen={setOpen} item={el} />
 							)
 						)}
 					</List>

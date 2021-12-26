@@ -5,8 +5,8 @@ import {
 	Box,
 	Card,
 	CardContent,
-	CircularProgress,
 	Container,
+	LinearProgress,
 	List,
 	Paper,
 	Tab,
@@ -21,94 +21,109 @@ import {
 	useMediaQuery,
 	useTheme
 } from "@mui/material"
-import { TabContext, TabPanel } from "@mui/lab"
+import { TabContext } from "@mui/lab"
 import { tabs } from "../App"
-import { useHistory } from "react-router-dom"
+import { useHistory, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
 
 const TopTracks: React.FC = () => {
 	//#region Hooks
 	const history = useHistory()
+	const location = useLocation()
 	const tracks = useSelector(state => state.statistics.tracks)
-	const [tab, setTab] = useState<"" | "short-term" | "medium-term" | "long-term">("")
+	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
 	const theme = useTheme()
-	const showList = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
+	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 	//#endregion
 
 	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
-		const tab = history.location.pathname.split("/").at(-1)
-		if (tab === "short-term" || tab === "medium-term" || tab === "long-term") {
-			setTab(tab)
-		} else {
-			history.replace("/top-tracks/short-term")
+		setTerm(
+			location.pathname.split("/").at(-1)!.replace("-", "_") as
+				| "short_term"
+				| "medium_term"
+				| "long_term"
+		)
+	}, [location])
+
+	useEffect(() => {
+		if (Object.values(tracks).includes(null)) {
+			sessionStorage.setItem("redirect", history.location.pathname)
+			history.push("/login")
 		}
-	}, [history, history.location])
+	}, [history, tracks])
 	//#endregion
 
-	return (
-		<TabContext value={tab}>
+	return term ? (
+		<TabContext value={term}>
 			<Box sx={{ my: 2 }}>
-				{tab && (
-					<Tabs value={tab} onChange={(e, tab) => history.push(tab)} centered>
-						<Tab label="Past 4 Weeks" value="short-term" />
-						<Tab label="Past 6 Months" value="medium-term" />
-						<Tab label="All Time" value="long-term" />
-					</Tabs>
-				)}
-				{tabs.map(tab => (
-					<TabPanel sx={{ px: 0 }} key={tab.term} value={tab.term.replace("_", "-")}>
-						<Container>
-							<Card>
-								<CardContent>
-									<Typography variant="h4">Top Tracks</Typography>
-									<Typography variant="h6" gutterBottom>
-										{tab.description}
-									</Typography>
-									<Typography variant="body1">
-										These are the tracks you listen to the most
-									</Typography>
-								</CardContent>
-							</Card>
-							{tracks[tab.term] ? (
-								<Card sx={{ my: 3 }}>
-									{showList ? (
-										<List>
-											{tracks[tab.term]!.map((track, i) => (
-												<TopTrackItem key={i} track={track} i={i} />
-											))}
-										</List>
-									) : (
-										<TableContainer component={Paper}>
-											<Table>
-												<TableHead>
-													<TableRow>
-														<TableCell>Position</TableCell>
-														<TableCell>Cover</TableCell>
-														<TableCell>Title</TableCell>
-														<TableCell>Artist</TableCell>
-														<TableCell>Duration</TableCell>
-													</TableRow>
-												</TableHead>
-												<TableBody>
-													{tracks[tab.term]!.map((track, i) => (
-														<TopTrackItem key={i} track={track} i={i} />
-													))}
-												</TableBody>
-											</Table>
-										</TableContainer>
-									)}
-								</Card>
-							) : (
-								<CircularProgress sx={{ my: 5, mx: "auto", display: "block" }} />
-							)}
-						</Container>
-					</TabPanel>
-				))}
+				<Tabs
+					value={term}
+					onChange={(e, tab) => history.push(tab.replace("_", "-"))}
+					centered>
+					<Tab label="Past 4 Weeks" value="short_term" />
+					<Tab label="Past 6 Months" value="medium_term" />
+					<Tab label="All Time" value="long_term" />
+				</Tabs>
+				<Container sx={{ mt: 3 }}>
+					<Card>
+						<CardContent>
+							<Typography variant="h4">Top Tracks</Typography>
+							<Typography variant="h6" gutterBottom>
+								{tabs.find(t => t.term === term)?.description}
+							</Typography>
+							<Typography variant="body1">
+								These are the tracks you listen to the most
+							</Typography>
+						</CardContent>
+					</Card>
+					<Card sx={{ my: 3 }}>
+						{smallScreen ? (
+							<List>
+								{(tracks[term] || Array(5).fill(undefined)).map((track, i) => (
+									<TopTrackItem
+										key={i}
+										smallScreen={smallScreen}
+										track={track}
+										i={i}
+									/>
+								))}
+							</List>
+						) : (
+							<TableContainer component={Paper}>
+								<Table>
+									<TableHead>
+										<TableRow>
+											<TableCell>Position</TableCell>
+											<TableCell>Cover</TableCell>
+											<TableCell>Title</TableCell>
+											<TableCell>Artist</TableCell>
+											<TableCell>Duration</TableCell>
+										</TableRow>
+									</TableHead>
+									<TableBody>
+										{(tracks[term] || Array(5).fill(undefined)).map(
+											(track, i) => (
+												<TopTrackItem
+													key={i}
+													smallScreen={smallScreen}
+													track={track}
+													i={i}
+												/>
+											)
+										)}
+									</TableBody>
+								</Table>
+							</TableContainer>
+						)}
+					</Card>
+				</Container>
 			</Box>
 		</TabContext>
+	) : (
+		<LinearProgress />
 	)
 }
 
