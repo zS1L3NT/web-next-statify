@@ -15,7 +15,7 @@ import {
 	Person,
 	Timeline
 } from "@mui/icons-material"
-import { AppBar, Box, Drawer, IconButton, List, Toolbar, Typography } from "@mui/material"
+import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
 import { useSelector } from "react-redux"
 
 const Navigator: React.FC = () => {
@@ -146,7 +146,11 @@ const Navigator: React.FC = () => {
 					<Typography variant="h6">Statify</Typography>
 				</Toolbar>
 			</AppBar>
-			<Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+			<SwipeableDrawer
+				anchor="left"
+				open={open}
+				onOpen={() => setOpen(true)}
+				onClose={() => setOpen(false)}>
 				<Box sx={{ width: 250 }} role="presentation">
 					<List
 						subheader={
@@ -163,7 +167,7 @@ const Navigator: React.FC = () => {
 						)}
 					</List>
 				</Box>
-			</Drawer>
+			</SwipeableDrawer>
 		</>
 	)
 }
