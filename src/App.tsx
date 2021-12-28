@@ -44,6 +44,10 @@ const App = (): JSX.Element => {
 
 	//#region Effects
 	useEffect(() => {
+		document.getElementsByClassName("preload").item(0)?.remove()
+	}, [])
+
+	useEffect(() => {
 		if (error) setErr(error)
 	}, [error])
 
