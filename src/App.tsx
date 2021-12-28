@@ -30,7 +30,7 @@ import {
 } from "@mui/material"
 import { clear_snackbar } from "./slices/SnackbarSlice"
 import { dark, light } from "./theme"
-import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { set_error } from "./slices/ErrorSlice"
 
 const App = (): JSX.Element => {
@@ -38,8 +38,8 @@ const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
 	const error = useAppSelector(state => state.error)
 	const snackbar = useAppSelector(state => state.snackbar)
-	const history = useHistory()
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [err, setErr] = useState<Error>()
 	//#endregion
 
@@ -63,16 +63,16 @@ const App = (): JSX.Element => {
 
 		// If is a id not found error, don't set the redirect path and don't logout
 		if (!err?.message.endsWith(" not found")) {
-			sessionStorage.setItem("redirect", history.location.pathname)
-			setTimeout(() => history.push("/logout"), 500)
+			sessionStorage.setItem("redirect", location.pathname)
+			setTimeout(() => navigate("/logout"), 500)
 		} else {
-			setTimeout(() => history.push("/"), 500)
+			setTimeout(() => navigate("/"), 500)
 		}
 	}
 
 	const handleDialogHome = () => {
 		dispatch(set_error(null))
-		history.push("/")
+		navigate("/")
 	}
 
 	const handleSnackbarClose = () => {
@@ -85,26 +85,41 @@ const App = (): JSX.Element => {
 			<CssBaseline />
 			<div className="w-100 h-100">
 				<Navigator />
-				<Switch>
-					<Route exact path="/" component={Home} />
-					<Route exact path="/login" component={Login} />
-					<Route exact path="/logout" component={Logout} />
-					<Route exact path="/top-tracks/short-term" component={TopTracks} />
-					<Redirect exact path="/top-tracks" to="/top-tracks/short-term" />
-					<Route exact path="/top-tracks/medium-term" component={TopTracks} />
-					<Route exact path="/top-tracks/long-term" component={TopTracks} />
-					<Route exact path="/top-artists/short-term" component={TopArtists} />
-					<Redirect exact path="/top-artists" to="/top-artists/short-term" />
-					<Route exact path="/top-artists/medium-term" component={TopArtists} />
-					<Route exact path="/top-artists/long-term" component={TopArtists} />
-					<Route exact path="/recents" component={RecentlyPlayed} />
-					<Route exact path="/dark" component={Dark} />
-					<Route exact path="/light" component={Light} />
-					<Route exact path="/track/:id" component={Track} />
-					<Route exact path="/artist/:id" component={Artist} />
-					<Route exact path="/album/:id" component={Album} />
-					<Redirect exact path="*" to="/" />
-				</Switch>
+				<Routes>
+					<Route path="/" element={<Home />} />
+					<Route path="login" element={<Login />} />
+					<Route path="logout" element={<Logout />} />
+					<Route path="top-tracks">
+						<Route path="" element={<Navigate to="short-term" replace />} />
+						<Route path="short-term" element={<TopTracks />} />
+						<Route path="medium-term" element={<TopTracks />} />
+						<Route path="long-term" element={<TopTracks />} />
+						<Route path="*" element={<Navigate to="short-term" replace />} />
+					</Route>
+					<Route path="top-artists">
+						<Route path="" element={<Navigate to="short-term" replace />} />
+						<Route path="short-term" element={<TopArtists />} />
+						<Route path="medium-term" element={<TopArtists />} />
+						<Route path="long-term" element={<TopArtists />} />
+						<Route path="*" element={<Navigate to="short-term" replace />} />
+					</Route>
+					<Route path="recents" element={<RecentlyPlayed />} />
+					<Route path="dark" element={<Dark />} />
+					<Route path="light" element={<Light />} />
+					<Route path="track">
+						<Route path="" element={<Navigate to="" replace />} />
+						<Route path=":id" element={<Track />} />
+					</Route>
+					<Route path="artist">
+						<Route path="" element={<Navigate to="" replace />} />
+						<Route path=":id" element={<Artist />} />
+					</Route>
+					<Route path="album">
+						<Route path="" element={<Navigate to="" replace />} />
+						<Route path=":id" element={<Album />} />
+					</Route>
+					<Route path="*" element={<Navigate to="" replace />} />
+				</Routes>
 			</div>
 			<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
 				<DialogTitle>{err?.name || ""}</DialogTitle>

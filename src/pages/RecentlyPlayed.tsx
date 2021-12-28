@@ -22,13 +22,14 @@ import {
 	useTheme
 } from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useHistory } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const RecentlyPlayed: React.FC = () => {
 	//#region Hooks
 	const dispatch = useAppDispatch()
 	const recents = useAppSelector(state => state.statistics.recents)
-	const history = useHistory()
+	const location = useLocation()
+	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [images, setImages] = useState<string[]>()
 	const theme = useTheme()
@@ -40,10 +41,10 @@ const RecentlyPlayed: React.FC = () => {
 
 	useEffect(() => {
 		if (recents === null) {
-			sessionStorage.setItem("redirect", history.location.pathname)
-			history.push("/login")
+			sessionStorage.setItem("redirect", location.pathname)
+			navigate("/login")
 		}
-	}, [history, recents])
+	}, [navigate, location.pathname, recents])
 
 	useEffect(() => {
 		if (!api) return

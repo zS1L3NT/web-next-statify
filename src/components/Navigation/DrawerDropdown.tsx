@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 import { Dispatch, SetStateAction } from "react"
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	setOpen: Dispatch<SetStateAction<boolean>>
@@ -13,13 +13,13 @@ const DrawerDropdown: React.FC<Props> = (props: Props) => {
 	const { setOpen, dropdown } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 	//#endregion
 
 	//#region Functions
 	const redirect = (url: string) => {
-		history.push(url)
+		navigate(url)
 		setOpen(false)
 	}
 	//#endregion

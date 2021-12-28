@@ -15,13 +15,13 @@ import {
 } from "@mui/material"
 import { TabContext } from "@mui/lab"
 import { tabs } from "../App"
-import { useHistory, useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const TopArtists: React.FC = () => {
 	//#region Hooks
 	const artists = useAppSelector(state => state.statistics.artists)
-	const history = useHistory()
 	const location = useLocation()
+	const navigate = useNavigate()
 	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
 	//#endregion
 
@@ -35,23 +35,20 @@ const TopArtists: React.FC = () => {
 				| "medium_term"
 				| "long_term"
 		)
-	}, [location])
+	}, [location.pathname])
 
 	useEffect(() => {
 		if (Object.values(artists).includes(null)) {
-			sessionStorage.setItem("redirect", history.location.pathname)
-			history.push("/login")
+			sessionStorage.setItem("redirect", location.pathname)
+			navigate("/login")
 		}
-	}, [history, artists])
+	}, [navigate, location.pathname, artists])
 	//#endregion
 
 	return term ? (
 		<TabContext value={term}>
 			<Box sx={{ my: 2 }}>
-				<Tabs
-					value={term}
-					onChange={(e, tab) => history.push(tab.replace("_", "-"))}
-					centered>
+				<Tabs value={term} onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))} centered>
 					<Tab label="Past 4 Weeks" value="short_term" />
 					<Tab label="Past 6 Months" value="medium_term" />
 					<Tab label="All Time" value="long_term" />

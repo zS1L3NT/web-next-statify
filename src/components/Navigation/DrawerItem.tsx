@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react"
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	setOpen: Dispatch<SetStateAction<boolean>>
@@ -11,12 +11,12 @@ const NavItem: React.FC<Props> = (props: Props) => {
 	const { setOpen, item } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Functions
 	const redirect = (url: string) => {
-		history.push(url)
+		navigate(url)
 		setOpen(false)
 	}
 	//#endregion

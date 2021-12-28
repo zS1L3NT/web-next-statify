@@ -1,19 +1,19 @@
 import React, { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import { set_theme } from "../slices/ThemeSlice"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Dark: React.FC = () => {
 	//#region Hooks
 	const dispatch = useAppDispatch()
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Effects
 	useEffect(() => {
 		dispatch(set_theme("dark"))
-		history.go(-1)
-	}, [dispatch, history])
+		navigate(-1)
+	}, [dispatch, navigate])
 	//#endregion
 
 	return <></>

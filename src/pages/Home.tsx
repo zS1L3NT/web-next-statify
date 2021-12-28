@@ -3,12 +3,12 @@ import React from "react"
 import useAppSelector from "../hooks/useAppSelector"
 import useThemeValue from "../hooks/useThemeValue"
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 const Home: React.FC = () => {
 	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	const cards: iHomeCard[] = [
@@ -53,7 +53,7 @@ const Home: React.FC = () => {
 							size="large"
 							variant="contained"
 							disabled={!!access_token}
-							onClick={() => history.push("/login")}>
+							onClick={() => navigate("/login")}>
 							{access_token ? "You are signed in" : "Sign in with Spotify"}
 						</Button>
 					</Stack>

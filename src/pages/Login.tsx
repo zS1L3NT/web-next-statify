@@ -7,7 +7,7 @@ import { LinearProgress } from "@mui/material"
 import { set_access_token } from "../slices/AccessTokenSlice"
 import { set_error } from "../slices/ErrorSlice"
 import { set_statistics } from "../slices/StatisticsSlice"
-import { useHistory } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const config = require("../config.json")
 
@@ -15,7 +15,8 @@ const Login: React.FC = () => {
 	//#region Hooks
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
-	const history = useHistory()
+	const location = useLocation()
+	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	//#endregion
 
@@ -23,7 +24,7 @@ const Login: React.FC = () => {
 	useEffect(() => {
 		if (access_token) return
 
-		const search = new URLSearchParams(history.location.search)
+		const search = new URLSearchParams(location.search)
 		if (search.has("code")) {
 			const data = new URLSearchParams()
 			data.append("grant_type", "authorization_code")
@@ -50,7 +51,7 @@ const Login: React.FC = () => {
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
 		}
-	}, [dispatch, history, access_token])
+	}, [dispatch, location.search, access_token])
 
 	useEffect(() => {
 		if (!api) return
@@ -94,11 +95,11 @@ const Login: React.FC = () => {
 					})
 				)
 
-				history.push(sessionStorage.getItem("redirect") || "/")
+				navigate(sessionStorage.getItem("redirect") || "/")
 				sessionStorage.removeItem("redirect")
 			})
 			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, history, api, access_token])
+	}, [dispatch, navigate, api, access_token])
 	//#endregion
 
 	return <LinearProgress />

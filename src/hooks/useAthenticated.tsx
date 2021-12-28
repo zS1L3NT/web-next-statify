@@ -1,20 +1,21 @@
-import { useEffect } from "react"
-import { useHistory } from "react-router-dom"
 import useAppSelector from "./useAppSelector"
+import { useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
 
 const useAuthenticated = (): void => {
 	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
-	const history = useHistory()
+	const location = useLocation()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Effects
 	useEffect(() => {
 		if (!access_token) {
-			sessionStorage.setItem("redirect", history.location.pathname)
-			history.push("/logout")
+			sessionStorage.setItem("redirect", location.pathname)
+			navigate("/logout")
 		}
-	}, [history, access_token])
+	}, [navigate, location.pathname, access_token])
 	//#endregion
 }
 

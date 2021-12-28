@@ -1,7 +1,15 @@
 import getFollowers from "../../utils/getFollowers"
 import React from "react"
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import {
+	Card,
+	CardActionArea,
+	CardContent,
+	CardMedia,
+	Grid,
+	Skeleton,
+	Typography
+} from "@mui/material"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectFull
@@ -12,13 +20,13 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 	const { artist, i } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Functions
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectFull) => {
 		if (artist) {
-			history.push("/artist/" + artist.id)
+			navigate("/artist/" + artist.id)
 		}
 	}
 	//#endregion

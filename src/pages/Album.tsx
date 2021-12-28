@@ -54,7 +54,7 @@ const Album: React.FC = () => {
 		} else {
 			dispatch(set_error(new Error("Album not found")))
 		}
-	}, [dispatch, location, api])
+	}, [dispatch, location.pathname, api])
 
 	useEffect(() => {
 		if (!api) return

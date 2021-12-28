@@ -14,7 +14,7 @@ import {
 	Typography
 } from "@mui/material"
 import { DateTime } from "luxon"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	smallScreen: boolean
@@ -27,18 +27,18 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, images, recent, i } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
-			history.push("/track/" + track.id)
+			navigate("/track/" + track.id)
 		}
 	}
 
 	const handleArtistClick = (artist: SpotifyApi.ArtistObjectSimplified) => {
-		history.push("/artist/" + artist.id)
+		navigate("/artist/" + artist.id)
 	}
 	//#endregion
 

@@ -1,6 +1,6 @@
 import React from "react"
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	appearance: iAppearanceCard
@@ -10,11 +10,11 @@ const AppearanceCard: React.FC<Props> = (props: Props) => {
 	const { appearance } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	return appearance.condition() ? (
-		<Card sx={{ width: 250, mb: 3 }} onClick={() => history.push(appearance.link)}>
+		<Card sx={{ width: 250, mb: 3 }} onClick={() => navigate(appearance.link)}>
 			<CardActionArea sx={{ height: "100%" }}>
 				<CardContent>
 					<Typography color="primary.main" variant="h3">

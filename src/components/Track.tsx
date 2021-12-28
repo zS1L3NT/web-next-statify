@@ -9,7 +9,7 @@ import {
 	Skeleton,
 	Stack
 } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	track?: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified
@@ -21,13 +21,13 @@ const Track: React.FC<Props> = (props: Props) => {
 	const { track, album, i } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
-			history.push("/track/" + track.id)
+			navigate("/track/" + track.id)
 		}
 	}
 	//#endregion

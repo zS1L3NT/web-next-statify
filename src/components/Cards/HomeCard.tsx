@@ -1,7 +1,7 @@
 import React from "react"
 import useAppSelector from "../../hooks/useAppSelector"
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	card: iHomeCard
@@ -12,7 +12,7 @@ const HomeCard: React.FC<Props> = (props: Props) => {
 
 	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	return (
@@ -31,7 +31,7 @@ const HomeCard: React.FC<Props> = (props: Props) => {
 						sx={{ ml: 1 }}
 						size="medium"
 						disabled={!access_token}
-						onClick={() => history.push(card.url)}>
+						onClick={() => navigate(card.url)}>
 						{access_token ? "Bring me there!" : "Sign in first!"}
 					</Button>
 				</CardActions>

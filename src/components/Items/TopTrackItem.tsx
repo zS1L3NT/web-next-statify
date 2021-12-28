@@ -13,7 +13,7 @@ import {
 	TableRow,
 	Typography
 } from "@mui/material"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	smallScreen: boolean
@@ -25,19 +25,19 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, track, i } = props
 
 	//#region Hooks
-	const history = useHistory()
+	const navigate = useNavigate()
 	//#endregion
 
 	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
 		if (track) {
-			history.push("/track/" + track.id)
+			navigate("/track/" + track.id)
 		}
 	}
 
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectSimplified) => {
 		if (artist) {
-			history.push("/artist/" + artist.id)
+			navigate("/artist/" + artist.id)
 		}
 	}
 	//#endregion

@@ -9,7 +9,7 @@ import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Container, Grid, List, Skeleton, Stack, Typography } from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useHistory, useLocation } from "react-router-dom"
+import { useLocation, useNavigate } from "react-router-dom"
 import { useTry as _useTry } from "no-try"
 
 /**
@@ -29,8 +29,8 @@ const Artist: React.FC = () => {
 	//#region Hooks
 	const dispatch = useAppDispatch()
 	const statistics = useAppSelector(state => state.statistics)
-	const history = useHistory()
 	const location = useLocation()
+	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse>()
 	const [topTracks, setTopTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
@@ -57,7 +57,7 @@ const Artist: React.FC = () => {
 		} else {
 			dispatch(set_error(new Error("Artist not found")))
 		}
-	}, [dispatch, location, api])
+	}, [dispatch, location.pathname, api])
 
 	useEffect(() => {
 		if (!api) return
@@ -78,10 +78,10 @@ const Artist: React.FC = () => {
 			!statistics.tracks.long_term ||
 			!statistics.recents
 		) {
-			sessionStorage.setItem("redirect", history.location.pathname)
-			history.push("/login")
+			sessionStorage.setItem("redirect", location.pathname)
+			navigate("/login")
 		}
-	}, [history, artist, statistics])
+	}, [navigate, location.pathname, artist, statistics])
 	//#endregion
 
 	const appearances: iAppearanceCard[] = [

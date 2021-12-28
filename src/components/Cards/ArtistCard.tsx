@@ -4,7 +4,7 @@ import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 import { set_error } from "../../slices/ErrorSlice"
-import { useHistory } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectSimplified
@@ -15,7 +15,7 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 
 	//#region Hooks
 	const dispatch = useAppDispatch()
-	const history = useHistory()
+	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.ArtistObjectFull>()
 	//#endregion
@@ -34,7 +34,7 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 	//#region Functions
 	const handleArtistClick = () => {
 		if (artist) {
-			history.push("/artist/" + artist.id)
+			navigate("/artist/" + artist.id)
 		}
 	}
 	//#endregion
