@@ -65,21 +65,21 @@ const Track: React.FC = () => {
 
 	const appearances: iAppearanceCard[] = [
 		{
-			hash: false,
+			hash: true,
 			link: "/top-tracks/short-term",
 			text: "of your most streamed tracks in the last 4 weeks",
 			condition: () =>
 				(statistics.tracks.short_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
 		{
-			hash: false,
+			hash: true,
 			link: "/top-tracks/medium-term",
 			text: "of your most streamed tracks in the last 6 months",
 			condition: () =>
 				(statistics.tracks.medium_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
 		{
-			hash: false,
+			hash: true,
 			link: "/top-tracks/long-term",
 			text: "of your most streamed tracks in your lifetime",
 			condition: () =>
