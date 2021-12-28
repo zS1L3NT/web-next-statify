@@ -19,6 +19,7 @@ import {
 	Typography
 } from "@mui/material"
 import { set_error } from "../../actions/ErrorActions"
+import { set_snackbar } from "../../actions/SnackbarActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 
@@ -58,9 +59,23 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 		if (api && artist) {
 			setFollowed(null)
 			api.followArtists([artist.id])
-				.then(() => setFollowed(true))
+				.then(() => {
+					setFollowed(true)
+					dispatch(
+						set_snackbar({
+							message: "Followed Artist",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setFollowed(false)
+					dispatch(
+						set_snackbar({
+							message: "Failed to Follow Artist",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}
@@ -70,9 +85,23 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 		if (api && artist) {
 			setFollowed(null)
 			api.unfollowArtists([artist.id])
-				.then(() => setFollowed(false))
+				.then(() => {
+					setFollowed(false)
+					dispatch(
+						set_snackbar({
+							message: "Unfollowed Artist",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setFollowed(true)
+					dispatch(
+						set_snackbar({
+							message: "Failed to Unfollow Artist",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}

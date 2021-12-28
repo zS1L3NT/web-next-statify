@@ -19,6 +19,7 @@ import {
 	Typography
 } from "@mui/material"
 import { set_error } from "../../actions/ErrorActions"
+import { set_snackbar } from "../../actions/SnackbarActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 
@@ -59,9 +60,23 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 		if (api && album) {
 			setLiked(null)
 			api.addToMySavedAlbums([album.id])
-				.then(() => setLiked(true))
+				.then(() => {
+					setLiked(true)
+					dispatch(
+						set_snackbar({
+							message: "Album saved to your Library",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setLiked(false)
+					dispatch(
+						set_snackbar({
+							message: "Failed to save Album to your Library",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}
@@ -71,9 +86,23 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 		if (api && album) {
 			setLiked(null)
 			api.removeFromMySavedAlbums([album.id])
-				.then(() => setLiked(false))
+				.then(() => {
+					setLiked(false)
+					dispatch(
+						set_snackbar({
+							message: "Album removed from your Library",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setLiked(true)
+					dispatch(
+						set_snackbar({
+							message: "Failed to remove Album from your Library",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}
@@ -145,8 +174,8 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 								liked === null
 									? ""
 									: liked
-									? "Unfavourite this album"
-									: "Favourite this album"
+									? "Remove this Album from your Library"
+									: "Add this Album to your Library"
 							}>
 							<IconButton
 								sx={{ width: 46 }}

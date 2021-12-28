@@ -19,6 +19,7 @@ import {
 	Typography
 } from "@mui/material"
 import { set_error } from "../../actions/ErrorActions"
+import { set_snackbar } from "../../actions/SnackbarActions"
 import { Star, StarBorder } from "@mui/icons-material"
 import { useDispatch } from "react-redux"
 
@@ -58,9 +59,23 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 		if (api && track) {
 			setLiked(null)
 			api.addToMySavedTracks([track.id])
-				.then(() => setLiked(true))
+				.then(() => {
+					setLiked(true)
+					dispatch(
+						set_snackbar({
+							message: "Track added to your Liked Tracks",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setLiked(false)
+					dispatch(
+						set_snackbar({
+							message: "Failed to add Track to your Liked Tracks",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}
@@ -70,9 +85,23 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 		if (api && track) {
 			setLiked(null)
 			api.removeFromMySavedTracks([track.id])
-				.then(() => setLiked(false))
+				.then(() => {
+					setLiked(false)
+					dispatch(
+						set_snackbar({
+							message: "Track removed from your Liked Tracks",
+							variant: "success"
+						})
+					)
+				})
 				.catch(err => {
 					setLiked(true)
+					dispatch(
+						set_snackbar({
+							message: "Failed to remove Track from your Liked Tracks",
+							variant: "error"
+						})
+					)
 					dispatch(set_error(err))
 				})
 		}
@@ -142,8 +171,8 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 								liked === null
 									? ""
 									: liked
-									? "Unfavourite this track"
-									: "Favourite this track"
+									? "Remove this Track from your Liked Tracks"
+									: "Add this Track to your Liked Tracks"
 							}>
 							<IconButton
 								sx={{ width: 46 }}

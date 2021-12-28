@@ -1,6 +1,6 @@
-import { iSetTheme } from "../redux"
+import { iSetTheme, iThemeData } from "../redux"
 
-export const set_theme = (theme: "light" | "dark"): iSetTheme => ({
+export const set_theme = (theme: iThemeData): iSetTheme => ({
 	type: "SET_THEME",
 	payload: {
 		theme

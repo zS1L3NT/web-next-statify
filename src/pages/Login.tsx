@@ -77,24 +77,20 @@ const Login: React.FC = () => {
 
 		Promise.all(promises)
 			.then(res => {
-				const tracksShortTerm = [...res[0][0].items, ...res[0][1].items]
-				const tracksMediumTerm = [...res[0][2].items, ...res[0][3].items]
-				const tracksLongTerm = [...res[0][4].items, ...res[0][5].items]
-				const artistsShortTerm = [...res[1][0].items, ...res[1][1].items]
-				const artistsMediumTerm = [...res[1][2].items, ...res[1][3].items]
-				const artistsLongTerm = [...res[1][4].items, ...res[1][5].items]
-				const recents = res[2].items
-
 				dispatch(
-					set_statistics(
-						tracksShortTerm,
-						tracksMediumTerm,
-						tracksLongTerm,
-						artistsShortTerm,
-						artistsMediumTerm,
-						artistsLongTerm,
-						recents
-					)
+					set_statistics({
+						tracks: {
+							short_term: [...res[0][0].items, ...res[0][1].items],
+							medium_term: [...res[0][2].items, ...res[0][3].items],
+							long_term: [...res[0][4].items, ...res[0][5].items]
+						},
+						artists: {
+							short_term: [...res[1][0].items, ...res[1][1].items],
+							medium_term: [...res[1][2].items, ...res[1][3].items],
+							long_term: [...res[1][4].items, ...res[1][5].items]
+						},
+						recents: res[2].items
+					})
 				)
 
 				history.push(sessionStorage.getItem("redirect") || "/")

@@ -13,6 +13,7 @@ import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
 import useThemeValue from "./hooks/useThemeValue"
 import {
+	Alert,
 	Backdrop,
 	Button,
 	CssBaseline,
@@ -21,8 +22,11 @@ import {
 	DialogContent,
 	DialogContentText,
 	DialogTitle,
+	Fade,
+	Snackbar,
 	ThemeProvider
 } from "@mui/material"
+import { clear_snackbar } from "./actions/SnackbarActions"
 import { dark, light } from "./theme"
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
 import { set_error } from "./actions/ErrorActions"
@@ -34,6 +38,7 @@ const App = (): JSX.Element => {
 	const history = useHistory()
 	const location = useLocation()
 	const error = useSelector(state => state.error)
+	const snackbar = useSelector(state => state.snackbar)
 	const [err, setErr] = useState<Error>()
 	//#endregion
 
@@ -48,7 +53,7 @@ const App = (): JSX.Element => {
 	//#endregion
 
 	//#region Functions
-	const handleRetry = () => {
+	const handleDialogRetry = () => {
 		dispatch(set_error(null))
 
 		// If is a id not found error, don't set the redirect path and don't logout
@@ -60,9 +65,13 @@ const App = (): JSX.Element => {
 		}
 	}
 
-	const handleHome = () => {
+	const handleDialogHome = () => {
 		dispatch(set_error(null))
 		history.push("/")
+	}
+
+	const handleSnackbarClose = () => {
+		dispatch(clear_snackbar())
 	}
 	//#endregion
 
@@ -105,11 +114,25 @@ const App = (): JSX.Element => {
 				</DialogContent>
 				<DialogActions>
 					{err?.message.endsWith(" not found") ? null : (
-						<Button onClick={handleHome}>Home</Button>
+						<Button onClick={handleDialogHome}>Home</Button>
 					)}
-					<Button onClick={handleRetry}>Retry</Button>
+					<Button onClick={handleDialogRetry}>Retry</Button>
 				</DialogActions>
 			</Dialog>
+			<Snackbar
+				open={!!snackbar.message}
+				onClose={handleSnackbarClose}
+				autoHideDuration={3000}
+				TransitionComponent={Fade}>
+				<Alert
+					sx={{ width: "100%" }}
+					elevation={6}
+					variant="filled"
+					severity={snackbar.variant}
+					onClose={handleSnackbarClose}>
+					{snackbar.message}
+				</Alert>
+			</Snackbar>
 		</ThemeProvider>
 	)
 }

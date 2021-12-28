@@ -6,7 +6,7 @@ export type iThemeData = "light" | "dark"
 export interface iSetTheme {
 	type: "SET_THEME"
 	payload: {
-		theme: "light" | "dark"
+		theme: iThemeData
 	}
 }
 
@@ -20,7 +20,7 @@ export type iAccessTokenData = string | null
 export interface iSetAccessToken {
 	type: "SET_ACCESS_TOKEN"
 	payload: {
-		access_token: string | null
+		access_token: iAccessTokenData
 	}
 }
 
@@ -44,6 +44,25 @@ export interface iSetError {
 export type iErrorActions = iSetError
 
 /**
+ * Snackbar
+ */
+export interface iSnackbarData {
+	message: string | null
+	variant: "success" | "error" | "warning" | "info"
+}
+
+export interface iSetSnackbar {
+	type: "SET_SNACKBAR"
+	payload: iSnackbarData
+}
+
+export interface iClearSnackbar {
+	type: "CLEAR_SNACKBAR"
+}
+
+export type iSnackbarActions = iSetSnackbar | iClearSnackbar
+
+/**
  * Statistics
  */
 export interface iStatisticsData {
@@ -62,19 +81,7 @@ export interface iStatisticsData {
 
 export interface iSetStatistics {
 	type: "SET_STATISTICS"
-	payload: {
-		tracks: {
-			short_term: SpotifyApi.TrackObjectFull[] | null
-			medium_term: SpotifyApi.TrackObjectFull[] | null
-			long_term: SpotifyApi.TrackObjectFull[] | null
-		}
-		artists: {
-			short_term: SpotifyApi.ArtistObjectFull[] | null
-			medium_term: SpotifyApi.ArtistObjectFull[] | null
-			long_term: SpotifyApi.ArtistObjectFull[] | null
-		}
-		recents: SpotifyApi.PlayHistoryObject[] | null
-	}
+	payload: iStatisticsData
 }
 
 export type iStatisticsActions = iSetStatistics
