@@ -63,6 +63,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 					setFollowed(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Followed Artist",
 							variant: "success"
 						})
@@ -72,6 +73,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 					setFollowed(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to Follow Artist",
 							variant: "error"
 						})
@@ -89,6 +91,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 					setFollowed(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Unfollowed Artist",
 							variant: "success"
 						})
@@ -98,6 +101,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 					setFollowed(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to Unfollow Artist",
 							variant: "error"
 						})

@@ -64,6 +64,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 					setLiked(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Album saved to your Library",
 							variant: "success"
 						})
@@ -73,6 +74,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 					setLiked(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to save Album to your Library",
 							variant: "error"
 						})
@@ -90,6 +92,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 					setLiked(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Album removed from your Library",
 							variant: "success"
 						})
@@ -99,6 +102,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 					setLiked(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to remove Album from your Library",
 							variant: "error"
 						})

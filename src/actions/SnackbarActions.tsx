@@ -6,5 +6,5 @@ export const set_snackbar = (snackbar: iSnackbarData): iSetSnackbar => ({
 })
 
 export const clear_snackbar = (): iClearSnackbar => ({
-	type: "CLEAR_SNACKBAR"
+	type: "CLOSE_SNACKBAR"
 })

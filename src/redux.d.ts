@@ -47,7 +47,8 @@ export type iErrorActions = iSetError
  * Snackbar
  */
 export interface iSnackbarData {
-	message: string | null
+	open: boolean
+	message: string
 	variant: "success" | "error" | "warning" | "info"
 }
 
@@ -57,7 +58,7 @@ export interface iSetSnackbar {
 }
 
 export interface iClearSnackbar {
-	type: "CLEAR_SNACKBAR"
+	type: "CLOSE_SNACKBAR"
 }
 
 export type iSnackbarActions = iSetSnackbar | iClearSnackbar

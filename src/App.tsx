@@ -124,7 +124,7 @@ const App = (): JSX.Element => {
 				</DialogActions>
 			</Dialog>
 			<Snackbar
-				open={!!snackbar.message}
+				open={snackbar.open}
 				onClose={handleSnackbarClose}
 				autoHideDuration={3000}
 				TransitionComponent={Fade}>

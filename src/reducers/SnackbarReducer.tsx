@@ -2,7 +2,8 @@ import { iSnackbarActions, iSnackbarData } from "../redux"
 import { Reducer } from "redux"
 
 const initial_state: iSnackbarData = {
-	message: null,
+	open: false,
+	message: "",
 	variant: "error"
 }
 
@@ -13,8 +14,11 @@ const reducer: Reducer<iSnackbarData, iSnackbarActions> = (
 	switch (action.type) {
 		case "SET_SNACKBAR":
 			return action.payload
-		case "CLEAR_SNACKBAR":
-			return initial_state
+		case "CLOSE_SNACKBAR":
+			return {
+				...state,
+				open: false
+			}
 		default:
 			return state
 	}

@@ -63,6 +63,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 					setLiked(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Track added to your Liked Tracks",
 							variant: "success"
 						})
@@ -72,6 +73,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 					setLiked(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to add Track to your Liked Tracks",
 							variant: "error"
 						})
@@ -89,6 +91,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 					setLiked(false)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Track removed from your Liked Tracks",
 							variant: "success"
 						})
@@ -98,6 +101,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 					setLiked(true)
 					dispatch(
 						set_snackbar({
+							open: true,
 							message: "Failed to remove Track from your Liked Tracks",
 							variant: "error"
 						})
