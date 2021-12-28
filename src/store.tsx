@@ -1,15 +1,20 @@
-import access_token from "./reducers/AccessTokenReducer"
-import error from "./reducers/ErrorReducer"
-import snackbar from "./reducers/SnackbarReducer"
-import statistics from "./reducers/StatisticsReducer"
-import theme from "./reducers/ThemeReducer"
-import { combineReducers, createStore } from "redux"
-import { composeWithDevTools } from "redux-devtools-extension"
+import AccessTokenReducer from "./slices/AccessTokenSlice"
+import ErrorReducer from "./slices/ErrorSlice"
+import SnackbarReducer from "./slices/SnackbarSlice"
+import StatisticsReducer from "./slices/StatisticsSlice"
+import ThemeReducer from "./slices/ThemeSlice"
+import { configureStore } from "@reduxjs/toolkit"
 
-const rootReducer = combineReducers({ theme, access_token, error, snackbar, statistics })
+const store = configureStore({
+	reducer: {
+		theme: ThemeReducer,
+		access_token: AccessTokenReducer,
+		error: ErrorReducer,
+		snackbar: SnackbarReducer,
+		statistics: StatisticsReducer
+	}
+})
 
-const store = createStore(rootReducer, composeWithDevTools({ trace: true })())
-
-export type AppState = ReturnType<typeof rootReducer>
-export type iStore = typeof store
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch
 export default store

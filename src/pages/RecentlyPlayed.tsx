@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 import RecentItem from "../components/Items/RecentItem"
+import useAppDispatch from "../hooks/useAppDispatch"
+import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import {
@@ -19,15 +21,14 @@ import {
 	useMediaQuery,
 	useTheme
 } from "@mui/material"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch, useSelector } from "react-redux"
+import { set_error } from "../slices/ErrorSlice"
 import { useHistory } from "react-router-dom"
 
 const RecentlyPlayed: React.FC = () => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+	const recents = useAppSelector(state => state.statistics.recents)
 	const history = useHistory()
-	const recents = useSelector(state => state.statistics.recents)
 	const api = useSpotifyApi()
 	const [images, setImages] = useState<string[]>()
 	const theme = useTheme()

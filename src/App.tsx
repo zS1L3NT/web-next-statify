@@ -11,6 +11,8 @@ import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
+import useAppDispatch from "./hooks/useAppDispatch"
+import useAppSelector from "./hooks/useAppSelector"
 import useThemeValue from "./hooks/useThemeValue"
 import {
 	Alert,
@@ -26,19 +28,18 @@ import {
 	Snackbar,
 	ThemeProvider
 } from "@mui/material"
-import { clear_snackbar } from "./actions/SnackbarActions"
+import { clear_snackbar } from "./slices/SnackbarSlice"
 import { dark, light } from "./theme"
 import { Redirect, Route, Switch, useHistory, useLocation } from "react-router-dom"
-import { set_error } from "./actions/ErrorActions"
-import { useDispatch, useSelector } from "react-redux"
+import { set_error } from "./slices/ErrorSlice"
 
 const App = (): JSX.Element => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+	const error = useAppSelector(state => state.error)
+	const snackbar = useAppSelector(state => state.snackbar)
 	const history = useHistory()
 	const location = useLocation()
-	const error = useSelector(state => state.error)
-	const snackbar = useSelector(state => state.snackbar)
 	const [err, setErr] = useState<Error>()
 	//#endregion
 

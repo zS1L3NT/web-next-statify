@@ -1,6 +1,7 @@
 import getDuration from "../../utils/getDuration"
 import PageIndicator from "../PageIndicator"
 import React, { useEffect, useState } from "react"
+import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import {
 	Avatar,
@@ -18,10 +19,9 @@ import {
 	Tooltip,
 	Typography
 } from "@mui/material"
-import { set_error } from "../../actions/ErrorActions"
-import { set_snackbar } from "../../actions/SnackbarActions"
+import { set_error } from "../../slices/ErrorSlice"
+import { set_snackbar } from "../../slices/SnackbarSlice"
 import { Star, StarBorder } from "@mui/icons-material"
-import { useDispatch } from "react-redux"
 
 interface Props {
 	album?: SpotifyApi.AlbumObjectFull
@@ -32,7 +32,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 	const { album, tracks } = props
 
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)

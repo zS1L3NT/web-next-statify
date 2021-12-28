@@ -2,6 +2,7 @@ import DrawerDropdown from "./DrawerDropdown"
 import DrawerItem from "./DrawerItem"
 import MenuIcon from "@mui/icons-material/Menu"
 import React, { useState } from "react"
+import useAppSelector from "../../hooks/useAppSelector"
 import {
 	AccessTime,
 	AccessTimeFilled,
@@ -16,12 +17,11 @@ import {
 	Timeline
 } from "@mui/icons-material"
 import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
-import { useSelector } from "react-redux"
 
 const Navigator: React.FC = () => {
 	//#region Hooks
-	const access_token = useSelector(state => state.access_token)
-	const theme = useSelector(state => state.theme)
+	const access_token = useAppSelector(state => state.access_token)
+	const theme = useAppSelector(state => state.theme)
 	const [open, setOpen] = useState(false)
 	//#endregion
 

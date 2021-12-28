@@ -1,11 +1,11 @@
 import React, { useEffect } from "react"
-import { set_access_token } from "../actions/AccessTokenActions"
-import { useDispatch } from "react-redux"
+import useAppDispatch from "../hooks/useAppDispatch"
+import { set_access_token } from "../slices/AccessTokenSlice"
 import { useHistory } from "react-router-dom"
 
 const Logout: React.FC = () => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const history = useHistory()
 	//#endregion
 

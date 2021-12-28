@@ -1,11 +1,11 @@
 import { useEffect } from "react"
 import { useHistory } from "react-router-dom"
-import { useSelector } from "react-redux"
+import useAppSelector from "./useAppSelector"
 
 const useAuthenticated = (): void => {
 	//#region Hooks
+	const access_token = useAppSelector(state => state.access_token)
 	const history = useHistory()
-	const access_token = useSelector(state => state.access_token)
 	//#endregion
 
 	//#region Effects

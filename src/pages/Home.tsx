@@ -1,14 +1,14 @@
 import HomeCard from "../components/Cards/HomeCard"
 import React from "react"
+import useAppSelector from "../hooks/useAppSelector"
 import useThemeValue from "../hooks/useThemeValue"
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material"
 import { useHistory } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 const Home: React.FC = () => {
 	//#region Hooks
+	const access_token = useAppSelector(state => state.access_token)
 	const history = useHistory()
-	const access_token = useSelector(state => state.access_token)
 	//#endregion
 
 	const cards: iHomeCard[] = [

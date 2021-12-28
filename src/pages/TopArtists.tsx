@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import TopArtistItem from "../components/Items/TopArtistItem"
+import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import {
 	Box,
@@ -15,13 +16,12 @@ import {
 import { TabContext } from "@mui/lab"
 import { tabs } from "../App"
 import { useHistory, useLocation } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 const TopArtists: React.FC = () => {
 	//#region Hooks
+	const artists = useAppSelector(state => state.statistics.artists)
 	const history = useHistory()
 	const location = useLocation()
-	const artists = useSelector(state => state.statistics.artists)
 	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
 	//#endregion
 

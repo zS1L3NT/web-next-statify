@@ -4,11 +4,12 @@ import ArtistCard from "../components/Cards/ArtistCard"
 import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
 import TrackDetails from "../components/Details/TrackDetails"
+import useAppDispatch from "../hooks/useAppDispatch"
+import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Container, Grid, Typography } from "@mui/material"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch, useSelector } from "react-redux"
+import { set_error } from "../slices/ErrorSlice"
 import { useLocation } from "react-router-dom"
 import { useTry as _useTry } from "no-try"
 
@@ -34,9 +35,9 @@ import { useTry as _useTry } from "no-try"
 
 const Track: React.FC = () => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
+	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
-	const statistics = useSelector(state => state.statistics)
 	const api = useSpotifyApi()
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse>()
 	//#endregion

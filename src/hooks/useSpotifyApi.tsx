@@ -1,10 +1,10 @@
 import Spotify from "spotify-web-api-js"
+import useAppSelector from "./useAppSelector"
 import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
 
 const useSpotifyApi = (): Spotify.SpotifyWebApiJs | null => {
 	//#region Hooks
-	const access_token = useSelector(state => state.access_token)
+	const access_token = useAppSelector(state => state.access_token)
 	const [api, setApi] = useState<Spotify.SpotifyWebApiJs | null>(null)
 	//#endregion
 

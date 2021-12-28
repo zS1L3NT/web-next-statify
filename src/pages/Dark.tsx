@@ -1,11 +1,11 @@
 import React, { useEffect } from "react"
-import { set_theme } from "../actions/ThemeActions"
-import { useDispatch } from "react-redux"
+import useAppDispatch from "../hooks/useAppDispatch"
+import { set_theme } from "../slices/ThemeSlice"
 import { useHistory } from "react-router-dom"
 
 const Dark: React.FC = () => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const history = useHistory()
 	//#endregion
 

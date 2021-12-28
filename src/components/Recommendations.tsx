@@ -1,9 +1,9 @@
 import React, { useState } from "react"
 import Track from "./Track"
+import useAppDispatch from "../hooks/useAppDispatch"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { List, Typography } from "@mui/material"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch } from "react-redux"
+import { set_error } from "../slices/ErrorSlice"
 import { useEffect } from "react"
 
 interface Props {
@@ -15,7 +15,7 @@ const Recommendations: React.FC<Props> = (props: Props) => {
 	const { track, artist } = props
 
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectSimplified | undefined)[]>(
 		Array(10).fill(undefined)
@@ -44,7 +44,7 @@ const Recommendations: React.FC<Props> = (props: Props) => {
 				if (!res.tracks.length) {
 					return setTracks([])
 				}
-				
+
 				api.getTracks(res.tracks.map(t => t.id))
 					.then(res => setTracks(res.tracks))
 					.catch(err => dispatch(set_error(err)))

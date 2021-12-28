@@ -1,7 +1,7 @@
 import React from "react"
+import useAppSelector from "../../hooks/useAppSelector"
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material"
 import { useHistory } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 interface Props {
 	card: iHomeCard
@@ -11,8 +11,8 @@ const HomeCard: React.FC<Props> = (props: Props) => {
 	const { card } = props
 
 	//#region Hooks
+	const access_token = useAppSelector(state => state.access_token)
 	const history = useHistory()
-	const access_token = useSelector(state => state.access_token)
 	//#endregion
 
 	return (

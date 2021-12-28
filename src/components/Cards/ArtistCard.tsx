@@ -1,9 +1,9 @@
 import getFollowers from "../../utils/getFollowers"
 import React, { useEffect, useState } from "react"
+import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
-import { set_error } from "../../actions/ErrorActions"
-import { useDispatch } from "react-redux"
+import { set_error } from "../../slices/ErrorSlice"
 import { useHistory } from "react-router-dom"
 
 interface Props {
@@ -14,7 +14,7 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 	const { artist } = props
 
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const history = useHistory()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.ArtistObjectFull>()

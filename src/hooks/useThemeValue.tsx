@@ -1,8 +1,8 @@
-import { useSelector } from "react-redux"
+import useAppSelector from "./useAppSelector"
 
 const useThemeValue = <T extends any>(dark: T, light: T): T => {
 	//#region Hooks
-	const theme = useSelector(state => state.theme)
+	const theme = useAppSelector(state => state.theme)
 	//#endregion
 
 	return theme === "dark" ? dark : light

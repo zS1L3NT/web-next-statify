@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import TopTrackItem from "../components/Items/TopTrackItem"
+import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import {
 	Box,
@@ -24,13 +25,12 @@ import {
 import { TabContext } from "@mui/lab"
 import { tabs } from "../App"
 import { useHistory, useLocation } from "react-router-dom"
-import { useSelector } from "react-redux"
 
 const TopTracks: React.FC = () => {
 	//#region Hooks
+	const tracks = useAppSelector(state => state.statistics.tracks)
 	const history = useHistory()
 	const location = useLocation()
-	const tracks = useSelector(state => state.statistics.tracks)
 	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
 	const theme = useTheme()
 	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme

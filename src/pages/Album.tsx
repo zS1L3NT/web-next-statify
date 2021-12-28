@@ -2,11 +2,11 @@ import AlbumDetails from "../components/Details/AlbumDetails"
 import ArtistCard from "../components/Cards/ArtistCard"
 import React, { useEffect, useState } from "react"
 import Track from "../components/Track"
+import useAppDispatch from "../hooks/useAppDispatch"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
 import { Container, Grid, List, Typography } from "@mui/material"
-import { set_error } from "../actions/ErrorActions"
-import { useDispatch } from "react-redux"
+import { set_error } from "../slices/ErrorSlice"
 import { useLocation } from "react-router-dom"
 import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
 
@@ -26,7 +26,7 @@ import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
 
 const Album: React.FC = () => {
 	//#region Hooks
-	const dispatch = useDispatch()
+	const dispatch = useAppDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
 	const [album, setAlbum] = useState<SpotifyApi.SingleAlbumResponse>()
