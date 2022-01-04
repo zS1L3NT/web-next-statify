@@ -81,14 +81,14 @@ const Login: React.FC = () => {
 				dispatch(
 					set_statistics({
 						tracks: {
-							short_term: [...res[0][0].items, ...res[0][1].items],
-							medium_term: [...res[0][2].items, ...res[0][3].items],
-							long_term: [...res[0][4].items, ...res[0][5].items]
+							short_term: [...res[0][0].items, ...res[0][1].items.slice(1)],
+							medium_term: [...res[0][2].items, ...res[0][3].items.slice(1)],
+							long_term: [...res[0][4].items, ...res[0][5].items.slice(1)]
 						},
 						artists: {
-							short_term: [...res[1][0].items, ...res[1][1].items],
-							medium_term: [...res[1][2].items, ...res[1][3].items],
-							long_term: [...res[1][4].items, ...res[1][5].items]
+							short_term: [...res[1][0].items, ...res[1][1].items.slice(1)],
+							medium_term: [...res[1][2].items, ...res[1][3].items.slice(1)],
+							long_term: [...res[1][4].items, ...res[1][5].items.slice(1)]
 						},
 						recents: res[2].items
 					})
