@@ -45,7 +45,11 @@ const App = (): JSX.Element => {
 
 	//#region Effects
 	useEffect(() => {
-		document.getElementsByClassName("preload").item(0)?.remove()
+		setTimeout(() => {
+			const preload = document.getElementsByClassName("preload").item(0)!
+			preload.classList.add("preload-hide")
+			setTimeout(() => preload.remove(), 1000)
+		}, 1000)
 	}, [])
 
 	useEffect(() => {
