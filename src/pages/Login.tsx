@@ -28,7 +28,12 @@ const Login: React.FC = () => {
 			const data = new URLSearchParams()
 			data.append("grant_type", "authorization_code")
 			data.append("code", search.get("code")!)
-			data.append("redirect_uri", config.spotify.redirect_uri)
+			data.append(
+				"redirect_uri",
+				window.location.hostname === "statify.zectan.com"
+					? config.spotify.redirect_uri.production
+					: config.spotify.redirect_uri.development
+			)
 			data.append("client_id", config.spotify.client_id)
 			data.append("client_secret", config.spotify.client_secret)
 
@@ -44,7 +49,10 @@ const Login: React.FC = () => {
 			const query = new URLSearchParams({
 				response_type: "code",
 				client_id: config.spotify.client_id,
-				redirect_uri: config.spotify.redirect_uri,
+				redirect_uri:
+					window.location.hostname === "statify.zectan.com"
+						? config.spotify.redirect_uri.production
+						: config.spotify.redirect_uri.development,
 				scope: config.spotify.scope
 			})
 

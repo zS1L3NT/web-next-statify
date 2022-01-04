@@ -2,7 +2,10 @@
 	"spotify": {
 		"client_id": "",
 		"client_secret": "",
-		"redirect_uri": "",
-		"scope": ""
+		"scope": "",
+		"redirect_uri": {
+			"development": "",
+			"production": ""
+		}
 	}
 }
