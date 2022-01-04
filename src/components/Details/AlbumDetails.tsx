@@ -44,7 +44,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 		if (!album) return
 
 		api.containsMySavedAlbums([album.id])
-			.then(res => setLiked(res[0]))
+			.then(res => setLiked(res[0] || null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, album])
 	//#endregion

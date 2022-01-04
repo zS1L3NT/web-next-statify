@@ -43,7 +43,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 		if (!track) return
 
 		api.containsMySavedTracks([track.id])
-			.then(res => setLiked(res[0]))
+			.then(res => setLiked(res[0] || null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, track])
 	//#endregion

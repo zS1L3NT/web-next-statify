@@ -1,4 +1,5 @@
 import axios from "axios"
+import config from "../config.json"
 import React, { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
@@ -8,8 +9,6 @@ import { set_access_token } from "../slices/AccessTokenSlice"
 import { set_error } from "../slices/ErrorSlice"
 import { set_statistics } from "../slices/StatisticsSlice"
 import { useLocation, useNavigate } from "react-router-dom"
-
-const config = require("../config.json")
 
 const Login: React.FC = () => {
 	//#region Hooks

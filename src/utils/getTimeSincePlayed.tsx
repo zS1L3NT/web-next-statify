@@ -11,23 +11,23 @@ const getTimeSincePlayed = (recent: SpotifyApi.PlayHistoryObject): string => {
 
 	let format = `${seconds}s`
 
-	if (minutes > 0) {
+	if (minutes && minutes > 0) {
 		format = `${minutes}m ${format}`
 	}
 
-	if (hours > 0) {
+	if (hours && hours > 0) {
 		format = `${hours}h ${format}`
 	}
 
-	if (days > 0) {
+	if (days && days > 0) {
 		format = `${days}d ${format}`
 	}
 
-	if (months > 0) {
+	if (months && months > 0) {
 		format = `${months}M ${format}`
 	}
 
-	if (years > 0) {
+	if (years && years > 0) {
 		format = `${years}Y ${format}`
 	}
 
