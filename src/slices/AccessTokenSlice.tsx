@@ -4,7 +4,7 @@ type iAccessTokenData = string | null
 
 const slice = createSlice({
 	name: "access_token",
-	initialState: sessionStorage.getItem("access_token") as iAccessTokenData,
+	initialState: null as iAccessTokenData,
 	reducers: {
 		set_access_token: (state, action: PayloadAction<iAccessTokenData>) => {
 			return action.payload

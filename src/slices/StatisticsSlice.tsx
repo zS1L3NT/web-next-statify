@@ -18,16 +18,16 @@ const slice = createSlice({
 	name: "statistics",
 	initialState: {
 		tracks: {
-			short_term: [],
-			medium_term: [],
-			long_term: []
+			short_term: null,
+			medium_term: null,
+			long_term: null
 		},
 		artists: {
-			short_term: [],
-			medium_term: [],
-			long_term: []
+			short_term: null,
+			medium_term: null,
+			long_term: null
 		},
-		recents: []
+		recents: null
 	} as iStatisticsData,
 	reducers: {
 		set_statistics: (state, action: PayloadAction<iStatisticsData>) => {

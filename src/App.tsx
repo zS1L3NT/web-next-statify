@@ -31,13 +31,16 @@ import {
 import { clear_snackbar } from "./slices/SnackbarSlice"
 import { dark, light } from "./theme"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { set_access_token } from "./slices/AccessTokenSlice"
 import { set_error } from "./slices/ErrorSlice"
 
 const App = (): JSX.Element => {
 	//#region Hooks
 	const dispatch = useAppDispatch()
+	const access_token = useAppSelector(state => state.access_token)
 	const error = useAppSelector(state => state.error)
 	const snackbar = useAppSelector(state => state.snackbar)
+	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [err, setErr] = useState<Error>()
@@ -59,6 +62,37 @@ const App = (): JSX.Element => {
 	useEffect(() => {
 		window.scrollTo({ top: 0 })
 	}, [location])
+
+	useEffect(() => {
+		if (localStorage.getItem("access_token")) {
+			dispatch(set_access_token(localStorage.getItem("access_token")))
+			localStorage.removeItem("access_token")
+		}
+
+		if (
+			access_token &&
+			!statistics.tracks.short_term &&
+			!statistics.tracks.medium_term &&
+			!statistics.tracks.long_term &&
+			!statistics.artists.short_term &&
+			!statistics.artists.medium_term &&
+			!statistics.artists.long_term &&
+			!statistics.recents
+		) {
+			navigate("/login")
+		}
+
+		const beforeunload = () => {
+			if (access_token) {
+				localStorage.setItem("access_token", access_token)
+			}
+		}
+
+		window.addEventListener("beforeunload", beforeunload)
+		return () => {
+			window.removeEventListener("beforeunload", beforeunload)
+		}
+	}, [navigate, access_token])
 	//#endregion
 
 	//#region Functions
