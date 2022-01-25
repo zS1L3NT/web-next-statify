@@ -10,16 +10,12 @@ interface Props {
 const NavItem: React.FC<Props> = (props: Props) => {
 	const { setOpen, item } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
-	//#region Functions
 	const redirect = (url: string) => {
 		navigate(url)
 		setOpen(false)
 	}
-	//#endregion
 
 	return item.condition() ? (
 		<React.Fragment key={item.id}>

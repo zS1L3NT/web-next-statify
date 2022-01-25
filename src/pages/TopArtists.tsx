@@ -18,14 +18,11 @@ import { tabs } from "../App"
 import { useLocation, useNavigate } from "react-router-dom"
 
 const TopArtists: React.FC = () => {
-	//#region Hooks
 	const artists = useAppSelector(state => state.statistics.artists)
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -43,12 +40,14 @@ const TopArtists: React.FC = () => {
 			navigate("/login")
 		}
 	}, [navigate, location.pathname, artists])
-	//#endregion
 
 	return term ? (
 		<TabContext value={term}>
 			<Box sx={{ my: 2 }}>
-				<Tabs value={term} onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))} centered>
+				<Tabs
+					value={term}
+					onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))}
+					centered>
 					<Tab label="Past 4 Weeks" value="short_term" />
 					<Tab label="Past 6 Months" value="medium_term" />
 					<Tab label="All Time" value="long_term" />

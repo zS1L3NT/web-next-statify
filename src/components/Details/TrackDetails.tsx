@@ -30,14 +30,11 @@ interface Props {
 const TrackDetails: React.FC<Props> = (props: Props) => {
 	const { track } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!track) return
@@ -46,9 +43,7 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 			.then(res => setLiked(res[0] !== undefined ? res[0] : null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, track])
-	//#endregion
 
-	//#region Functions
 	const handleTrackOpen = () => {
 		if (track) {
 			window.open(track.external_urls.spotify)
@@ -110,7 +105,6 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 				})
 		}
 	}
-	//#endregion
 
 	return (
 		<>

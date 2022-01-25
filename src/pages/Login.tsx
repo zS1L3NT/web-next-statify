@@ -11,15 +11,12 @@ import { set_statistics } from "../slices/StatisticsSlice"
 import { useLocation, useNavigate } from "react-router-dom"
 
 const Login: React.FC = () => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
 	const location = useLocation()
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (access_token) return
 
@@ -107,7 +104,6 @@ const Login: React.FC = () => {
 			})
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, navigate, api, access_token])
-	//#endregion
 
 	return <LinearProgress />
 }

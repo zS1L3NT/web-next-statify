@@ -24,11 +24,8 @@ interface Props {
 const TopTrackItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, track, i } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
-	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
 		if (track) {
 			navigate("/track/" + track.id)
@@ -40,7 +37,6 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 			navigate("/artist/" + artist.id)
 		}
 	}
-	//#endregion
 
 	return smallScreen ? (
 		<ListItem onClick={() => handleTrackClick(track)} disablePadding>

@@ -9,9 +9,7 @@ interface Props {
 const AppearanceCard: React.FC<Props> = (props: Props) => {
 	const { appearance } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
 	return appearance.condition() ? (
 		<Card sx={{ width: 250, mb: 3 }} onClick={() => navigate(appearance.link)}>

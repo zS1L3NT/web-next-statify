@@ -25,7 +25,6 @@ import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
  */
 
 const Album: React.FC = () => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const location = useLocation()
 	const api = useSpotifyApi()
@@ -33,9 +32,7 @@ const Album: React.FC = () => {
 	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectSimplified | undefined)[]>(
 		Array(10).fill(undefined)
 	)
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -80,7 +77,6 @@ const Album: React.FC = () => {
 			}
 		})
 	}, [dispatch, api, album])
-	//#endregion
 
 	return (
 		<Container>

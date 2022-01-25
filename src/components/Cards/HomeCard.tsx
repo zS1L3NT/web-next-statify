@@ -10,10 +10,8 @@ interface Props {
 const HomeCard: React.FC<Props> = (props: Props) => {
 	const { card } = props
 
-	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
 	const navigate = useNavigate()
-	//#endregion
 
 	return (
 		<Grid key={card.id} item>

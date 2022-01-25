@@ -13,14 +13,11 @@ interface Props {
 const ArtistCard: React.FC<Props> = (props: Props) => {
 	const { artist } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.ArtistObjectFull>()
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!artist) return
@@ -29,15 +26,12 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 			.then(setData)
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
-	//#endregion
 
-	//#region Functions
 	const handleArtistClick = () => {
 		if (artist) {
 			navigate("/artist/" + artist.id)
 		}
 	}
-	//#endregion
 
 	return (
 		<Card sx={{ mb: 2 }} onClick={handleArtistClick}>

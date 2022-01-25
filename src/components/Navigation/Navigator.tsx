@@ -19,11 +19,9 @@ import {
 import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
 
 const Navigator: React.FC = () => {
-	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
 	const theme = useAppSelector(state => state.theme)
 	const [open, setOpen] = useState(false)
-	//#endregion
 
 	const data: (iDrawerItem | iDrawerDropdown)[] = [
 		{

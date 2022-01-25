@@ -26,11 +26,8 @@ interface Props {
 const RecentItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, images, recent, i } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
-	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
 			navigate("/track/" + track.id)
@@ -40,7 +37,6 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	const handleArtistClick = (artist: SpotifyApi.ArtistObjectSimplified) => {
 		navigate("/artist/" + artist.id)
 	}
-	//#endregion
 
 	return smallScreen ? (
 		<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>

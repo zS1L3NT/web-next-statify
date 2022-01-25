@@ -25,7 +25,6 @@ import { set_error } from "../slices/ErrorSlice"
 import { useLocation, useNavigate } from "react-router-dom"
 
 const RecentlyPlayed: React.FC = () => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const recents = useAppSelector(state => state.statistics.recents)
 	const location = useLocation()
@@ -34,9 +33,7 @@ const RecentlyPlayed: React.FC = () => {
 	const [images, setImages] = useState<string[]>()
 	const theme = useTheme()
 	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -54,7 +51,6 @@ const RecentlyPlayed: React.FC = () => {
 			.then(res => setImages(res.tracks.map(t => t.album.images.at(0)?.url || "")))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, recents])
-	//#endregion
 
 	return (
 		<Container>

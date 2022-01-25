@@ -6,10 +6,8 @@ import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router-dom"
 
 const Home: React.FC = () => {
-	//#region Hooks
 	const access_token = useAppSelector(state => state.access_token)
 	const navigate = useNavigate()
-	//#endregion
 
 	const cards: iHomeCard[] = [
 		{

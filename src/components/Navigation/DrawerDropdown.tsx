@@ -12,17 +12,13 @@ interface Props {
 const DrawerDropdown: React.FC<Props> = (props: Props) => {
 	const { setOpen, dropdown } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
 	const [dropdownOpen, setDropdownOpen] = useState(false)
-	//#endregion
 
-	//#region Functions
 	const redirect = (url: string) => {
 		navigate(url)
 		setOpen(false)
 	}
-	//#endregion
 
 	return dropdown.condition() ? (
 		<React.Fragment key={dropdown.id}>

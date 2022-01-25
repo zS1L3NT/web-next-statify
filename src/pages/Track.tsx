@@ -34,15 +34,12 @@ import { useTry as _useTry } from "no-try"
  */
 
 const Track: React.FC = () => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
 	const api = useSpotifyApi()
 	const [track, setTrack] = useState<SpotifyApi.SingleTrackResponse>()
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -62,7 +59,6 @@ const Track: React.FC = () => {
 			dispatch(set_error(new Error("Track not found")))
 		}
 	}, [dispatch, location.pathname, api])
-	//#endregion
 
 	const appearances: iAppearanceCard[] = [
 		{

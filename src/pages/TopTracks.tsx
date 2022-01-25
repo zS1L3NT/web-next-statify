@@ -27,16 +27,13 @@ import { tabs } from "../App"
 import { useLocation, useNavigate } from "react-router-dom"
 
 const TopTracks: React.FC = () => {
-	//#region Hooks
 	const tracks = useAppSelector(state => state.statistics.tracks)
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
 	const theme = useTheme()
 	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -54,12 +51,14 @@ const TopTracks: React.FC = () => {
 			navigate("/login")
 		}
 	}, [navigate, location.pathname, tracks])
-	//#endregion
 
 	return term ? (
 		<TabContext value={term}>
 			<Box sx={{ my: 2 }}>
-				<Tabs value={term} onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))} centered>
+				<Tabs
+					value={term}
+					onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))}
+					centered>
 					<Tab label="Past 4 Weeks" value="short_term" />
 					<Tab label="Past 6 Months" value="medium_term" />
 					<Tab label="All Time" value="long_term" />

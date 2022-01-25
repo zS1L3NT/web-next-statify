@@ -31,14 +31,11 @@ interface Props {
 const AlbumDetails: React.FC<Props> = (props: Props) => {
 	const { album, tracks } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!album) return
@@ -47,9 +44,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 			.then(res => setLiked(res[0] !== undefined ? res[0] : null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, album])
-	//#endregion
 
-	//#region Functions
 	const handleAlbumOpen = () => {
 		if (album) {
 			window.open(album.external_urls.spotify)
@@ -111,7 +106,6 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 				})
 		}
 	}
-	//#endregion
 
 	return (
 		<>

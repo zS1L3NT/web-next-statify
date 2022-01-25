@@ -20,17 +20,13 @@ interface Props {
 const Track: React.FC<Props> = (props: Props) => {
 	const { track, album, i } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
-	//#region Functions
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
 			navigate("/track/" + track.id)
 		}
 	}
-	//#endregion
 
 	return (
 		<Card sx={{ my: 1 }} key={i} onClick={() => handleTrackClick(track)}>

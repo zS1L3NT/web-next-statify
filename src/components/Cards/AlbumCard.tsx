@@ -13,14 +13,11 @@ interface Props {
 const AlbumCard: React.FC<Props> = (props: Props) => {
 	const { position, album } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.AlbumObjectFull>()
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!album) return
@@ -29,15 +26,12 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 			.then(setData)
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, album])
-	//#endregion
 
-	//#region Functions
 	const handleAlbumClick = () => {
 		if (album) {
 			navigate("/album/" + album.id)
 		}
 	}
-	//#endregion
 
 	return (
 		<Card onClick={handleAlbumClick}>

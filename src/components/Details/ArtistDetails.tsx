@@ -30,14 +30,11 @@ interface Props {
 const ArtistDetails: React.FC<Props> = (props: Props) => {
 	const { artist } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [followed, setFollowed] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!artist) return
@@ -46,9 +43,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 			.then(res => setFollowed(res[0] !== undefined ? res[0] : null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
-	//#endregion
 
-	//#region Functions
 	const handleArtistOpen = () => {
 		if (artist) {
 			window.open(artist.external_urls.spotify)
@@ -110,7 +105,6 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 				})
 		}
 	}
-	//#endregion
 
 	return (
 		<>

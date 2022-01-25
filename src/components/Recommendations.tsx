@@ -14,15 +14,12 @@ interface Props {
 const Recommendations: React.FC<Props> = (props: Props) => {
 	const { track, artist } = props
 
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const api = useSpotifyApi()
 	const [tracks, setTracks] = useState<(SpotifyApi.TrackObjectSimplified | undefined)[]>(
 		Array(10).fill(undefined)
 	)
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		if (!api) return
 		if (!track && !artist) return
@@ -51,7 +48,6 @@ const Recommendations: React.FC<Props> = (props: Props) => {
 			})
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, track, artist])
-	//#endregion
 
 	return (
 		<>

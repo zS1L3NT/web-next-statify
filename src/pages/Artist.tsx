@@ -26,7 +26,6 @@ import { useTry as _useTry } from "no-try"
  */
 
 const Artist: React.FC = () => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
@@ -36,9 +35,7 @@ const Artist: React.FC = () => {
 	const [topTracks, setTopTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
 		Array(5).fill(undefined)
 	)
-	//#endregion
 
-	//#region Effects
 	useAuthenticated()
 
 	useEffect(() => {
@@ -82,7 +79,6 @@ const Artist: React.FC = () => {
 			navigate("/login")
 		}
 	}, [navigate, location.pathname, artist, statistics])
-	//#endregion
 
 	const appearances: iAppearanceCard[] = [
 		{

@@ -36,7 +36,6 @@ import { set_access_token } from "./slices/AccessTokenSlice"
 import { set_error } from "./slices/ErrorSlice"
 
 const App = (): JSX.Element => {
-	//#region Hooks
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
 	const error = useAppSelector(state => state.error)
@@ -45,9 +44,7 @@ const App = (): JSX.Element => {
 	const location = useLocation()
 	const navigate = useNavigate()
 	const [err, setErr] = useState<Error>()
-	//#endregion
 
-	//#region Effects
 	useEffect(() => {
 		setTimeout(() => {
 			const preload = document.getElementsByClassName("preload").item(0)!
@@ -94,9 +91,7 @@ const App = (): JSX.Element => {
 			window.removeEventListener("beforeunload", beforeunload)
 		}
 	}, [navigate, access_token])
-	//#endregion
 
-	//#region Functions
 	const handleDialogRetry = () => {
 		dispatch(set_error(null))
 
@@ -117,7 +112,6 @@ const App = (): JSX.Element => {
 	const handleSnackbarClose = () => {
 		dispatch(clear_snackbar())
 	}
-	//#endregion
 
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>

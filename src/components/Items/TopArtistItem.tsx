@@ -19,17 +19,13 @@ interface Props {
 const TopArtistItem: React.FC<Props> = (props: Props) => {
 	const { artist, i } = props
 
-	//#region Hooks
 	const navigate = useNavigate()
-	//#endregion
 
-	//#region Functions
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectFull) => {
 		if (artist) {
 			navigate("/artist/" + artist.id)
 		}
 	}
-	//#endregion
 
 	return (
 		<Grid item>
