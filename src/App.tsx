@@ -6,6 +6,7 @@ import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
 import Navigator from "./components/Navigation/Navigator"
+import PWASnackbar from "./components/Popups/PWASnackbar"
 import React, { useEffect, useState } from "react"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
@@ -159,6 +160,7 @@ const App = (): JSX.Element => {
 					<Route path="*" element={<Navigate to="" replace />} />
 				</Routes>
 			</div>
+			<PWASnackbar />
 			<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
 				<DialogTitle>{err?.name || ""}</DialogTitle>
 				<DialogContent>

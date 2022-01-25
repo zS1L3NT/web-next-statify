@@ -21,7 +21,6 @@
 		"react-dom": "^17.0.2",
 		"react-redux": "^7.2.5",
 		"react-router-dom": "^6.2.1",
-		"react-service-worker": "^0.1.1",
 		"spotify-web-api-js": "^1.5.1"
 	},
 	"devDependencies": {
@@ -34,11 +33,7 @@
 		"@vitejs/plugin-react": "^1.1.4",
 		"typescript": "^4.4.3",
 		"vite": "^2.7.13",
-		"workbox-core": "^6.4.2",
-		"workbox-expiration": "^6.4.2",
-		"workbox-precaching": "^6.4.2",
-		"workbox-routing": "^6.4.2",
-		"workbox-strategies": "^6.4.2"
+		"vite-plugin-pwa": "^0.11.13"
 	},
 	"browserslist": {
 		"production": [
