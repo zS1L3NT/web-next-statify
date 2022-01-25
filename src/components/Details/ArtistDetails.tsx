@@ -43,7 +43,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 		if (!artist) return
 
 		api.isFollowingArtists([artist.id])
-			.then(res => setFollowed(res[0] || null))
+			.then(res => setFollowed(res[0] !== undefined ? res[0] : null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
 	//#endregion
