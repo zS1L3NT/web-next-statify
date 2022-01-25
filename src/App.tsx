@@ -1,13 +1,14 @@
 import Album from "./pages/Album"
 import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
+import ErrorDialog from "./components/Popups/ErrorDialog"
 import Home from "./pages/Home"
+import InfoSnackbar from "./components/Popups/InfoSnackbar"
 import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
 import Navigator from "./components/Navigation/Navigator"
 import PWASnackbar from "./components/Popups/PWASnackbar"
-import React, { useEffect, useState } from "react"
 import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
@@ -15,35 +16,18 @@ import Track from "./pages/Track"
 import useAppDispatch from "./hooks/useAppDispatch"
 import useAppSelector from "./hooks/useAppSelector"
 import useThemeValue from "./hooks/useThemeValue"
-import {
-	Alert,
-	Backdrop,
-	Button,
-	CssBaseline,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle,
-	Fade,
-	Snackbar,
-	ThemeProvider
-} from "@mui/material"
-import { clear_snackbar } from "./slices/SnackbarSlice"
+import { CssBaseline, ThemeProvider } from "@mui/material"
 import { dark, light } from "./theme"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 import { set_access_token } from "./slices/AccessTokenSlice"
-import { set_error } from "./slices/ErrorSlice"
+import { useEffect } from "react"
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
-	const error = useAppSelector(state => state.error)
-	const snackbar = useAppSelector(state => state.snackbar)
 	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
 	const navigate = useNavigate()
-	const [err, setErr] = useState<Error>()
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -52,10 +36,6 @@ const App = (): JSX.Element => {
 			setTimeout(() => preload.remove(), 1000)
 		}, 1000)
 	}, [])
-
-	useEffect(() => {
-		if (error) setErr(error)
-	}, [error])
 
 	useEffect(() => {
 		window.scrollTo({ top: 0 })
@@ -91,27 +71,6 @@ const App = (): JSX.Element => {
 			window.removeEventListener("beforeunload", beforeunload)
 		}
 	}, [navigate, access_token])
-
-	const handleDialogRetry = () => {
-		dispatch(set_error(null))
-
-		// If is a id not found error, don't set the redirect path and don't logout
-		if (!err?.message.endsWith(" not found")) {
-			sessionStorage.setItem("redirect", location.pathname)
-			setTimeout(() => navigate("/logout"), 500)
-		} else {
-			setTimeout(() => navigate("/"), 500)
-		}
-	}
-
-	const handleDialogHome = () => {
-		dispatch(set_error(null))
-		navigate("/")
-	}
-
-	const handleSnackbarClose = () => {
-		dispatch(clear_snackbar())
-	}
 
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>
@@ -154,39 +113,9 @@ const App = (): JSX.Element => {
 					<Route path="*" element={<Navigate to="" replace />} />
 				</Routes>
 			</div>
+			<ErrorDialog />
 			<PWASnackbar />
-			<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
-				<DialogTitle>{err?.name || ""}</DialogTitle>
-				<DialogContent>
-					<DialogContentText>
-						{err?.message || ""}
-						<br />
-						{err?.message.endsWith(" not found")
-							? "You will be redirected home"
-							: "You will be signed out"}
-					</DialogContentText>
-				</DialogContent>
-				<DialogActions>
-					{err?.message.endsWith(" not found") ? null : (
-						<Button onClick={handleDialogHome}>Home</Button>
-					)}
-					<Button onClick={handleDialogRetry}>Retry</Button>
-				</DialogActions>
-			</Dialog>
-			<Snackbar
-				open={snackbar.open}
-				onClose={handleSnackbarClose}
-				autoHideDuration={3000}
-				TransitionComponent={Fade}>
-				<Alert
-					sx={{ width: "100%" }}
-					elevation={6}
-					variant="filled"
-					severity={snackbar.variant}
-					onClose={handleSnackbarClose}>
-					{snackbar.message}
-				</Alert>
-			</Snackbar>
+			<InfoSnackbar />
 		</ThemeProvider>
 	)
 }
