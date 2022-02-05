@@ -1,6 +1,6 @@
 # Statify
 
-![License](https://img.shields.io/github/license/zS1L3NT/.github?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/zS1L3NT/web-react-statify?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/zS1L3NT/web-react-statify?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/zS1L3NT/web-react-statify?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/zS1L3NT/web-react-statify?style=for-the-badge)
+![License](https://img.shields.io/github/license/zS1L3NT/web-react-statify?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/zS1L3NT/web-react-statify?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/zS1L3NT/web-react-statify?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/zS1L3NT/web-react-statify?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/zS1L3NT/web-react-statify?style=for-the-badge)
 
 Statify is a Spotify listening statistics checking website available [here](https://statify.zectan.com). Just sign into your Spotify account and you will be able to see your top tracks, artists and recent tracks. Click on a Track, Artist or Album to view more details about it.
 
