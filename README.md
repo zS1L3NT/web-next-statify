@@ -4,6 +4,12 @@
 
 Statify is a Spotify listening statistics checking website available [here](https://statify.zectan.com). Just sign into your Spotify account and you will be able to see your top tracks, artists and recent tracks. Click on a Track, Artist or Album to view more details about it.
 
+## Motivation
+
+I love looking at my Spotify statistics. I enjoy seeing what track I'm listening to the most across different time periods. I used to use [StatsForSpotify](https://statsforspotify.com) to check my listening history on Spotify. However, the UI looked terrible and it didn't support progressive web applications, meaning I can install on my phone.
+
+Building Statify allowed me to view my Spotify listening statistics with a much nicer UI than StatsForSpotify.
+
 ## Features
 
 -   Progressive Web Application
