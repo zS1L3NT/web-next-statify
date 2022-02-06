@@ -42,7 +42,7 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 		<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
 			<ListItemButton>
 				<ListItemAvatar>
-					{images && i ? (
+					{images && i !== undefined ? (
 						<Avatar sx={{ width: 45, height: 45 }} src={images[i] || ""} />
 					) : (
 						<Skeleton variant="circular" width={45} height={45} />
@@ -72,7 +72,7 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	) : (
 		<TableRow hover>
 			<TableCell>
-				{images && i ? (
+				{images && i !== undefined ? (
 					<Avatar sx={{ width: 45, height: 45 }} src={images[i] || ""} />
 				) : (
 					<Skeleton variant="circular" width={45} height={45} />
