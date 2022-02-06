@@ -27,11 +27,13 @@ const ErrorDialog = () => {
 		dispatch(set_error(null))
 
 		// If is a id not found error, don't set the redirect path and don't logout
-		if (!localError?.message.endsWith(" not found")) {
-			sessionStorage.setItem("redirect", location.pathname)
-			setTimeout(() => navigate("/logout"), 500)
-		} else {
+		if (localError?.message.endsWith(" not found")) {
 			setTimeout(() => navigate("/"), 500)
+		} else {
+			if (location.pathname !== "/login") {
+				sessionStorage.setItem("redirect", location.pathname)
+			}
+			setTimeout(() => navigate("/logout"), 500)
 		}
 	}
 

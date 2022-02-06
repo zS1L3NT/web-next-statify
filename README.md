@@ -38,7 +38,7 @@ With `yarn`
 
 ```
 $ yarn
-$ npm run start
+$ yarn start
 ```
 
 With `npm`
