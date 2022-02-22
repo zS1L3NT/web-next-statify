@@ -48,6 +48,10 @@ $ npm i
 $ npm run start
 ```
 
+## Credits
+
+[@Shockch4rge](https://github.com/Shockch4rge) introduced me to `@reduxjs/toolkit` which improved my productivity in Redux
+
 ## Build with
 
 -   TypeScript
