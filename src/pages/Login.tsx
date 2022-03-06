@@ -1,5 +1,4 @@
 import axios from "axios"
-import config from "../config.json"
 import React, { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
@@ -25,14 +24,9 @@ const Login: React.FC = () => {
 			const data = new URLSearchParams()
 			data.append("grant_type", "authorization_code")
 			data.append("code", search.get("code")!)
-			data.append(
-				"redirect_uri",
-				window.location.hostname === "statify.zectan.com"
-					? config.spotify.redirect_uri.production
-					: config.spotify.redirect_uri.development
-			)
-			data.append("client_id", config.spotify.client_id)
-			data.append("client_secret", config.spotify.client_secret)
+			data.append("redirect_uri", import.meta.env.VITE__SPOTIFY__REDIRECT_URI)
+			data.append("client_id", import.meta.env.VITE__SPOTIFY__CLIENT_ID)
+			data.append("client_secret", import.meta.env.VITE__SPOTIFY__CLIENT_SECRET)
 
 			axios
 				.post("https://accounts.spotify.com/api/token", data, {
@@ -45,12 +39,9 @@ const Login: React.FC = () => {
 		} else {
 			const query = new URLSearchParams({
 				response_type: "code",
-				client_id: config.spotify.client_id,
-				redirect_uri:
-					window.location.hostname === "statify.zectan.com"
-						? config.spotify.redirect_uri.production
-						: config.spotify.redirect_uri.development,
-				scope: config.spotify.scope
+				client_id: import.meta.env.VITE__SPOTIFY__CLIENT_ID,
+				redirect_uri: import.meta.env.VITE__SPOTIFY__REDIRECT_URI,
+				scope: import.meta.env.VITE__SPOTIFY__SCOPE
 			})
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
