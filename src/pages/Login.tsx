@@ -1,4 +1,3 @@
-import axios from "axios"
 import React, { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
@@ -19,26 +18,16 @@ const Login: React.FC = () => {
 	useEffect(() => {
 		if (access_token) return
 
-		const search = new URLSearchParams(location.search)
-		if (search.has("code")) {
-			const data = new URLSearchParams()
-			data.append("grant_type", "authorization_code")
-			data.append("code", search.get("code")!)
-			data.append("redirect_uri", import.meta.env.VITE__SPOTIFY__REDIRECT_URI)
-			data.append("client_id", import.meta.env.VITE__SPOTIFY__CLIENT_ID)
-			data.append("client_secret", import.meta.env.VITE__SPOTIFY__CLIENT_SECRET)
-
-			axios
-				.post("https://accounts.spotify.com/api/token", data, {
-					headers: {
-						"Content-Type": "application/x-www-form-urlencoded"
-					}
-				})
-				.then(res => dispatch(set_access_token((res.data as any).access_token)))
-				.catch(err => dispatch(set_error(err.response?.data?.message || err.message)))
+		if (location.hash) {
+			const matches = location.hash.match(/access_token=([^&]*)/)
+			if (matches) {
+				dispatch(set_access_token(matches[1] as string))
+			} else {
+				navigate("/")
+			}
 		} else {
 			const query = new URLSearchParams({
-				response_type: "code",
+				response_type: "token",
 				client_id: import.meta.env.VITE__SPOTIFY__CLIENT_ID,
 				redirect_uri: import.meta.env.VITE__SPOTIFY__REDIRECT_URI,
 				scope: import.meta.env.VITE__SPOTIFY__SCOPE
@@ -46,7 +35,7 @@ const Login: React.FC = () => {
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
 		}
-	}, [dispatch, location.search, access_token])
+	}, [dispatch, location.hash, access_token])
 
 	useEffect(() => {
 		if (!api) return

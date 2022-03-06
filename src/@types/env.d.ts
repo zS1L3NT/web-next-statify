@@ -2,7 +2,6 @@
 
 interface ImportMetaEnv {
 	readonly VITE__SPOTIFY__CLIENT_ID: string
-	readonly VITE__SPOTIFY__CLIENT_SECRET: string
 	readonly VITE__SPOTIFY__SCOPE: string
 	readonly VITE__SPOTIFY__REDIRECT_URI: string
 }
