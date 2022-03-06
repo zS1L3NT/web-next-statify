@@ -1,0 +1,58 @@
+name: Deploy
+on:
+    push:
+        branches: [main]
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - name: Performing Repository Checkout
+              uses: actions/checkout@v2
+
+            - name: Performing Yarn Install on Workspace
+              uses: borales/actions-yarn@v2.3.0
+              with:
+                  cmd: install
+
+            - name: Writing to .env file
+              run: |
+                  echo 'VITE__SPOTIFY__CLIENT_ID=${{ secrets.VITE__SPOTIFY__CLIENT_ID }}' > .env
+                  echo 'VITE__SPOTIFY__REDIRECT_URI=${{ secrets.VITE__SPOTIFY__REDIRECT_URI }}' >> .env
+                  echo 'VITE__SPOTIFY__SCOPE=${{ secrets.VITE__SPOTIFY__SCOPE }}' >> .env
+
+            - name: Building React Project
+              run: yarn build
+
+            - name: Deleting old files on Server
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  script: "rm -rf /home/ubuntu/projects/web-react-statify/dist"
+
+            - name: Uploading new files to Server
+              uses: appleboy/scp-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  target: "/home/ubuntu/projects/web-react-statify"
+                  source: "dist/*"
+
+            - name: Performing Yarn Install on Server
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  script: "cd /home/ubuntu/projects/web-react-statify && yarn"
+
+            - name: Restarting PM2 Process
+              uses: appleboy/ssh-action@master
+              with:
+                  host: ${{ secrets.SSH_HOST }}
+                  username: ${{ secrets.SSH_USERNAME }}
+                  password: ${{ secrets.SSH_PASSWORD }}
+                  script: "pm2 flush web-react-statify && pm2 restart web-react-statify"
