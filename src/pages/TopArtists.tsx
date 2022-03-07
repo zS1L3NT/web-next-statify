@@ -26,11 +26,9 @@ const TopArtists: React.FC = () => {
 	useAuthenticated()
 
 	useEffect(() => {
+		const parts = location.pathname.split("/")
 		setTerm(
-			location.pathname.split("/").at(-1)!.replace("-", "_") as
-				| "short_term"
-				| "medium_term"
-				| "long_term"
+			parts[parts.length - 1]!.replace("-", "_") as "short_term" | "medium_term" | "long_term"
 		)
 	}, [location.pathname])
 

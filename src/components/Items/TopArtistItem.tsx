@@ -37,7 +37,7 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 							alt="Picture"
 							width={250}
 							height={250}
-							image={artist.images.at(0)?.url || ""}
+							image={artist.images[0]?.url || ""}
 						/>
 					) : (
 						<Skeleton variant="rectangular" width={250} height={250} />

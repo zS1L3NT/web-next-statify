@@ -37,7 +37,7 @@ const Track: React.FC<Props> = (props: Props) => {
 							<Avatar
 								sx={{ width: 45, height: 45 }}
 								src={
-									("album" in track ? track.album : album)?.images.at(0)?.url ||
+									("album" in track ? track.album : album)?.images[0]?.url ||
 									""
 								}
 							/>

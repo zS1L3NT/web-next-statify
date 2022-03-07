@@ -45,7 +45,7 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 					{track ? (
 						<Avatar
 							sx={{ width: 45, height: 45 }}
-							src={track.album.images.at(0)?.url || ""}
+							src={track.album.images[0]?.url || ""}
 						/>
 					) : (
 						<Skeleton variant="circular" width={45} height={45} />
@@ -71,7 +71,7 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 				{track ? (
 					<Avatar
 						sx={{ width: 45, height: 45 }}
-						src={track.album.images.at(0)?.url || ""}
+						src={track.album.images[0]?.url || ""}
 					/>
 				) : (
 					<Skeleton variant="circular" width={45} height={45} />
