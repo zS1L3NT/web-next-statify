@@ -57,7 +57,6 @@ $ npm run start
 -   TypeScript
     -   [![@types/luxon](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/luxon?style=flat-square)](https://npmjs.com/package/@types/luxon)
     -   [![@types/react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react?style=flat-square)](https://npmjs.com/package/@types/react)
-    -   [![@types/react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react?style=flat-square)](https://npmjs.com/package/@types/react)
     -   [![@types/react-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-dom?style=flat-square)](https://npmjs.com/package/@types/react-dom)
     -   [![@types/react-redux](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-redux?style=flat-square)](https://npmjs.com/package/@types/react-redux)
     -   [![@types/react-router-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-router-dom?style=flat-square)](https://npmjs.com/package/@types/react-router-dom)
