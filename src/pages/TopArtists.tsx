@@ -46,8 +46,8 @@ const TopArtists: React.FC = () => {
 					value={term}
 					onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))}
 					centered>
-					<Tab label="Past 4 Weeks" value="short_term" />
-					<Tab label="Past 6 Months" value="medium_term" />
+					<Tab label="Last Month" value="short_term" />
+					<Tab label="Last 6 Months" value="medium_term" />
 					<Tab label="All Time" value="long_term" />
 				</Tabs>
 				<Container sx={{ mt: 3 }}>

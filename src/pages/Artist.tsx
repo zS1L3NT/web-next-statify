@@ -83,7 +83,7 @@ const Artist: React.FC = () => {
 	const appearances: iAppearanceCard[] = [
 		{
 			hash: true,
-			text: "streamed artists of the last 4 weeks",
+			text: "streamed artists of the last month",
 			link: "/top-artists/short-term",
 			condition: () =>
 				(statistics.artists.short_term?.findIndex(t => t.id === artist?.id) || 0) + 1
@@ -105,7 +105,7 @@ const Artist: React.FC = () => {
 		{
 			hash: false,
 			link: "/top-tracks/short-term",
-			text: `appearances from ${artist?.name} in your top tracks of the last 4 weeks`,
+			text: `appearances from ${artist?.name} in your top tracks of the last month`,
 			condition: () =>
 				statistics.tracks.short_term?.filter(t => t.artists.find(a => a.id === artist?.id))
 					.length

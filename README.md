@@ -16,11 +16,11 @@ Building Statify allowed me to view my Spotify listening statistics with a much 
 -   Authentication state saves on refresh
 -   Light mode or Dark mode
 -   Top Tracks
-    -   Last 4 Weeks
+    -   Last Month
     -   Last 6 Months
     -   All Time
 -   Top Artists
-    -   Last 4 Weeks
+    -   Last Month
     -   Last 6 Months
     -   All Time
 -   Recently Played

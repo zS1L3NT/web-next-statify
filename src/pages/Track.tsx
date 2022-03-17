@@ -64,7 +64,7 @@ const Track: React.FC = () => {
 		{
 			hash: true,
 			link: "/top-tracks/short-term",
-			text: "streamed tracks of the last 4 weeks",
+			text: "streamed tracks of the last month",
 			condition: () =>
 				(statistics.tracks.short_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
