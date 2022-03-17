@@ -1,5 +1,5 @@
+import AsyncImage from "./AsyncImage"
 import React, { useEffect } from "react"
-import useAsyncImageUrl from "../hooks/useAsyncImageUrl"
 import {
 	Avatar,
 	Card,
@@ -22,11 +22,6 @@ const Track: React.FC<Props> = (props: Props) => {
 	const { track, album, i } = props
 
 	const navigate = useNavigate()
-	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
-
-	useEffect(() => {
-		setThumbnailUrl((track && "album" in track ? track.album : album)?.images[0]?.url)
-	}, [track])
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
@@ -39,11 +34,13 @@ const Track: React.FC<Props> = (props: Props) => {
 			<CardActionArea>
 				<ListItem>
 					<ListItemAvatar>
-						{thumbnailUrl ? (
-							<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
-						) : (
-							<Skeleton variant="circular" width={45} height={45} />
-						)}
+						<AsyncImage
+							src={(track && "album" in track ? track.album : album)?.images[0]?.url}
+							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							component={thumbnailUrl => (
+								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+							)}
+						/>
 					</ListItemAvatar>
 					{track ? (
 						<ListItemText

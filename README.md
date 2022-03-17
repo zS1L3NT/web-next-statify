@@ -50,7 +50,8 @@ $ npm run start
 
 ## Credits
 
-[@Shockch4rge](https://github.com/Shockch4rge) introduced me to `@reduxjs/toolkit` which improved my productivity in Redux
+[@Shockch4rge](https://github.com/Shockch4rge) introduced me to `@reduxjs/toolkit` which improved my productivity in Redux.
+Overlapping elements was simplified for me thanks to [this](https://css-tricks.com/how-to-stack-elements-in-css/) article
 
 ## Build with
 

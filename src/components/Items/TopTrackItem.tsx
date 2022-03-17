@@ -1,6 +1,6 @@
+import AsyncImage from "../AsyncImage"
 import getDuration from "../../utils/getDuration"
-import React, { useEffect } from "react"
-import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
+import React from "react"
 import {
 	Avatar,
 	Link,
@@ -26,11 +26,6 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, track, i } = props
 
 	const navigate = useNavigate()
-	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
-
-	useEffect(() => {
-		setThumbnailUrl(track?.album.images[0]?.url)
-	}, [track])
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
 		if (track) {
@@ -48,11 +43,13 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 		<ListItem onClick={() => handleTrackClick(track)} disablePadding>
 			<ListItemButton>
 				<ListItemAvatar>
-					{thumbnailUrl ? (
-						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
-					) : (
-						<Skeleton variant="circular" width={45} height={45} />
-					)}
+					<AsyncImage
+						src={track?.album.images[0]?.url}
+						skeleton={<Skeleton variant="circular" width={45} height={45} />}
+						component={thumbnailUrl => (
+							<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+						)}
+					/>
 				</ListItemAvatar>
 				{track ? (
 					<ListItemText
@@ -71,11 +68,13 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 		<TableRow hover>
 			<TableCell align="center">{i! + 1}</TableCell>
 			<TableCell>
-				{thumbnailUrl ? (
-					<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
-				) : (
-					<Skeleton variant="circular" width={45} height={45} />
-				)}
+				<AsyncImage
+					src={track?.album.images[0]?.url}
+					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					component={thumbnailUrl => (
+						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+					)}
+				/>
 			</TableCell>
 			<TableCell>
 				{track ? (

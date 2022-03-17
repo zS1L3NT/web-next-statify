@@ -1,6 +1,6 @@
+import AsyncImage from "../AsyncImage"
 import React, { useEffect, useState } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
-import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 import { set_error } from "../../slices/ErrorSlice"
@@ -18,7 +18,6 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.AlbumObjectFull>()
-	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
 
 	useEffect(() => {
 		if (!api) return
@@ -28,10 +27,6 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 			.then(setData)
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, album])
-
-	useEffect(() => {
-		setThumbnailUrl(data?.images[0]?.url)
-	}, [data])
 
 	const handleAlbumClick = () => {
 		if (album) {
@@ -47,16 +42,18 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 						display: "flex",
 						flexDirection: "row"
 					}}>
-					{thumbnailUrl ? (
-						<CardMedia
-							component="img"
-							sx={{ width: 120 }}
-							image={thumbnailUrl}
-							alt="Picture"
-						/>
-					) : (
-						<Skeleton variant="rectangular" width={120} height={120} />
-					)}
+					<AsyncImage
+						src={data?.images[0]?.url}
+						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
+						component={thumbnailUrl => (
+							<CardMedia
+								component="img"
+								sx={{ width: 120 }}
+								image={thumbnailUrl}
+								alt="Picture"
+							/>
+						)}
+					/>
 					<CardMedia
 						sx={{
 							ml: 2,

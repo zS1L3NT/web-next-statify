@@ -1,6 +1,6 @@
+import AsyncImage from "../AsyncImage"
 import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
-import React, { useEffect } from "react"
-import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
+import React from "react"
 import {
 	Avatar,
 	Link,
@@ -27,11 +27,6 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	const { smallScreen, image, recent } = props
 
 	const navigate = useNavigate()
-	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
-
-	useEffect(() => {
-		setThumbnailUrl(image)
-	}, [image])
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
 		if (track) {
@@ -47,11 +42,13 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 		<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
 			<ListItemButton>
 				<ListItemAvatar>
-					{thumbnailUrl ? (
-						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
-					) : (
-						<Skeleton variant="circular" width={45} height={45} />
-					)}
+					<AsyncImage
+						src={image}
+						skeleton={<Skeleton variant="circular" width={45} height={45} />}
+						component={thumbnailUrl => (
+							<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+						)}
+					/>
 				</ListItemAvatar>
 				{recent ? (
 					<ListItemText
@@ -77,11 +74,13 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	) : (
 		<TableRow hover>
 			<TableCell>
-				{thumbnailUrl ? (
-					<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
-				) : (
-					<Skeleton variant="circular" width={45} height={45} />
-				)}
+				<AsyncImage
+					src={image}
+					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					component={thumbnailUrl => (
+						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+					)}
+				/>
 			</TableCell>
 			<TableCell>
 				{recent ? (
