@@ -1,5 +1,6 @@
 import getFollowers from "../../utils/getFollowers"
-import React from "react"
+import React, { useEffect } from "react"
+import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
 import {
 	Card,
 	CardActionArea,
@@ -20,6 +21,11 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 	const { artist, i } = props
 
 	const navigate = useNavigate()
+	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
+
+	useEffect(() => {
+		setThumbnailUrl(artist?.images[0]?.url)
+	}, [artist])
 
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectFull) => {
 		if (artist) {
@@ -31,13 +37,13 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 		<Grid item>
 			<Card sx={{ p: 0, minWidth: 250 }} onClick={() => handleArtistClick(artist)}>
 				<CardActionArea>
-					{artist ? (
+					{thumbnailUrl ? (
 						<CardMedia
 							component="img"
 							alt="Picture"
 							width={250}
 							height={250}
-							image={artist.images[0]?.url || ""}
+							image={thumbnailUrl}
 						/>
 					) : (
 						<Skeleton variant="rectangular" width={250} height={250} />

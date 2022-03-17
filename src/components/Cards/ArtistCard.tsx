@@ -1,6 +1,7 @@
 import getFollowers from "../../utils/getFollowers"
 import React, { useEffect, useState } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
+import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 import { set_error } from "../../slices/ErrorSlice"
@@ -17,6 +18,7 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
 	const [data, setData] = useState<SpotifyApi.ArtistObjectFull>()
+	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
 
 	useEffect(() => {
 		if (!api) return
@@ -26,6 +28,10 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 			.then(setData)
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
+
+	useEffect(() => {
+		setThumbnailUrl(data?.images[0]?.url)
+	}, [data])
 
 	const handleArtistClick = () => {
 		if (artist) {
@@ -41,11 +47,11 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 						display: "flex",
 						flexDirection: "row"
 					}}>
-					{data ? (
+					{thumbnailUrl ? (
 						<CardMedia
 							component="img"
 							sx={{ width: 120 }}
-							image={data.images[0]?.url || ""}
+							image={thumbnailUrl}
 							alt="Picture"
 						/>
 					) : (

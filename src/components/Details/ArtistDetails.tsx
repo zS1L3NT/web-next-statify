@@ -2,6 +2,7 @@ import getFollowers from "../../utils/getFollowers"
 import PageIndicator from "../PageIndicator"
 import React, { useEffect, useState } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
+import useAsyncImageUrl from "../../hooks/useAsyncImageUrl"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
 import {
 	Avatar,
@@ -34,6 +35,7 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 	const api = useSpotifyApi()
 	const [followed, setFollowed] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
+	const [thumbnailUrl, setThumbnailUrl] = useAsyncImageUrl()
 
 	useEffect(() => {
 		if (!api) return
@@ -43,6 +45,10 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 			.then(res => setFollowed(res[0] !== undefined ? res[0] : null))
 			.catch(err => dispatch(set_error(err)))
 	}, [dispatch, api, artist])
+
+	useEffect(() => {
+		setThumbnailUrl(artist?.images[0]?.url)
+	}, [artist])
 
 	const handleArtistOpen = () => {
 		if (artist) {
@@ -113,14 +119,14 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 				container
 				direction={{ xs: "column", sm: "row" }}>
 				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
-					{artist ? (
+					{thumbnailUrl ? (
 						<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
 							<CardActionArea>
 								<CardMedia
 									component="img"
 									width={200}
 									height={200}
-									image={artist.images[0]?.url || ""}
+									image={thumbnailUrl}
 									alt="Image"
 								/>
 							</CardActionArea>
