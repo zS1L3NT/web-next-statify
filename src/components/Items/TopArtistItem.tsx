@@ -1,6 +1,6 @@
 import AsyncImage from "../AsyncImage"
 import getFollowers from "../../utils/getFollowers"
-import React, { useEffect } from "react"
+import React from "react"
 import {
 	Card,
 	CardActionArea,
