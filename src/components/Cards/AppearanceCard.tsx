@@ -15,7 +15,14 @@ const AppearanceCard: React.FC<Props> = (props: Props) => {
 		<Card sx={{ width: 250, mb: 3 }} onClick={() => navigate(appearance.link)}>
 			<CardActionArea sx={{ height: "100%" }}>
 				<CardContent>
-					<Typography color="primary.main" variant="h3">
+					<Typography
+						color="primary.main"
+						variant="h3"
+						sx={{
+							width: "fit-content",
+							marginRight: "0.8rem",
+							float: "left"
+						}}>
 						{appearance.hash ? "#" : ""}
 						{appearance.condition()}
 					</Typography>

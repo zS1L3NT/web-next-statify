@@ -83,21 +83,21 @@ const Artist: React.FC = () => {
 	const appearances: iAppearanceCard[] = [
 		{
 			hash: true,
-			text: "of your most streamed artists in the last 4 weeks",
+			text: "streamed artists of the last 4 weeks",
 			link: "/top-artists/short-term",
 			condition: () =>
 				(statistics.artists.short_term?.findIndex(t => t.id === artist?.id) || 0) + 1
 		},
 		{
 			hash: true,
-			text: "of your most streamed artists in the last 6 months",
+			text: "streamed artists of the last 6 months",
 			link: "/top-artists/medium-term",
 			condition: () =>
 				(statistics.artists.medium_term?.findIndex(t => t.id === artist?.id) || 0) + 1
 		},
 		{
 			hash: true,
-			text: "of your most streamed artists in your lifetime",
+			text: "streamed artists of your lifetime",
 			link: "/top-artists/long-term",
 			condition: () =>
 				(statistics.artists.long_term?.findIndex(t => t.id === artist?.id) || 0) + 1
@@ -105,7 +105,7 @@ const Artist: React.FC = () => {
 		{
 			hash: false,
 			link: "/top-tracks/short-term",
-			text: "appearances from this Artist in your most streamed tracks in the last 4 weeks",
+			text: `appearances from ${artist?.name} in your top tracks of the last 4 weeks`,
 			condition: () =>
 				statistics.tracks.short_term?.filter(t => t.artists.find(a => a.id === artist?.id))
 					.length
@@ -113,7 +113,7 @@ const Artist: React.FC = () => {
 		{
 			hash: false,
 			link: "/top-tracks/medium-term",
-			text: "appearances from this Artist in your most streamed tracks in the last 6 months",
+			text: `appearances from ${artist?.name} in your top tracks of the last 6 months`,
 			condition: () =>
 				statistics.tracks.medium_term?.filter(t => t.artists.find(a => a.id === artist?.id))
 					.length
@@ -121,7 +121,7 @@ const Artist: React.FC = () => {
 		{
 			hash: false,
 			link: "/top-tracks/long-term",
-			text: "appearances from this Artist in your most streamed tracks in your lifetime",
+			text: `appearances from ${artist?.name} in your top tracks of your lifetime`,
 			condition: () =>
 				statistics.tracks.long_term?.filter(t => t.artists.find(a => a.id === artist?.id))
 					.length
@@ -129,7 +129,7 @@ const Artist: React.FC = () => {
 		{
 			hash: false,
 			link: "/recents",
-			text: "appearances from this Artist in your last 50 streams",
+			text: `appearances from ${artist?.name} in your last 50 streams`,
 			condition: () =>
 				statistics.recents?.filter(t => t.track.artists.find(a => a.id === artist?.id))
 					.length
