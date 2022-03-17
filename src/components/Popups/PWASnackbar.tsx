@@ -30,7 +30,7 @@ const PWASnackbar = () => {
 			message={
 				offlineReady
 					? "App ready to work offline"
-					: "New content available, click on reload button to update."
+					: "An update is available!"
 			}
 			action={
 				<>
@@ -39,7 +39,7 @@ const PWASnackbar = () => {
 							color="primary"
 							size="small"
 							onClick={() => updateServiceWorker(true)}>
-							Reload
+							Update
 						</Button>
 					)}
 					<IconButton
