@@ -13,13 +13,13 @@ const Home: React.FC = () => {
 		{
 			id: "home-top-tracks",
 			header: "Top Tracks",
-			body: "See the top 100 tracks you played on Spotify in the past 4 weeks, 6 months and lifetime!",
+			body: "See the top 100 tracks you played on Spotify in the last month, 6 months and lifetime!",
 			url: "/top-tracks"
 		},
 		{
 			id: "home-top-artists",
 			header: "Top Artists",
-			body: "See the top 100 artists you played on Spotify in the past 4 weeks, 6 months and lifetime!",
+			body: "See the top 100 artists you played on Spotify in the last month, 6 months and lifetime!",
 			url: "/top-artists"
 		},
 		{

@@ -72,9 +72,8 @@ const RecentlyPlayed: React.FC = () => {
 								<RecentItem
 									key={i}
 									smallScreen={smallScreen}
-									images={images}
+									image={images?.[i]}
 									recent={recent}
-									i={i}
 								/>
 							))}
 						</List>
@@ -94,9 +93,8 @@ const RecentlyPlayed: React.FC = () => {
 										<RecentItem
 											key={i}
 											smallScreen={smallScreen}
-											images={images}
+											image={images?.[i]}
 											recent={recent}
-											i={i}
 										/>
 									))}
 								</TableBody>

@@ -47,14 +47,14 @@ const Navigator: React.FC = () => {
 				{
 					id: "nav-top-tracks-short-term",
 					icon: <AccessTime />,
-					title: "Past 4 Weeks",
+					title: "Last Month",
 					url: "/top-tracks/short-term",
 					condition: () => !!access_token
 				},
 				{
 					id: "nav-top-tracks-medium-term",
 					icon: <AccessTimeFilled />,
-					title: "Past 6 Months",
+					title: "Last 6 Months",
 					url: "/top-tracks/medium-term",
 					condition: () => !!access_token
 				},
@@ -77,14 +77,14 @@ const Navigator: React.FC = () => {
 				{
 					id: "nav-top-artists-short-term",
 					icon: <AccessTime />,
-					title: "Past 4 Weeks",
+					title: "Last Month",
 					url: "/top-artists/short-term",
 					condition: () => !!access_token
 				},
 				{
 					id: "nav-top-artists-medium-term",
 					icon: <AccessTimeFilled />,
-					title: "Past 6 Months",
+					title: "Last 6 Months",
 					url: "/top-artists/medium-term",
 					condition: () => !!access_token
 				},

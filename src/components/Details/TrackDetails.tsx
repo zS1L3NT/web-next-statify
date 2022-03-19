@@ -1,3 +1,4 @@
+import AsyncImage from "../AsyncImage"
 import getDuration from "../../utils/getDuration"
 import PageIndicator from "../PageIndicator"
 import React, { useEffect, useState } from "react"
@@ -113,26 +114,30 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 				container
 				direction={{ xs: "column", sm: "row" }}>
 				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
-					{track ? (
-						<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
-							<CardActionArea>
-								<CardMedia
-									component="img"
-									width={200}
-									height={200}
-									image={track.album.images[0]?.url || ""}
-									alt="Image"
-								/>
-							</CardActionArea>
-						</Card>
-					) : (
-						<Skeleton
-							sx={{ borderRadius: 5 }}
-							variant="rectangular"
-							width={200}
-							height={200}
-						/>
-					)}
+					<AsyncImage
+						src={track?.album.images[0]?.url}
+						skeleton={
+							<Skeleton
+								sx={{ borderRadius: 5 }}
+								variant="rectangular"
+								width={200}
+								height={200}
+							/>
+						}
+						component={thumbnailUrl => (
+							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
+								<CardActionArea>
+									<CardMedia
+										component="img"
+										width={200}
+										height={200}
+										image={thumbnailUrl}
+										alt="Image"
+									/>
+								</CardActionArea>
+							</Card>
+						)}
+					/>
 				</Grid>
 				<Grid
 					sx={{

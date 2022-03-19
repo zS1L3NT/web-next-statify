@@ -1,4 +1,6 @@
+import AsyncImage from "../AsyncImage"
 import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
+import LazyLoad from "react-lazyload"
 import React from "react"
 import {
 	Avatar,
@@ -18,13 +20,12 @@ import { useNavigate } from "react-router-dom"
 
 interface Props {
 	smallScreen: boolean
-	images?: string[]
+	image?: string
 	recent?: SpotifyApi.PlayHistoryObject
-	i?: number
 }
 
 const RecentItem: React.FC<Props> = (props: Props) => {
-	const { smallScreen, images, recent, i } = props
+	const { smallScreen, image, recent } = props
 
 	const navigate = useNavigate()
 
@@ -39,44 +40,50 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 	}
 
 	return smallScreen ? (
-		<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
-			<ListItemButton>
-				<ListItemAvatar>
-					{images && i !== undefined ? (
-						<Avatar sx={{ width: 45, height: 45 }} src={images[i] || ""} />
+		<LazyLoad height={72}>
+			<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
+				<ListItemButton>
+					<ListItemAvatar>
+						<AsyncImage
+							src={image}
+							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							component={thumbnailUrl => (
+								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+							)}
+						/>
+					</ListItemAvatar>
+					{recent ? (
+						<ListItemText
+							primary={
+								recent.track.name +
+								" - " +
+								recent.track.artists.map(a => a.name).join(", ")
+							}
+							secondary={
+								getTimeSincePlayed(recent) +
+								" ago, " +
+								DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")
+							}
+						/>
 					) : (
-						<Skeleton variant="circular" width={45} height={45} />
+						<Stack my="6px">
+							<Skeleton variant="text" width={200} height={24} />
+							<Skeleton variant="text" width={160} height={20} />
+						</Stack>
 					)}
-				</ListItemAvatar>
-				{recent ? (
-					<ListItemText
-						primary={
-							recent.track.name +
-							" - " +
-							recent.track.artists.map(a => a.name).join(", ")
-						}
-						secondary={
-							getTimeSincePlayed(recent) +
-							" ago, " +
-							DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")
-						}
-					/>
-				) : (
-					<Stack my="6px">
-						<Skeleton variant="text" width={200} height={24} />
-						<Skeleton variant="text" width={160} height={20} />
-					</Stack>
-				)}
-			</ListItemButton>
-		</ListItem>
+				</ListItemButton>
+			</ListItem>
+		</LazyLoad>
 	) : (
 		<TableRow hover>
 			<TableCell>
-				{images && i !== undefined ? (
-					<Avatar sx={{ width: 45, height: 45 }} src={images[i] || ""} />
-				) : (
-					<Skeleton variant="circular" width={45} height={45} />
-				)}
+				<AsyncImage
+					src={image}
+					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					component={thumbnailUrl => (
+						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+					)}
+				/>
 			</TableCell>
 			<TableCell>
 				{recent ? (

@@ -1,3 +1,4 @@
+import AsyncImage from "../AsyncImage"
 import React, { useEffect, useState } from "react"
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
@@ -41,16 +42,18 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 						display: "flex",
 						flexDirection: "row"
 					}}>
-					{data ? (
-						<CardMedia
-							component="img"
-							sx={{ width: 120 }}
-							image={data.images[0]?.url || ""}
-							alt="Picture"
-						/>
-					) : (
-						<Skeleton variant="rectangular" width={120} height={120} />
-					)}
+					<AsyncImage
+						src={data?.images[0]?.url}
+						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
+						component={thumbnailUrl => (
+							<CardMedia
+								component="img"
+								sx={{ width: 120 }}
+								image={thumbnailUrl}
+								alt="Picture"
+							/>
+						)}
+					/>
 					<CardMedia
 						sx={{
 							ml: 2,

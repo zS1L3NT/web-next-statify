@@ -123,11 +123,11 @@ const App = (): JSX.Element => {
 export const tabs = [
 	{
 		term: "short_term",
-		description: "Past 4 Weeks"
+		description: "Last Month"
 	},
 	{
 		term: "medium_term",
-		description: "Past 6 Months"
+		description: "Last 6 Months"
 	},
 	{
 		term: "long_term",

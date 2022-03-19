@@ -1,3 +1,4 @@
+import AsyncImage from "../AsyncImage"
 import getFollowers from "../../utils/getFollowers"
 import React from "react"
 import {
@@ -31,17 +32,19 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 		<Grid item>
 			<Card sx={{ p: 0, minWidth: 250 }} onClick={() => handleArtistClick(artist)}>
 				<CardActionArea>
-					{artist ? (
-						<CardMedia
-							component="img"
-							alt="Picture"
-							width={250}
-							height={250}
-							image={artist.images[0]?.url || ""}
-						/>
-					) : (
-						<Skeleton variant="rectangular" width={250} height={250} />
-					)}
+					<AsyncImage
+						src={artist?.images[0]?.url}
+						skeleton={<Skeleton variant="rectangular" width={250} height={250} />}
+						component={thumbnailUrl => (
+							<CardMedia
+								component="img"
+								alt="Picture"
+								width={250}
+								height={250}
+								image={thumbnailUrl}
+							/>
+						)}
+					/>
 					<CardContent>
 						{artist ? (
 							<>

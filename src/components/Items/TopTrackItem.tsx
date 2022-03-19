@@ -1,5 +1,7 @@
+import AsyncImage from "../AsyncImage"
 import getDuration from "../../utils/getDuration"
 import React from "react"
+import LazyLoad from "react-lazyload"
 import {
 	Avatar,
 	Link,
@@ -39,43 +41,43 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 	}
 
 	return smallScreen ? (
-		<ListItem onClick={() => handleTrackClick(track)} disablePadding>
-			<ListItemButton>
-				<ListItemAvatar>
+		<LazyLoad height={72}>
+			<ListItem onClick={() => handleTrackClick(track)} disablePadding>
+				<ListItemButton>
+					<ListItemAvatar>
+						<AsyncImage
+							src={track?.album.images[0]?.url}
+							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							component={thumbnailUrl => (
+								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+							)}
+						/>
+					</ListItemAvatar>
 					{track ? (
-						<Avatar
-							sx={{ width: 45, height: 45 }}
-							src={track.album.images[0]?.url || ""}
+						<ListItemText
+							primary={(i !== undefined ? i + 1 + ". " : "") + track.name}
+							secondary={track.artists.map(a => a.name).join(", ")}
 						/>
 					) : (
-						<Skeleton variant="circular" width={45} height={45} />
+						<Stack my="6px">
+							<Skeleton variant="text" width={200} height={24} />
+							<Skeleton variant="text" width={160} height={20} />
+						</Stack>
 					)}
-				</ListItemAvatar>
-				{track ? (
-					<ListItemText
-						primary={(i !== undefined ? i + 1 + ". " : "") + track.name}
-						secondary={track.artists.map(a => a.name).join(", ")}
-					/>
-				) : (
-					<Stack my="6px">
-						<Skeleton variant="text" width={200} height={24} />
-						<Skeleton variant="text" width={160} height={20} />
-					</Stack>
-				)}
-			</ListItemButton>
-		</ListItem>
+				</ListItemButton>
+			</ListItem>
+		</LazyLoad>
 	) : (
 		<TableRow hover>
 			<TableCell align="center">{i! + 1}</TableCell>
 			<TableCell>
-				{track ? (
-					<Avatar
-						sx={{ width: 45, height: 45 }}
-						src={track.album.images[0]?.url || ""}
-					/>
-				) : (
-					<Skeleton variant="circular" width={45} height={45} />
-				)}
+				<AsyncImage
+					src={track?.album.images[0]?.url}
+					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					component={thumbnailUrl => (
+						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+					)}
+				/>
 			</TableCell>
 			<TableCell>
 				{track ? (
