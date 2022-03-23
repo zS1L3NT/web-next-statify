@@ -83,21 +83,21 @@ const Artist: React.FC = () => {
 	const appearances: iAppearanceCard[] = [
 		{
 			hash: true,
-			text: "streamed artists of the last month",
+			text: "streamed artist of the last month",
 			link: "/top-artists/short-term",
 			condition: () =>
 				(statistics.artists.short_term?.findIndex(t => t.id === artist?.id) || 0) + 1
 		},
 		{
 			hash: true,
-			text: "streamed artists of the last 6 months",
+			text: "streamed artist of the last 6 months",
 			link: "/top-artists/medium-term",
 			condition: () =>
 				(statistics.artists.medium_term?.findIndex(t => t.id === artist?.id) || 0) + 1
 		},
 		{
 			hash: true,
-			text: "streamed artists of your lifetime",
+			text: "streamed artist of your lifetime",
 			link: "/top-artists/long-term",
 			condition: () =>
 				(statistics.artists.long_term?.findIndex(t => t.id === artist?.id) || 0) + 1

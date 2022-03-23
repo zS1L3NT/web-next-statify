@@ -64,21 +64,21 @@ const Track: React.FC = () => {
 		{
 			hash: true,
 			link: "/top-tracks/short-term",
-			text: "streamed tracks of the last month",
+			text: "streamed track of the last month",
 			condition: () =>
 				(statistics.tracks.short_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
 		{
 			hash: true,
 			link: "/top-tracks/medium-term",
-			text: "streamed tracks of the last 6 months",
+			text: "streamed track of the last 6 months",
 			condition: () =>
 				(statistics.tracks.medium_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
 		{
 			hash: true,
 			link: "/top-tracks/long-term",
-			text: "streamed tracks of your lifetime",
+			text: "streamed track of your lifetime",
 			condition: () =>
 				(statistics.tracks.long_term?.findIndex(t => t.id === track?.id) || 0) + 1
 		},
