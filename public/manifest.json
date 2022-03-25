@@ -15,7 +15,7 @@
 			"purpose": "any"
 		},
 		{
-			"src": "assets/spotify-logo.png",
+			"src": "assets/logo.png",
 			"sizes": "1024x1024",
 			"type": "image/png"
 		}
