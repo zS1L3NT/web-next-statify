@@ -26,6 +26,7 @@ specifiers:
   typescript: ^4.4.3
   vite: ^2.7.13
   vite-plugin-pwa: ^0.11.13
+  workbox-window: ^6.5.2
 
 dependencies:
   '@emotion/react': 11.8.2_03a98942b76c57740a9573edba2d1cc1
@@ -55,6 +56,7 @@ devDependencies:
   typescript: 4.6.3
   vite: 2.8.6
   vite-plugin-pwa: 0.11.13_vite@2.8.6
+  workbox-window: 6.5.2
 
 packages:
 

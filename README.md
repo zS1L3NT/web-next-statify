@@ -81,6 +81,7 @@ Overlapping elements was simplified for me thanks to [this](https://css-tricks.c
     -   [![@vitejs/plugin-react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@vitejs/plugin-react?style=flat-square)](https://npmjs.com/package/@vitejs/plugin-react)
     -   [![vite](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/vite?style=flat-square)](https://npmjs.com/package/vite)
     -   [![vite-plugin-pwa](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/vite-plugin-pwa?style=flat-square)](https://npmjs.com/package/vite-plugin-pwa)
+    -   [![workbox-window](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/workbox-window?style=flat-square)](https://npmjs.com/package/workbox-window)
 -   Miscellaneous
     -   [![axios](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/axios?style=flat-square)](https://npmjs.com/package/axios)
     -   [![luxon](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/luxon?style=flat-square)](https://npmjs.com/package/luxon)
