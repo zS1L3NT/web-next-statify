@@ -82,7 +82,10 @@ const Login: React.FC = () => {
 				navigate(sessionStorage.getItem("redirect") || "/")
 				sessionStorage.removeItem("redirect")
 			})
-			.catch(err => dispatch(set_error(err)))
+			.catch(err => {
+				dispatch(set_error(err))
+				dispatch(set_access_token(null))
+			})
 	}, [dispatch, navigate, api, access_token])
 
 	return <LinearProgress />
