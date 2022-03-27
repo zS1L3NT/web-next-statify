@@ -22,6 +22,7 @@ specifiers:
   react-lazyload: ^3.2.0
   react-redux: ^7.2.5
   react-router-dom: ^6.2.1
+  react-use-is-online: ^1.0.4
   spotify-web-api-js: ^1.5.1
   typescript: ^4.4.3
   vite: ^2.7.13
@@ -43,6 +44,7 @@ dependencies:
   react-lazyload: 3.2.0_react-dom@17.0.2+react@17.0.2
   react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
   react-router-dom: 6.2.2_react-dom@17.0.2+react@17.0.2
+  react-use-is-online: 1.0.4_react-dom@17.0.2+react@17.0.2
   spotify-web-api-js: 1.5.2
 
 devDependencies:
@@ -1771,6 +1773,12 @@ packages:
       string.prototype.matchall: 4.0.7
     dev: true
 
+  /@types/cheerio/0.22.31:
+    resolution: {integrity: sha512-Kt7Cdjjdi2XWSfrZ53v4Of0wG3ZcmaegFXjMmz9tfNrZSkzzo36G0AL1YqSdcIA78Etjt6E609pt5h1xnQkPUw==}
+    dependencies:
+      '@types/node': 17.0.23
+    dev: false
+
   /@types/estree/0.0.39:
     resolution: {integrity: sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==}
     dev: true
@@ -1791,7 +1799,6 @@ packages:
 
   /@types/node/17.0.23:
     resolution: {integrity: sha512-UxDxWn7dl97rKVeVS61vErvw086aCYhDLyvRQZ5Rk65rZKepaFdm53GeqXaKBuOhED4e9uWq34IC3TdSdJJ2Gw==}
-    dev: true
 
   /@types/parse-json/4.0.0:
     resolution: {integrity: sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==}
@@ -2159,6 +2166,17 @@ packages:
   /electron-to-chromium/1.4.93:
     resolution: {integrity: sha512-ywq9Pc5Gwwpv7NG767CtoU8xF3aAUQJjH9//Wy3MBCg4w5JSLbJUq2L8IsCdzPMjvSgxuue9WcVaTOyyxCL0aQ==}
     dev: true
+
+  /enzyme-to-json/3.6.2:
+    resolution: {integrity: sha512-Ynm6Z6R6iwQ0g2g1YToz6DWhxVnt8Dy1ijR2zynRKxTyBGA8rCDXU3rs2Qc4OKvUvc2Qoe1bcFK6bnPs20TrTg==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      enzyme: ^3.4.0
+    dependencies:
+      '@types/cheerio': 0.22.31
+      lodash: 4.17.21
+      react-is: 16.13.1
+    dev: false
 
   /error-ex/1.3.2:
     resolution: {integrity: sha512-7dFHNmqeFSEt2ZBsCriorKnn3Z2pj+fd9kmI6QoWw4//DL+icEBfc0U7qJCisqrTsKTjw4fNFy2pW9OqStD84g==}
@@ -2842,7 +2860,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /loose-envify/1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -3097,6 +3114,19 @@ packages:
       prop-types: 15.8.1
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
+    dev: false
+
+  /react-use-is-online/1.0.4_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-MpyzAVKWFnsrE2DVTtuZnpXooL2/My8rdzVUvRuRwgkB5GxXTxwB+vf913CWOKfvL9SYs1ybZnKyZGNPoxctow==}
+    peerDependencies:
+      react: '>=16.8.0'
+      react-dom: '>=16.8.0'
+    dependencies:
+      enzyme-to-json: 3.6.2
+      react: 17.0.2
+      react-dom: 17.0.2_react@17.0.2
+    transitivePeerDependencies:
+      - enzyme
     dev: false
 
   /react/17.0.2:

@@ -75,44 +75,42 @@ const App = (): JSX.Element => {
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>
 			<CssBaseline />
-			<div className="w-100 h-100">
-				<Navigator />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="login" element={<Login />} />
-					<Route path="logout" element={<Logout />} />
-					<Route path="top-tracks">
-						<Route path="" element={<Navigate to="short-term" replace />} />
-						<Route path="short-term" element={<TopTracks />} />
-						<Route path="medium-term" element={<TopTracks />} />
-						<Route path="long-term" element={<TopTracks />} />
-						<Route path="*" element={<Navigate to="short-term" replace />} />
-					</Route>
-					<Route path="top-artists">
-						<Route path="" element={<Navigate to="short-term" replace />} />
-						<Route path="short-term" element={<TopArtists />} />
-						<Route path="medium-term" element={<TopArtists />} />
-						<Route path="long-term" element={<TopArtists />} />
-						<Route path="*" element={<Navigate to="short-term" replace />} />
-					</Route>
-					<Route path="recents" element={<RecentlyPlayed />} />
-					<Route path="dark" element={<Dark />} />
-					<Route path="light" element={<Light />} />
-					<Route path="track">
-						<Route path="" element={<Navigate to="" replace />} />
-						<Route path=":id" element={<Track />} />
-					</Route>
-					<Route path="artist">
-						<Route path="" element={<Navigate to="" replace />} />
-						<Route path=":id" element={<Artist />} />
-					</Route>
-					<Route path="album">
-						<Route path="" element={<Navigate to="" replace />} />
-						<Route path=":id" element={<Album />} />
-					</Route>
-					<Route path="*" element={<Navigate to="" replace />} />
-				</Routes>
-			</div>
+			<Navigator />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="login" element={<Login />} />
+				<Route path="logout" element={<Logout />} />
+				<Route path="top-tracks">
+					<Route path="" element={<Navigate to="short-term" replace />} />
+					<Route path="short-term" element={<TopTracks />} />
+					<Route path="medium-term" element={<TopTracks />} />
+					<Route path="long-term" element={<TopTracks />} />
+					<Route path="*" element={<Navigate to="short-term" replace />} />
+				</Route>
+				<Route path="top-artists">
+					<Route path="" element={<Navigate to="short-term" replace />} />
+					<Route path="short-term" element={<TopArtists />} />
+					<Route path="medium-term" element={<TopArtists />} />
+					<Route path="long-term" element={<TopArtists />} />
+					<Route path="*" element={<Navigate to="short-term" replace />} />
+				</Route>
+				<Route path="recents" element={<RecentlyPlayed />} />
+				<Route path="dark" element={<Dark />} />
+				<Route path="light" element={<Light />} />
+				<Route path="track">
+					<Route path="" element={<Navigate to="" replace />} />
+					<Route path=":id" element={<Track />} />
+				</Route>
+				<Route path="artist">
+					<Route path="" element={<Navigate to="" replace />} />
+					<Route path=":id" element={<Artist />} />
+				</Route>
+				<Route path="album">
+					<Route path="" element={<Navigate to="" replace />} />
+					<Route path=":id" element={<Album />} />
+				</Route>
+				<Route path="*" element={<Navigate to="" replace />} />
+			</Routes>
 			<ErrorDialog />
 			<PWASnackbar />
 			<InfoSnackbar />

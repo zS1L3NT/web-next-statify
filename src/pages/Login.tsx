@@ -1,21 +1,25 @@
+import CloudOffIcon from "@mui/icons-material/CloudOff"
 import React, { useEffect } from "react"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { LinearProgress } from "@mui/material"
+import { Box, LinearProgress, Typography } from "@mui/material"
 import { set_access_token } from "../slices/AccessTokenSlice"
 import { set_error } from "../slices/ErrorSlice"
 import { set_statistics } from "../slices/StatisticsSlice"
+import { useIsOnline } from "react-use-is-online"
 import { useLocation, useNavigate } from "react-router-dom"
 
 const Login: React.FC = () => {
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
+	const { isOnline, isOffline } = useIsOnline()
 	const location = useLocation()
 	const navigate = useNavigate()
 	const api = useSpotifyApi()
 
 	useEffect(() => {
+		if (isOffline) return
 		if (access_token) return
 
 		if (location.hash) {
@@ -35,7 +39,7 @@ const Login: React.FC = () => {
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
 		}
-	}, [dispatch, location.hash, access_token])
+	}, [dispatch, location.hash, access_token, isOffline])
 
 	useEffect(() => {
 		if (!api) return
@@ -88,7 +92,26 @@ const Login: React.FC = () => {
 			})
 	}, [dispatch, navigate, api, access_token])
 
-	return <LinearProgress />
+	return isOnline ? (
+		<LinearProgress />
+	) : (
+		<Box
+			sx={{
+				display: "flex",
+				flexDirection: "column",
+				alignItems: "center"
+			}}>
+			<CloudOffIcon sx={{ mt: 16, height: 96, width: 96 }} />
+			<Typography sx={{ mt: 4 }} variant="h5">
+				You're Offline!
+			</Typography>
+			<Typography sx={{ mt: 1, textAlign: "center" }}>
+				Waiting for Internet Connection
+				<br />
+				before proceeding...
+			</Typography>
+		</Box>
+	)
 }
 
 export default Login
