@@ -68,6 +68,7 @@ Overlapping elements was simplified for me thanks to [this](https://css-tricks.c
     -   [![react-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-dom?style=flat-square)](https://npmjs.com/package/react-dom)
     -   [![react-lazyload](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-lazyload?style=flat-square)](https://npmjs.com/package/react-lazyload)
     -   [![react-router-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-router-dom?style=flat-square)](https://npmjs.com/package/react-router-dom)
+    -   [![react-use-is-online](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-use-is-online?style=flat-square)](https://npmjs.com/package/react-use-is-online)
 -   MUI
     -   [![@emotion/react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@emotion/react?style=flat-square)](https://npmjs.com/package/@emotion/react)
     -   [![@emotion/styled](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@emotion/styled?style=flat-square)](https://npmjs.com/package/@emotion/styled)
