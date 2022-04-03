@@ -32,9 +32,12 @@ const Login: React.FC = () => {
 		} else {
 			const query = new URLSearchParams({
 				response_type: "token",
-				client_id: import.meta.env.VITE__SPOTIFY__CLIENT_ID,
-				redirect_uri: import.meta.env.VITE__SPOTIFY__REDIRECT_URI,
-				scope: import.meta.env.VITE__SPOTIFY__SCOPE
+				client_id: "042bace248d040d79bffb1e86f0c29c1",
+				// @ts-ignore
+				redirect_uri: import.meta.env.PROD
+					? "https://statify.zectan.com/login"
+					: "http://localhost:3000/login",
+				scope: "user-top-read user-read-recently-played user-follow-read user-follow-modify user-library-read user-library-modify"
 			})
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()

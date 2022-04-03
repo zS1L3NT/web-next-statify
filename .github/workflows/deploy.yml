@@ -16,12 +16,6 @@ jobs:
                 version: 6.0.2
                 run_install: true
 
-            - name: Writing to .env file
-              run: |
-                  echo 'VITE__SPOTIFY__CLIENT_ID=${{ secrets.VITE__SPOTIFY__CLIENT_ID }}' > .env
-                  echo 'VITE__SPOTIFY__REDIRECT_URI=${{ secrets.VITE__SPOTIFY__REDIRECT_URI }}' >> .env
-                  echo 'VITE__SPOTIFY__SCOPE=${{ secrets.VITE__SPOTIFY__SCOPE }}' >> .env
-
             - name: Building React Project
               run: pnpm build
 
