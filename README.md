@@ -32,20 +32,9 @@ Building Statify allowed me to view my Spotify listening statistics with a much 
 
 ## Usage
 
-Copy the `.env.example` file to `.env` then fill in the json file with the correct project credentials.
-
-With `yarn`
-
-```
-$ yarn
-$ yarn start
-```
-
-With `npm`
-
 ```
 $ npm i
-$ npm run start
+$ npm run dev
 ```
 
 ## Credits
