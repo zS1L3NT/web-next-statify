@@ -25,27 +25,9 @@ jobs:
             - name: Building React Project
               run: pnpm build
 
-            - name: Deleting old files on Server
-              uses: appleboy/ssh-action@master
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USERNAME }}
-                  password: ${{ secrets.SSH_PASSWORD }}
-                  script: "rm -rf /home/ubuntu/projects/web-react-statify/dist"
-
-            - name: Uploading new files to Server
-              uses: appleboy/scp-action@master
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USERNAME }}
-                  password: ${{ secrets.SSH_PASSWORD }}
-                  target: "/home/ubuntu/projects/web-react-statify"
-                  source: "dist/*"
-
-            - name: Restarting PM2 Process
-              uses: appleboy/ssh-action@master
-              with:
-                  host: ${{ secrets.SSH_HOST }}
-                  username: ${{ secrets.SSH_USERNAME }}
-                  password: ${{ secrets.SSH_PASSWORD }}
-                  script: "pm2 flush web-react-statify && pm2 restart web-react-statify"
+            - name: Deploying with gh-pages
+              run: |
+                  git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+                  pnpx -y gh-pages -d dist -u "github-actions-bot <support+actions@github.com>"
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
