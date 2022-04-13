@@ -1,6 +1,7 @@
-import useAppSelector from "./useAppSelector"
 import { useEffect } from "react"
 import { useLocation, useNavigate } from "react-router-dom"
+
+import useAppSelector from "./useAppSelector"
 
 const useAuthenticated = (): void => {
 	const access_token = useAppSelector(state => state.access_token)

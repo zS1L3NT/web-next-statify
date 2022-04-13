@@ -1,11 +1,13 @@
-import AsyncImage from "../AsyncImage"
-import getFollowers from "../../utils/getFollowers"
 import React, { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
+
+import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
+
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 import { set_error } from "../../slices/ErrorSlice"
-import { useNavigate } from "react-router-dom"
+import getFollowers from "../../utils/getFollowers"
+import AsyncImage from "../AsyncImage"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectSimplified

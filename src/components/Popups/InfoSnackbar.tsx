@@ -1,6 +1,7 @@
+import { Alert, Fade, Snackbar as MUISnackbar } from "@mui/material"
+
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useAppSelector from "../../hooks/useAppSelector"
-import { Alert, Fade, Snackbar as MUISnackbar } from "@mui/material"
 import { clear_snackbar } from "../../slices/SnackbarSlice"
 
 const InfoSnackbar = () => {

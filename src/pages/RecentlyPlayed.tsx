@@ -1,28 +1,17 @@
 import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import {
+	Card, CardContent, CircularProgress, Container, List, Paper, Table, TableBody, TableCell,
+	TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme
+} from "@mui/material"
+
 import RecentItem from "../components/Items/RecentItem"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import {
-	Card,
-	CardContent,
-	CircularProgress,
-	Container,
-	List,
-	Paper,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	Typography,
-	useMediaQuery,
-	useTheme
-} from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useLocation, useNavigate } from "react-router-dom"
 
 const RecentlyPlayed: React.FC = () => {
 	const dispatch = useAppDispatch()

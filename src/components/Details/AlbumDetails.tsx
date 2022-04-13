@@ -1,28 +1,18 @@
-import AsyncImage from "../AsyncImage"
-import getDuration from "../../utils/getDuration"
-import PageIndicator from "../PageIndicator"
 import React, { useEffect, useState } from "react"
+
+import { Star, StarBorder } from "@mui/icons-material"
+import {
+	Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, CircularProgress, Dialog, Grid,
+	IconButton, Skeleton, Stack, Tooltip, Typography
+} from "@mui/material"
+
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useSpotifyApi from "../../hooks/useSpotifyApi"
-import {
-	Avatar,
-	Backdrop,
-	Box,
-	Card,
-	CardActionArea,
-	CardMedia,
-	CircularProgress,
-	Dialog,
-	Grid,
-	IconButton,
-	Skeleton,
-	Stack,
-	Tooltip,
-	Typography
-} from "@mui/material"
 import { set_error } from "../../slices/ErrorSlice"
 import { set_snackbar } from "../../slices/SnackbarSlice"
-import { Star, StarBorder } from "@mui/icons-material"
+import getDuration from "../../utils/getDuration"
+import AsyncImage from "../AsyncImage"
+import PageIndicator from "../PageIndicator"
 
 interface Props {
 	album?: SpotifyApi.AlbumObjectFull

@@ -1,4 +1,5 @@
 import React from "react"
+
 import { Typography } from "@mui/material"
 
 const PageIndicator: React.FC = (props: { children?: React.ReactNode }) => (

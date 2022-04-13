@@ -1,22 +1,15 @@
+import React, { useState } from "react"
+
+import {
+	AccessTime, AccessTimeFilled, Audiotrack, DarkMode, History, Home, LightMode, Login, Logout,
+	Person, Timeline
+} from "@mui/icons-material"
+import MenuIcon from "@mui/icons-material/Menu"
+import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
+
+import useAppSelector from "../../hooks/useAppSelector"
 import DrawerDropdown from "./DrawerDropdown"
 import DrawerItem from "./DrawerItem"
-import MenuIcon from "@mui/icons-material/Menu"
-import React, { useState } from "react"
-import useAppSelector from "../../hooks/useAppSelector"
-import {
-	AccessTime,
-	AccessTimeFilled,
-	Audiotrack,
-	DarkMode,
-	History,
-	Home,
-	LightMode,
-	Login,
-	Logout,
-	Person,
-	Timeline
-} from "@mui/icons-material"
-import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
 
 const Navigator: React.FC = () => {
 	const access_token = useAppSelector(state => state.access_token)

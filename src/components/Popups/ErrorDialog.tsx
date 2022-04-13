@@ -1,17 +1,13 @@
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useAppSelector from "../../hooks/useAppSelector"
-import {
-	Backdrop,
-	Button,
-	Dialog,
-	DialogActions,
-	DialogContent,
-	DialogContentText,
-	DialogTitle
-} from "@mui/material"
-import { set_error } from "../../slices/ErrorSlice"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+
+import {
+	Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+} from "@mui/material"
+
+import useAppDispatch from "../../hooks/useAppDispatch"
+import useAppSelector from "../../hooks/useAppSelector"
+import { set_error } from "../../slices/ErrorSlice"
 
 const ErrorDialog = () => {
 	const dispatch = useAppDispatch()

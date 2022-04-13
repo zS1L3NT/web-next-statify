@@ -1,22 +1,15 @@
-import AsyncImage from "../AsyncImage"
-import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
-import LazyLoad from "react-lazyload"
-import React from "react"
-import {
-	Avatar,
-	Link,
-	ListItem,
-	ListItemAvatar,
-	ListItemButton,
-	ListItemText,
-	Skeleton,
-	Stack,
-	TableCell,
-	TableRow,
-	Typography
-} from "@mui/material"
 import { DateTime } from "luxon"
+import React from "react"
+import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
+
+import {
+	Avatar, Link, ListItem, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack,
+	TableCell, TableRow, Typography
+} from "@mui/material"
+
+import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
+import AsyncImage from "../AsyncImage"
 
 interface Props {
 	smallScreen: boolean

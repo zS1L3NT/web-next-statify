@@ -1,10 +1,11 @@
-import React, { useState } from "react"
-import Track from "./Track"
+import React, { useEffect, useState } from "react"
+
+import { List, Typography } from "@mui/material"
+
 import useAppDispatch from "../hooks/useAppDispatch"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { List, Typography } from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useEffect } from "react"
+import Track from "./Track"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectSimplified

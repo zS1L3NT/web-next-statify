@@ -1,6 +1,7 @@
-import Spotify from "spotify-web-api-js"
-import useAppSelector from "./useAppSelector"
 import { useEffect, useState } from "react"
+import Spotify from "spotify-web-api-js"
+
+import useAppSelector from "./useAppSelector"
 
 const useSpotifyApi = (): Spotify.SpotifyWebApiJs | null => {
 	const access_token = useAppSelector(state => state.access_token)

@@ -1,21 +1,14 @@
-import AsyncImage from "../AsyncImage"
-import getDuration from "../../utils/getDuration"
 import React from "react"
 import LazyLoad from "react-lazyload"
-import {
-	Avatar,
-	Link,
-	ListItem,
-	ListItemAvatar,
-	ListItemButton,
-	ListItemText,
-	Skeleton,
-	Stack,
-	TableCell,
-	TableRow,
-	Typography
-} from "@mui/material"
 import { useNavigate } from "react-router-dom"
+
+import {
+	Avatar, Link, ListItem, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack,
+	TableCell, TableRow, Typography
+} from "@mui/material"
+
+import getDuration from "../../utils/getDuration"
+import AsyncImage from "../AsyncImage"
 
 interface Props {
 	smallScreen: boolean

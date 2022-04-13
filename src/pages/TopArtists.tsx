@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import { TabContext } from "@mui/lab"
+import {
+	Box, Card, CardContent, Container, Grid, LinearProgress, Tab, Tabs, Typography
+} from "@mui/material"
+
+import { tabs } from "../App"
 import TopArtistItem from "../components/Items/TopArtistItem"
 import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
-import {
-	Box,
-	Card,
-	CardContent,
-	Container,
-	Grid,
-	LinearProgress,
-	Tab,
-	Tabs,
-	Typography
-} from "@mui/material"
-import { TabContext } from "@mui/lab"
-import { tabs } from "../App"
-import { useLocation, useNavigate } from "react-router-dom"
 
 const TopArtists: React.FC = () => {
 	const artists = useAppSelector(state => state.statistics.artists)

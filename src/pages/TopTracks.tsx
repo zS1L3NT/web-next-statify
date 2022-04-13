@@ -1,30 +1,16 @@
 import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import { TabContext } from "@mui/lab"
+import {
+	Box, Card, CardContent, Container, LinearProgress, List, Paper, Tab, Table, TableBody,
+	TableCell, TableContainer, TableHead, TableRow, Tabs, Typography, useMediaQuery, useTheme
+} from "@mui/material"
+
+import { tabs } from "../App"
 import TopTrackItem from "../components/Items/TopTrackItem"
 import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
-import {
-	Box,
-	Card,
-	CardContent,
-	Container,
-	LinearProgress,
-	List,
-	Paper,
-	Tab,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	Tabs,
-	Typography,
-	useMediaQuery,
-	useTheme
-} from "@mui/material"
-import { TabContext } from "@mui/lab"
-import { tabs } from "../App"
-import { useLocation, useNavigate } from "react-router-dom"
 
 const TopTracks: React.FC = () => {
 	const tracks = useAppSelector(state => state.statistics.tracks)

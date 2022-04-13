@@ -1,17 +1,12 @@
-import AsyncImage from "./AsyncImage"
-import LazyLoad from "react-lazyload"
 import React from "react"
-import {
-	Avatar,
-	Card,
-	CardActionArea,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
-	Skeleton,
-	Stack
-} from "@mui/material"
+import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
+
+import {
+	Avatar, Card, CardActionArea, ListItem, ListItemAvatar, ListItemText, Skeleton, Stack
+} from "@mui/material"
+
+import AsyncImage from "./AsyncImage"
 
 interface Props {
 	track?: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified

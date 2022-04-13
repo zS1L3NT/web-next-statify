@@ -1,9 +1,10 @@
+import { configureStore } from "@reduxjs/toolkit"
+
 import AccessTokenReducer from "./slices/AccessTokenSlice"
 import ErrorReducer from "./slices/ErrorSlice"
 import SnackbarReducer from "./slices/SnackbarSlice"
 import StatisticsReducer from "./slices/StatisticsSlice"
 import ThemeReducer from "./slices/ThemeSlice"
-import { configureStore } from "@reduxjs/toolkit"
 
 const store = configureStore({
 	reducer: {

@@ -1,14 +1,16 @@
-import CloudOffIcon from "@mui/icons-material/CloudOff"
 import React, { useEffect } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+import { useIsOnline } from "react-use-is-online"
+
+import CloudOffIcon from "@mui/icons-material/CloudOff"
+import { Box, LinearProgress, Typography } from "@mui/material"
+
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Box, LinearProgress, Typography } from "@mui/material"
 import { set_access_token } from "../slices/AccessTokenSlice"
 import { set_error } from "../slices/ErrorSlice"
 import { set_statistics } from "../slices/StatisticsSlice"
-import { useIsOnline } from "react-use-is-online"
-import { useLocation, useNavigate } from "react-router-dom"
 
 const Login: React.FC = () => {
 	const dispatch = useAppDispatch()

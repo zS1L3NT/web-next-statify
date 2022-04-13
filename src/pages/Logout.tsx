@@ -1,7 +1,8 @@
 import React, { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
+
 import useAppDispatch from "../hooks/useAppDispatch"
 import { set_access_token } from "../slices/AccessTokenSlice"
-import { useNavigate } from "react-router-dom"
 
 const Logout: React.FC = () => {
 	const dispatch = useAppDispatch()

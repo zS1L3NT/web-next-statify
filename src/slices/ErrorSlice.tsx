@@ -1,5 +1,6 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 import { useTry as _useTry } from "no-try"
+
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 type iErrorData = {
 	name: string

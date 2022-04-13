@@ -1,16 +1,12 @@
-import AsyncImage from "../AsyncImage"
-import getFollowers from "../../utils/getFollowers"
 import React from "react"
-import {
-	Card,
-	CardActionArea,
-	CardContent,
-	CardMedia,
-	Grid,
-	Skeleton,
-	Typography
-} from "@mui/material"
 import { useNavigate } from "react-router-dom"
+
+import {
+	Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography
+} from "@mui/material"
+
+import getFollowers from "../../utils/getFollowers"
+import AsyncImage from "../AsyncImage"
 
 interface Props {
 	artist?: SpotifyApi.ArtistObjectFull

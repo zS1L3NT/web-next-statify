@@ -1,16 +1,18 @@
+import { useTry as _useTry } from "no-try"
+import React, { useEffect, useState } from "react"
+import { useLocation, useNavigate } from "react-router-dom"
+
+import { Container, Grid, List, Skeleton, Stack, Typography } from "@mui/material"
+
 import AppearanceCard from "../components/Cards/AppearanceCard"
 import ArtistDetails from "../components/Details/ArtistDetails"
-import React, { useEffect, useState } from "react"
 import Recommendations from "../components/Recommendations"
 import Track from "../components/Track"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Container, Grid, List, Skeleton, Stack, Typography } from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useLocation, useNavigate } from "react-router-dom"
-import { useTry as _useTry } from "no-try"
 
 /**
  * * Name

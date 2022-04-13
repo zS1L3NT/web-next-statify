@@ -1,14 +1,16 @@
-import AlbumDetails from "../components/Details/AlbumDetails"
-import ArtistCard from "../components/Cards/ArtistCard"
+import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
 import React, { useEffect, useState } from "react"
+import { useLocation } from "react-router-dom"
+
+import { Container, Grid, List, Typography } from "@mui/material"
+
+import ArtistCard from "../components/Cards/ArtistCard"
+import AlbumDetails from "../components/Details/AlbumDetails"
 import Track from "../components/Track"
 import useAppDispatch from "../hooks/useAppDispatch"
 import useAuthenticated from "../hooks/useAthenticated"
 import useSpotifyApi from "../hooks/useSpotifyApi"
-import { Container, Grid, List, Typography } from "@mui/material"
 import { set_error } from "../slices/ErrorSlice"
-import { useLocation } from "react-router-dom"
-import { useTry as _useTry, useTryAsync as _useTryAsync } from "no-try"
 
 /**
  * * Name

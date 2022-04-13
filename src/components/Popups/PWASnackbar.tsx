@@ -1,6 +1,7 @@
-import { Button, Fade, IconButton, Snackbar } from "@mui/material"
-import { Close } from "@mui/icons-material"
 import { useRegisterSW } from "virtual:pwa-register/react"
+
+import { Close } from "@mui/icons-material"
+import { Button, Fade, IconButton, Snackbar } from "@mui/material"
 
 const PWASnackbar = () => {
 	const {
@@ -27,11 +28,7 @@ const PWASnackbar = () => {
 			TransitionComponent={Fade}
 			autoHideDuration={7500}
 			onClose={handleClose}
-			message={
-				offlineReady
-					? "App ready to work offline"
-					: "An update is available!"
-			}
+			message={offlineReady ? "App ready to work offline" : "An update is available!"}
 			action={
 				<>
 					{needRefresh && (
