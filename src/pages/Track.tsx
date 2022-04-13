@@ -88,8 +88,7 @@ const Track: React.FC = () => {
 			hash: false,
 			link: "/recents",
 			text: `appearances of ${track?.name} in your last 50 streams`,
-			condition: () =>
-				(statistics.recents?.filter(t => t.track.id === track?.id).length || 0) + 1
+			condition: () => statistics.recents?.filter(t => t.track.id === track?.id).length
 		}
 	]
 
