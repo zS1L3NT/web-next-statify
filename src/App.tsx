@@ -1,4 +1,5 @@
 import { useEffect } from "react"
+import ReactGA from "react-ga4"
 import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
 
 import { CssBaseline, ThemeProvider } from "@mui/material"
@@ -32,6 +33,8 @@ const App = (): JSX.Element => {
 	const navigate = useNavigate()
 
 	useEffect(() => {
+		ReactGA.initialize("G-P3JDSNFPZ5")
+
 		setTimeout(() => {
 			const preload = document.getElementsByClassName("preload").item(0)!
 			preload.classList.add("preload-hide")
