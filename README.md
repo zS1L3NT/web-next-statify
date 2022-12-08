@@ -1,4 +1,6 @@
-# <img width="25" height="25" src="https://raw.githubusercontent.com/zS1L3NT/web-react-statify/main/public/favicon.ico" /> Statify
+![Statify Cover Image](https://res.cloudinary.com/zs1l3nt/image/upload/repositories/web-react-statify.png)
+
+# Statify
 
 ![License](https://img.shields.io/github/license/zS1L3NT/web-react-statify?style=for-the-badge) ![Languages](https://img.shields.io/github/languages/count/zS1L3NT/web-react-statify?style=for-the-badge) ![Top Language](https://img.shields.io/github/languages/top/zS1L3NT/web-react-statify?style=for-the-badge) ![Commit Activity](https://img.shields.io/github/commit-activity/y/zS1L3NT/web-react-statify?style=for-the-badge) ![Last commit](https://img.shields.io/github/last-commit/zS1L3NT/web-react-statify?style=for-the-badge)
 
