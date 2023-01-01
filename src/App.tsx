@@ -44,6 +44,7 @@ const App = (): JSX.Element => {
 
 	useEffect(() => {
 		window.scrollTo({ top: 0 })
+		ReactGA.send({ hitType: "pageview", page: location.pathname })
 	}, [location])
 
 	useEffect(() => {
