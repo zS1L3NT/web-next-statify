@@ -3,7 +3,6 @@ import { configureStore } from "@reduxjs/toolkit"
 import AccessTokenReducer from "./slices/AccessTokenSlice"
 import ErrorReducer from "./slices/ErrorSlice"
 import SnackbarReducer from "./slices/SnackbarSlice"
-import StatisticsReducer from "./slices/StatisticsSlice"
 import ThemeReducer from "./slices/ThemeSlice"
 
 const store = configureStore({
@@ -11,8 +10,7 @@ const store = configureStore({
 		theme: ThemeReducer,
 		access_token: AccessTokenReducer,
 		error: ErrorReducer,
-		snackbar: SnackbarReducer,
-		statistics: StatisticsReducer
+		snackbar: SnackbarReducer
 	}
 })
 
