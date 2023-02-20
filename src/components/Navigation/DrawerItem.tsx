@@ -3,14 +3,13 @@ import { useNavigate } from "react-router-dom"
 
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
-interface Props {
+const NavItem = ({
+	setOpen,
+	item
+}: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	item: iDrawerItem
-}
-
-const NavItem: React.FC<Props> = (props: Props) => {
-	const { setOpen, item } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const redirect = (url: string) => {

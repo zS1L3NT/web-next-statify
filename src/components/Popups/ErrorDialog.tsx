@@ -7,12 +7,14 @@ import {
 
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useAppSelector from "../../hooks/useAppSelector"
-import { set_error } from "../../slices/ErrorSlice"
+import { setError } from "../../slices/ErrorSlice"
 
 const ErrorDialog = () => {
-	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+
 	const error = useAppSelector(state => state.error)
+	const dispatch = useAppDispatch()
+
 	const [localError, setLocalError] = useState<Error>()
 
 	useEffect(() => {
@@ -20,7 +22,7 @@ const ErrorDialog = () => {
 	}, [error])
 
 	const handleRetry = () => {
-		dispatch(set_error(null))
+		dispatch(setError(null))
 
 		// If is a id not found error, don't set the redirect path and don't logout
 		if (localError?.message.endsWith(" not found")) {
@@ -34,7 +36,7 @@ const ErrorDialog = () => {
 	}
 
 	const handleHome = () => {
-		dispatch(set_error(null))
+		dispatch(setError(null))
 		navigate("/")
 	}
 

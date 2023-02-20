@@ -1,5 +1,4 @@
 import { DateTime } from "luxon"
-import React from "react"
 import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
@@ -11,15 +10,15 @@ import {
 import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
+const RecentItem = ({
+	smallScreen,
+	image,
+	recent
+}: {
 	smallScreen: boolean
 	image?: string
 	recent?: SpotifyApi.PlayHistoryObject
-}
-
-const RecentItem: React.FC<Props> = (props: Props) => {
-	const { smallScreen, image, recent } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {

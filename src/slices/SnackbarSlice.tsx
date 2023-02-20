@@ -14,14 +14,14 @@ const slice = createSlice({
 		variant: "error"
 	} as iSnackbarData,
 	reducers: {
-		set_snackbar: (state, action: PayloadAction<iSnackbarData>) => {
+		setSnackbar: (state, action: PayloadAction<iSnackbarData>) => {
 			return action.payload
 		},
-		clear_snackbar: state => {
+		clearSnackbar: state => {
 			state.open = false
 		}
 	}
 })
 
-export const { set_snackbar, clear_snackbar } = slice.actions
+export const { setSnackbar, clearSnackbar } = slice.actions
 export default slice.reducer

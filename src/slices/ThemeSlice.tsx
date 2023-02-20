@@ -10,11 +10,11 @@ const slice = createSlice({
 		? localStorageTheme
 		: "dark") as iThemeData,
 	reducers: {
-		set_theme: (state, action: PayloadAction<iThemeData>) => {
+		setTheme: (state, action: PayloadAction<iThemeData>) => {
 			return action.payload
 		}
 	}
 })
 
-export const { set_theme } = slice.actions
+export const { setTheme } = slice.actions
 export default slice.reducer

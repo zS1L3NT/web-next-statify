@@ -6,10 +6,11 @@ const album = api.injectEndpoints({
 			query: ({ token, ...args }) => ["getAlbum", [args], token]
 		}),
 		getAlbumTracks: builder.query<
-			SpotifyApi.AlbumTracksResponse,
+			SpotifyApi.TrackObjectSimplified[],
 			{ id: string; limit?: number; offset?: number } & RequireToken
 		>({
-			query: ({ token, ...args }) => ["getAlbumTracks", [args], token]
+			query: ({ token, ...args }) => ["getAlbumTracks", [args], token],
+			transformResponse: response => response.items
 		}),
 		getIsInMySavedAlbums: builder.query<
 			SpotifyApi.CheckUserSavedAlbumsResponse,
@@ -40,7 +41,5 @@ export const {
 	useGetAlbumQuery,
 	useGetAlbumTracksQuery,
 	useGetIsInMySavedAlbumsQuery,
-	useGetRecentsQuery,
-	useGetRecommendationsQuery,
 	useRemoveFromMySavedAlbumsMutation
 } = album

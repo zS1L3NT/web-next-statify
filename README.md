@@ -77,5 +77,4 @@ Overlapping elements was simplified for me thanks to [this](https://css-tricks.c
 -   Miscellaneous
     -   [![axios](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/axios?style=flat-square)](https://npmjs.com/package/axios)
     -   [![luxon](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/luxon?style=flat-square)](https://npmjs.com/package/luxon)
-    -   [![no-try](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/no-try?style=flat-square)](https://npmjs.com/package/no-try)
     -   [![spotify-web-api-js](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/spotify-web-api-js?style=flat-square)](https://npmjs.com/package/spotify-web-api-js)

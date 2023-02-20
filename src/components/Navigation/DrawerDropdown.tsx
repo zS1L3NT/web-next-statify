@@ -4,15 +4,15 @@ import { useNavigate } from "react-router-dom"
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
-interface Props {
+const DrawerDropdown = ({
+	setOpen,
+	dropdown
+}: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	dropdown: iDrawerDropdown
-}
-
-const DrawerDropdown: React.FC<Props> = (props: Props) => {
-	const { setOpen, dropdown } = props
-
+}) => {
 	const navigate = useNavigate()
+
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 
 	const redirect = (url: string) => {

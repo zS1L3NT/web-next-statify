@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -6,35 +6,31 @@ import {
 	IconButton, Skeleton, Stack, Tooltip, Typography
 } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
-import { set_snackbar } from "../../slices/SnackbarSlice"
+import {
+	useAddToMySavedAlbumsMutation, useGetIsInMySavedAlbumsQuery, useRemoveFromMySavedAlbumsMutation
+} from "../../api/album"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import getDuration from "../../utils/getDuration"
 import AsyncImage from "../AsyncImage"
 import PageIndicator from "../PageIndicator"
 
-interface Props {
+const AlbumDetails = ({
+	album,
+	tracks
+}: {
 	album?: SpotifyApi.AlbumObjectFull
-	tracks: (SpotifyApi.TrackObjectSimplified | undefined)[]
-}
+	tracks: SpotifyApi.TrackObjectSimplified[] | undefined[]
+}) => {
+	const token = useAuthenticated()
 
-const AlbumDetails: React.FC<Props> = (props: Props) => {
-	const { album, tracks } = props
+	const { data: isInMySavedAlbums } = useGetIsInMySavedAlbumsQuery(
+		{ ids: [album?.id ?? ""], token },
+		{ skip: !album }
+	)
+	const [addToMySavedAlbums] = useAddToMySavedAlbumsMutation()
+	const [removeFromMySavedAlbums] = useRemoveFromMySavedAlbumsMutation()
 
-	const dispatch = useAppDispatch()
-	const api = useSpotifyApi()
-	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-
-	useEffect(() => {
-		if (!api) return
-		if (!album) return
-
-		api.containsMySavedAlbums([album.id])
-			.then(res => setLiked(res[0] !== undefined ? res[0] : null))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, album])
 
 	const handleAlbumOpen = () => {
 		if (album) {
@@ -42,61 +38,19 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 		}
 	}
 
-	const handleLike = () => {
-		if (api && album) {
-			setLiked(null)
-			api.addToMySavedAlbums([album.id])
-				.then(() => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Album saved to your Library",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to save Album to your Library",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleLike = async () => {
+		if (!album) return
+
+		await addToMySavedAlbums({ ids: [album.id], token })
 	}
 
-	const handleUnlike = () => {
-		if (api && album) {
-			setLiked(null)
-			api.removeFromMySavedAlbums([album.id])
-				.then(() => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Album removed from your Library",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to remove Album from your Library",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleUnlike = async () => {
+		if (!album) return
+
+		await removeFromMySavedAlbums({ ids: [album.id], token })
 	}
+
+	const liked = isInMySavedAlbums?.[0] ?? null
 
 	return (
 		<>

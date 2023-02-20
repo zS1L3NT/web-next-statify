@@ -1,45 +1,24 @@
-import React, { useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
-
 import {
 	Card, CardContent, CircularProgress, Container, List, Paper, Table, TableBody, TableCell,
 	TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme
 } from "@mui/material"
 
+import { useGetRecentsQuery } from "../api/api"
+import { useGetTracksQuery } from "../api/track"
 import RecentItem from "../components/Items/RecentItem"
-import useAppDispatch from "../hooks/useAppDispatch"
-import useAppSelector from "../hooks/useAppSelector"
-import useAuthenticated from "../hooks/useAthenticated"
-import useSpotifyApi from "../hooks/useSpotifyApi"
-import { set_error } from "../slices/ErrorSlice"
+import useAuthenticated from "../hooks/useAuthenticated"
 
-const RecentlyPlayed: React.FC = () => {
-	const dispatch = useAppDispatch()
-	const recents = useAppSelector(state => state.statistics.recents)
-	const location = useLocation()
-	const navigate = useNavigate()
-	const api = useSpotifyApi()
-	const [images, setImages] = useState<string[]>()
+const RecentlyPlayed = ({}: {}) => {
+	const token = useAuthenticated()
+
 	const theme = useTheme()
 	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 
-	useAuthenticated()
-
-	useEffect(() => {
-		if (recents === null) {
-			sessionStorage.setItem("redirect", location.pathname)
-			navigate("/login")
-		}
-	}, [navigate, location.pathname, recents])
-
-	useEffect(() => {
-		if (!api) return
-		if (!recents) return
-
-		api.getTracks(recents.map(r => r.track.id))
-			.then(res => setImages(res.tracks.map(t => t.album.images[0]?.url || "")))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, recents])
+	const { data: recents } = useGetRecentsQuery({ token })
+	const { data: tracks } = useGetTracksQuery(
+		{ ids: recents?.map(r => r.track.id) ?? [], token },
+		{ skip: !recents }
+	)
 
 	return (
 		<Container>
@@ -61,7 +40,7 @@ const RecentlyPlayed: React.FC = () => {
 								<RecentItem
 									key={i}
 									smallScreen={smallScreen}
-									image={images?.[i]}
+									image={tracks?.[i]?.album.images[0]?.url}
 									recent={recent}
 								/>
 							))}
@@ -82,7 +61,7 @@ const RecentlyPlayed: React.FC = () => {
 										<RecentItem
 											key={i}
 											smallScreen={smallScreen}
-											image={images?.[i]}
+											image={tracks?.[i]?.album.images[0]?.url}
 											recent={recent}
 										/>
 									))}

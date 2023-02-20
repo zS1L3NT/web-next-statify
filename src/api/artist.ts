@@ -18,6 +18,12 @@ const artist = api.injectEndpoints({
 		getArtist: builder.query<SpotifyApi.ArtistObjectFull, { id: string } & RequireToken>({
 			query: ({ token, ...args }) => ["getArtist", [args], token]
 		}),
+		getArtistTopTracks: builder.query<
+			SpotifyApi.TrackObjectFull[],
+			{ id: string } & RequireToken
+		>({
+			query: ({ token, ...args }) => ["getArtistTopTracks", [args], token]
+		}),
 		getIsFollowingArtists: builder.query<
 			SpotifyApi.UserFollowsUsersOrArtistsResponse,
 			{ ids: string[] } & RequireToken
@@ -45,9 +51,9 @@ const artist = api.injectEndpoints({
 export const {
 	useFollowArtistsMutation,
 	useGetArtistQuery,
+	useGetArtistTopTracksQuery,
 	useGetArtistsQuery,
 	useGetIsFollowingArtistsQuery,
-	useGetRecentsQuery,
-	useGetRecommendationsQuery,
-	useGetTopArtistsQuery
+	useGetTopArtistsQuery,
+	useUnfollowArtistsMutation
 } = artist

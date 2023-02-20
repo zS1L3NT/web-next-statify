@@ -1,4 +1,3 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material"
@@ -7,9 +6,10 @@ import HomeCard from "../components/Cards/HomeCard"
 import useAppSelector from "../hooks/useAppSelector"
 import useThemeValue from "../hooks/useThemeValue"
 
-const Home: React.FC = () => {
-	const access_token = useAppSelector(state => state.access_token)
+const Home = ({}: {}) => {
 	const navigate = useNavigate()
+
+	const token = useAppSelector(state => state.token)
 
 	const cards: iHomeCard[] = [
 		{
@@ -40,7 +40,7 @@ const Home: React.FC = () => {
 						Statify
 					</Typography>
 					<Typography variant="h6" align="center" color="text.secondary" paragraph>
-						{access_token
+						{token
 							? "View your Spotify Statistics"
 							: "Log in to see your Spotify Statistics"}
 					</Typography>
@@ -52,9 +52,9 @@ const Home: React.FC = () => {
 						<Button
 							size="large"
 							variant="contained"
-							disabled={!!access_token}
+							disabled={!!token}
 							onClick={() => navigate("/login")}>
-							{access_token ? "You are signed in" : "Sign in with Spotify"}
+							{token ? "You are signed in" : "Sign in with Spotify"}
 						</Button>
 					</Stack>
 					<Typography variant="subtitle2" align="center" color="text.secondary">

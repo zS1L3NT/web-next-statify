@@ -9,18 +9,25 @@ import {
 
 import { tabs } from "../App"
 import TopTrackItem from "../components/Items/TopTrackItem"
-import useAppSelector from "../hooks/useAppSelector"
-import useAuthenticated from "../hooks/useAthenticated"
+import useAuthenticated from "../hooks/useAuthenticated"
+import useGetFullTopTracksQuery from "../hooks/useGetFullTopTracksQuery"
 
-const TopTracks: React.FC = () => {
-	const tracks = useAppSelector(state => state.statistics.tracks)
-	const location = useLocation()
+const TopTracks = ({}: {}) => {
+	const token = useAuthenticated()
+
 	const navigate = useNavigate()
-	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const location = useLocation()
 	const theme = useTheme()
-	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
+	const smallScreen = useMediaQuery(theme.breakpoints.down("lg"))
 
-	useAuthenticated()
+	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const { data: topTracks } = useGetFullTopTracksQuery(
+		{
+			time_range: term as "short_term" | "medium_term" | "long_term",
+			token
+		},
+		{ skip: !term }
+	)
 
 	useEffect(() => {
 		const parts = location.pathname.split("/")
@@ -28,13 +35,6 @@ const TopTracks: React.FC = () => {
 			parts[parts.length - 1]!.replace("-", "_") as "short_term" | "medium_term" | "long_term"
 		)
 	}, [location.pathname])
-
-	useEffect(() => {
-		if (Object.values(tracks).includes(null)) {
-			sessionStorage.setItem("redirect", location.pathname)
-			navigate("/login")
-		}
-	}, [navigate, location.pathname, tracks])
 
 	return term ? (
 		<TabContext value={term}>
@@ -62,11 +62,11 @@ const TopTracks: React.FC = () => {
 					<Card sx={{ my: 3 }}>
 						{smallScreen ? (
 							<List>
-								{(tracks[term] || Array(5).fill(undefined)).map((track, i) => (
+								{(topTracks ?? Array(5).fill(undefined)).map((t, i) => (
 									<TopTrackItem
 										key={i}
 										smallScreen={smallScreen}
-										track={track}
+										track={t}
 										i={i}
 									/>
 								))}
@@ -84,16 +84,14 @@ const TopTracks: React.FC = () => {
 										</TableRow>
 									</TableHead>
 									<TableBody>
-										{(tracks[term] || Array(5).fill(undefined)).map(
-											(track, i) => (
-												<TopTrackItem
-													key={i}
-													smallScreen={smallScreen}
-													track={track}
-													i={i}
-												/>
-											)
-										)}
+										{(topTracks ?? Array(5).fill(undefined)).map((t, i) => (
+											<TopTrackItem
+												key={i}
+												smallScreen={smallScreen}
+												track={t}
+												i={i}
+											/>
+										))}
 									</TableBody>
 								</Table>
 							</TableContainer>

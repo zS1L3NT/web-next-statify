@@ -1,18 +1,16 @@
-import { useTry as _useTry } from "no-try"
-import React, { useEffect, useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useLocation } from "react-router-dom"
 
 import { Container, Grid, List, Skeleton, Stack, Typography } from "@mui/material"
 
+import { useGetRecentsQuery } from "../api/api"
+import { useGetArtistQuery, useGetArtistTopTracksQuery } from "../api/artist"
 import AppearanceCard from "../components/Cards/AppearanceCard"
 import ArtistDetails from "../components/Details/ArtistDetails"
 import Recommendations from "../components/Recommendations"
 import Track from "../components/Track"
-import useAppDispatch from "../hooks/useAppDispatch"
-import useAppSelector from "../hooks/useAppSelector"
-import useAuthenticated from "../hooks/useAthenticated"
-import useSpotifyApi from "../hooks/useSpotifyApi"
-import { set_error } from "../slices/ErrorSlice"
+import useAuthenticated from "../hooks/useAuthenticated"
+import useGetFullTopArtistsQuery from "../hooks/useGetFullTopArtistsQuery"
+import useGetFullTopTracksQuery from "../hooks/useGetFullTopTracksQuery"
 
 /**
  * * Name
@@ -27,114 +25,86 @@ import { set_error } from "../slices/ErrorSlice"
  * * Recommended
  */
 
-const Artist: React.FC = () => {
-	const dispatch = useAppDispatch()
-	const statistics = useAppSelector(state => state.statistics)
+const Artist = ({}: {}) => {
+	const token = useAuthenticated()
+
 	const location = useLocation()
-	const navigate = useNavigate()
-	const api = useSpotifyApi()
-	const [artist, setArtist] = useState<SpotifyApi.SingleArtistResponse>()
-	const [topTracks, setTopTracks] = useState<(SpotifyApi.TrackObjectFull | undefined)[]>(
-		Array(5).fill(undefined)
-	)
 
-	useAuthenticated()
-
-	useEffect(() => {
-		if (!api) return
-
-		const [, , artistId] = location.pathname.split("/")
-		if (artistId) {
-			api.getArtist(artistId)
-				.then(setArtist)
-				.catch(err => {
-					const [, message] = _useTry(() => JSON.parse(err.response).error.message)
-					dispatch(
-						set_error(message === "invalid id" ? new Error("Artist not found") : err)
-					)
-				})
-		} else {
-			dispatch(set_error(new Error("Artist not found")))
-		}
-	}, [dispatch, location.pathname, api])
-
-	useEffect(() => {
-		if (!api) return
-		if (!artist) return
-
-		api.getArtistTopTracks(artist.id, "SG")
-			.then(res => setTopTracks(res.tracks.slice(0, 5)))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, artist])
-
-	useEffect(() => {
-		if (
-			!statistics.artists.short_term ||
-			!statistics.artists.medium_term ||
-			!statistics.artists.long_term ||
-			!statistics.tracks.short_term ||
-			!statistics.tracks.medium_term ||
-			!statistics.tracks.long_term ||
-			!statistics.recents
-		) {
-			sessionStorage.setItem("redirect", location.pathname)
-			navigate("/login")
-		}
-	}, [navigate, location.pathname, artist, statistics])
+	const artistId = location.pathname.split("/")[2]!
+	const { data: artist } = useGetArtistQuery({ id: artistId, token })
+	const { data: artistTopTracks } = useGetArtistTopTracksQuery({ id: artistId, token })
+	const { data: userTopArtistsShortTerm } = useGetFullTopArtistsQuery({
+		time_range: "short_term",
+		token
+	})
+	const { data: userTopArtistsMediumTerm } = useGetFullTopArtistsQuery({
+		time_range: "medium_term",
+		token
+	})
+	const { data: userTopArtistsLongTerm } = useGetFullTopArtistsQuery({
+		time_range: "long_term",
+		token
+	})
+	const { data: userTopTracksShortTerm } = useGetFullTopTracksQuery({
+		time_range: "short_term",
+		token
+	})
+	const { data: userTopTracksMediumTerm } = useGetFullTopTracksQuery({
+		time_range: "medium_term",
+		token
+	})
+	const { data: userTopTracksLongTerm } = useGetFullTopTracksQuery({
+		time_range: "long_term",
+		token
+	})
+	const { data: userRecents } = useGetRecentsQuery({ token })
 
 	const appearances: iAppearanceCard[] = [
 		{
 			hash: true,
 			text: "streamed artist of the last month",
 			link: "/top-artists/short-term",
-			condition: () =>
-				(statistics.artists.short_term?.findIndex(t => t.id === artist?.id) || 0) + 1
+			condition: () => (userTopArtistsShortTerm?.findIndex(t => t.id === artistId) || 0) + 1
 		},
 		{
 			hash: true,
 			text: "streamed artist of the last 6 months",
 			link: "/top-artists/medium-term",
-			condition: () =>
-				(statistics.artists.medium_term?.findIndex(t => t.id === artist?.id) || 0) + 1
+			condition: () => (userTopArtistsMediumTerm?.findIndex(t => t.id === artistId) || 0) + 1
 		},
 		{
 			hash: true,
 			text: "streamed artist of your lifetime",
 			link: "/top-artists/long-term",
-			condition: () =>
-				(statistics.artists.long_term?.findIndex(t => t.id === artist?.id) || 0) + 1
+			condition: () => (userTopArtistsLongTerm?.findIndex(t => t.id === artistId) || 0) + 1
 		},
 		{
 			hash: false,
 			link: "/top-tracks/short-term",
 			text: `appearances from ${artist?.name} in your top tracks of the last month`,
 			condition: () =>
-				statistics.tracks.short_term?.filter(t => t.artists.find(a => a.id === artist?.id))
-					.length
+				userTopTracksShortTerm?.filter(t => t.artists.find(a => a.id === artistId)).length
 		},
 		{
 			hash: false,
 			link: "/top-tracks/medium-term",
 			text: `appearances from ${artist?.name} in your top tracks of the last 6 months`,
 			condition: () =>
-				statistics.tracks.medium_term?.filter(t => t.artists.find(a => a.id === artist?.id))
-					.length
+				userTopTracksMediumTerm?.filter(t => t.artists.find(a => a.id === artistId)).length
 		},
 		{
 			hash: false,
 			link: "/top-tracks/long-term",
 			text: `appearances from ${artist?.name} in your top tracks of your lifetime`,
 			condition: () =>
-				statistics.tracks.long_term?.filter(t => t.artists.find(a => a.id === artist?.id))
-					.length
+				userTopTracksLongTerm?.filter(t => t.artists.find(a => a.id === artistId)).length
 		},
 		{
 			hash: false,
 			link: "/recents",
 			text: `appearances from ${artist?.name} in your last 50 streams`,
 			condition: () =>
-				statistics.recents?.filter(t => t.track.artists.find(a => a.id === artist?.id))
-					.length
+				userRecents?.filter(t => t.track.artists.find(a => a.id === artistId)).length
 		}
 	]
 
@@ -149,8 +119,8 @@ const Artist: React.FC = () => {
 				</Typography>
 			</Stack>
 			<List>
-				{topTracks.map((track, i) => (
-					<Track key={i} track={track} i={i} />
+				{(artistTopTracks ?? Array(5).fill(undefined)).map((t, i) => (
+					<Track key={i} track={t} i={i} />
 				))}
 			</List>
 

@@ -1,5 +1,3 @@
-import { useTry as _useTry } from "no-try"
-
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 type iErrorData = {
@@ -11,7 +9,7 @@ const slice = createSlice({
 	name: "error",
 	initialState: null as iErrorData,
 	reducers: {
-		set_error: (state, action: PayloadAction<Error | null>) => {
+		setError: (state, action: PayloadAction<Error | null>) => {
 			if (action.payload) {
 				const response_str = (action.payload as any).response
 				if (response_str) {
@@ -40,5 +38,5 @@ const slice = createSlice({
 	}
 })
 
-export const { set_error } = slice.actions
+export const { setError } = slice.actions
 export default slice.reducer

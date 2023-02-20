@@ -22,13 +22,12 @@ import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
-import { set_access_token } from "./slices/AccessTokenSlice"
+import { setToken } from "./slices/TokenSlice"
 import { dark, light } from "./theme"
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
 	const access_token = useAppSelector(state => state.access_token)
-	const statistics = useAppSelector(state => state.statistics)
 	const location = useLocation()
 	const navigate = useNavigate()
 
@@ -49,21 +48,8 @@ const App = (): JSX.Element => {
 
 	useEffect(() => {
 		if (localStorage.getItem("access_token")) {
-			dispatch(set_access_token(localStorage.getItem("access_token")))
+			dispatch(setToken(localStorage.getItem("access_token")))
 			localStorage.removeItem("access_token")
-		}
-
-		if (
-			access_token &&
-			!statistics.tracks.short_term &&
-			!statistics.tracks.medium_term &&
-			!statistics.tracks.long_term &&
-			!statistics.artists.short_term &&
-			!statistics.artists.medium_term &&
-			!statistics.artists.long_term &&
-			!statistics.recents
-		) {
-			navigate("/login")
 		}
 
 		const beforeunload = () => {

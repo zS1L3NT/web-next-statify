@@ -1,4 +1,3 @@
-import React from "react"
 import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
@@ -10,15 +9,15 @@ import {
 import getDuration from "../../utils/getDuration"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
+const TopTrackItem = ({
+	smallScreen,
+	track,
+	i
+}: {
 	smallScreen: boolean
 	track?: SpotifyApi.TrackObjectFull
 	i?: number
-}
-
-const TopTrackItem: React.FC<Props> = (props: Props) => {
-	const { smallScreen, track, i } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {

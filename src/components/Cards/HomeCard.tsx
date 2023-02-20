@@ -1,19 +1,13 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Button, Card, CardActions, CardContent, Grid, Typography } from "@mui/material"
 
 import useAppSelector from "../../hooks/useAppSelector"
 
-interface Props {
-	card: iHomeCard
-}
-
-const HomeCard: React.FC<Props> = (props: Props) => {
-	const { card } = props
-
-	const access_token = useAppSelector(state => state.access_token)
+const HomeCard = ({ card }: { card: iHomeCard }) => {
 	const navigate = useNavigate()
+
+	const token = useAppSelector(state => state.token)
 
 	return (
 		<Grid key={card.id} item>
@@ -30,9 +24,9 @@ const HomeCard: React.FC<Props> = (props: Props) => {
 					<Button
 						sx={{ ml: 1 }}
 						size="medium"
-						disabled={!access_token}
+						disabled={!token}
 						onClick={() => navigate(card.url)}>
-						{access_token ? "Bring me there!" : "Sign in first!"}
+						{token ? "Bring me there!" : "Sign in first!"}
 					</Button>
 				</CardActions>
 			</Card>

@@ -1,15 +1,8 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
 
-interface Props {
-	appearance: iAppearanceCard
-}
-
-const AppearanceCard: React.FC<Props> = (props: Props) => {
-	const { appearance } = props
-
+const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
 	const navigate = useNavigate()
 
 	return appearance.condition() ? (

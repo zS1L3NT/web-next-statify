@@ -11,8 +11,8 @@ import useAppSelector from "../../hooks/useAppSelector"
 import DrawerDropdown from "./DrawerDropdown"
 import DrawerItem from "./DrawerItem"
 
-const Navigator: React.FC = () => {
-	const access_token = useAppSelector(state => state.access_token)
+const Navigator = ({}: {}) => {
+	const token = useAppSelector(state => state.token)
 	const theme = useAppSelector(state => state.theme)
 	const [open, setOpen] = useState(false)
 
@@ -29,7 +29,7 @@ const Navigator: React.FC = () => {
 			icon: <Login />,
 			title: "Login",
 			url: "/login",
-			condition: () => !access_token
+			condition: () => !token
 		},
 		{
 			id: "nav-top-tracks",
@@ -42,24 +42,24 @@ const Navigator: React.FC = () => {
 					icon: <AccessTime />,
 					title: "Last Month",
 					url: "/top-tracks/short-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				},
 				{
 					id: "nav-top-tracks-medium-term",
 					icon: <AccessTimeFilled />,
 					title: "Last 6 Months",
 					url: "/top-tracks/medium-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				},
 				{
 					id: "nav-top-tracks-long-term",
 					icon: <Timeline />,
 					title: "All Time",
 					url: "/top-tracks/long-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				}
 			],
-			condition: () => !!access_token
+			condition: () => !!token
 		},
 		{
 			id: "nav-top-artists",
@@ -72,31 +72,31 @@ const Navigator: React.FC = () => {
 					icon: <AccessTime />,
 					title: "Last Month",
 					url: "/top-artists/short-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				},
 				{
 					id: "nav-top-artists-medium-term",
 					icon: <AccessTimeFilled />,
 					title: "Last 6 Months",
 					url: "/top-artists/medium-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				},
 				{
 					id: "nav-top-artists-long-term",
 					icon: <Timeline />,
 					title: "All Time",
 					url: "/top-artists/long-term",
-					condition: () => !!access_token
+					condition: () => !!token
 				}
 			],
-			condition: () => !!access_token
+			condition: () => !!token
 		},
 		{
 			id: "nav-recents",
 			icon: <History />,
 			title: "Recently Played",
 			url: "/recents",
-			condition: () => !!access_token
+			condition: () => !!token
 		},
 		{
 			id: "nav-to-light",
@@ -117,7 +117,7 @@ const Navigator: React.FC = () => {
 			icon: <Logout />,
 			title: "Logout",
 			url: "/logout",
-			condition: () => !!access_token
+			condition: () => !!token
 		}
 	]
 

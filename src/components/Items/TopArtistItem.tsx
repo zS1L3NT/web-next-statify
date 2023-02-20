@@ -1,4 +1,3 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import {
@@ -8,14 +7,7 @@ import {
 import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
-	artist?: SpotifyApi.ArtistObjectFull
-	i: number
-}
-
-const TopArtistItem: React.FC<Props> = (props: Props) => {
-	const { artist, i } = props
-
+const TopArtistItem = ({ artist, i }: { artist?: SpotifyApi.ArtistObjectFull; i: number }) => {
 	const navigate = useNavigate()
 
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectFull) => {

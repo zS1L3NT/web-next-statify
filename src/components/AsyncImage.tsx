@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react"
 
-interface Props {
+const AsyncImage = ({
+	src,
+	skeleton,
+	component
+}: {
 	src: string | undefined
 	skeleton: JSX.Element
 	component: (url: string) => JSX.Element
-}
-
-const AsyncImage = (props: Props) => {
-	const { src, skeleton, component } = props
-
+}) => {
 	const [fade, setFade] = useState(false)
 	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
 

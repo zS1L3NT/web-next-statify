@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -6,34 +6,25 @@ import {
 	IconButton, Skeleton, Stack, Tooltip, Typography
 } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
-import { set_snackbar } from "../../slices/SnackbarSlice"
+import {
+	useFollowArtistsMutation, useGetIsFollowingArtistsQuery, useUnfollowArtistsMutation
+} from "../../api/artist"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 import PageIndicator from "../PageIndicator"
 
-interface Props {
-	artist?: SpotifyApi.ArtistObjectFull
-}
+const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => {
+	const token = useAuthenticated()
 
-const ArtistDetails: React.FC<Props> = (props: Props) => {
-	const { artist } = props
+	const { data: isFollowingArtists } = useGetIsFollowingArtistsQuery(
+		{ ids: [artist?.id ?? ""], token },
+		{ skip: !artist }
+	)
+	const [followArtists] = useFollowArtistsMutation()
+	const [unfollowArtists] = useUnfollowArtistsMutation()
 
-	const dispatch = useAppDispatch()
-	const api = useSpotifyApi()
-	const [followed, setFollowed] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-
-	useEffect(() => {
-		if (!api) return
-		if (!artist) return
-
-		api.isFollowingArtists([artist.id])
-			.then(res => setFollowed(res[0] !== undefined ? res[0] : null))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, artist])
 
 	const handleArtistOpen = () => {
 		if (artist) {
@@ -41,61 +32,19 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 		}
 	}
 
-	const handleFollow = () => {
-		if (api && artist) {
-			setFollowed(null)
-			api.followArtists([artist.id])
-				.then(() => {
-					setFollowed(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Followed Artist",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setFollowed(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to Follow Artist",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleFollow = async () => {
+		if (!artist) return
+
+		await followArtists({ ids: [artist.id], token })
 	}
 
-	const handleUnfollow = () => {
-		if (api && artist) {
-			setFollowed(null)
-			api.unfollowArtists([artist.id])
-				.then(() => {
-					setFollowed(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Unfollowed Artist",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setFollowed(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to Unfollow Artist",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleUnfollow = async () => {
+		if (!artist) return
+
+		await unfollowArtists({ ids: [artist.id], token })
 	}
+
+	const following = isFollowingArtists?.[0] ?? null
 
 	return (
 		<>
@@ -155,18 +104,18 @@ const ArtistDetails: React.FC<Props> = (props: Props) => {
 					<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
 						<Tooltip
 							title={
-								followed === null
+								following === null
 									? ""
-									: followed
+									: following
 									? "Unfollow this artist"
 									: "Follow this artist"
 							}>
 							<IconButton
 								sx={{ width: 46 }}
-								onClick={followed ? handleUnfollow : handleFollow}>
-								{followed === null ? (
+								onClick={following ? handleUnfollow : handleFollow}>
+								{following === null ? (
 									<CircularProgress size={30} />
-								) : followed ? (
+								) : following ? (
 									<Star />
 								) : (
 									<StarBorder />

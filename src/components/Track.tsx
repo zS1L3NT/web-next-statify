@@ -1,4 +1,3 @@
-import React from "react"
 import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
@@ -8,15 +7,15 @@ import {
 
 import AsyncImage from "./AsyncImage"
 
-interface Props {
+const Track = ({
+	track,
+	album,
+	i
+}: {
 	track?: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified
 	album?: SpotifyApi.AlbumObjectSimplified
 	i: number
-}
-
-const Track: React.FC<Props> = (props: Props) => {
-	const { track, album, i } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {

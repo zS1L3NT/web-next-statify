@@ -8,16 +8,23 @@ import {
 
 import { tabs } from "../App"
 import TopArtistItem from "../components/Items/TopArtistItem"
-import useAppSelector from "../hooks/useAppSelector"
-import useAuthenticated from "../hooks/useAthenticated"
+import useAuthenticated from "../hooks/useAuthenticated"
+import useGetFullTopArtistsQuery from "../hooks/useGetFullTopArtistsQuery"
 
-const TopArtists: React.FC = () => {
-	const artists = useAppSelector(state => state.statistics.artists)
-	const location = useLocation()
+const TopArtists = ({}: {}) => {
+	const token = useAuthenticated()
+
 	const navigate = useNavigate()
-	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const location = useLocation()
 
-	useAuthenticated()
+	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const { data: topArtists } = useGetFullTopArtistsQuery(
+		{
+			time_range: term as "short_term" | "medium_term" | "long_term",
+			token
+		},
+		{ skip: !term }
+	)
 
 	useEffect(() => {
 		const parts = location.pathname.split("/")
@@ -25,13 +32,6 @@ const TopArtists: React.FC = () => {
 			parts[parts.length - 1]!.replace("-", "_") as "short_term" | "medium_term" | "long_term"
 		)
 	}, [location.pathname])
-
-	useEffect(() => {
-		if (Object.values(artists).includes(null)) {
-			sessionStorage.setItem("redirect", location.pathname)
-			navigate("/login")
-		}
-	}, [navigate, location.pathname, artists])
 
 	return term ? (
 		<TabContext value={term}>
@@ -57,11 +57,8 @@ const TopArtists: React.FC = () => {
 						</CardContent>
 					</Card>
 					<Grid sx={{ my: 1 }} container spacing={5} justifyContent="space-evenly">
-						{(term
-							? artists[term] || Array(5).fill(undefined)
-							: Array(5).fill(undefined)
-						).map((artist, i) => (
-							<TopArtistItem key={i} artist={artist} i={i} />
+						{(topArtists ?? Array(5).fill(undefined)).map((a, i) => (
+							<TopArtistItem key={i} artist={a} i={i} />
 						))}
 					</Grid>
 				</Container>

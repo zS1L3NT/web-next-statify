@@ -1,34 +1,17 @@
-import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
+import { useGetAlbumQuery } from "../../api/album"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
-	album?: SpotifyApi.AlbumObjectSimplified
-	position?: number
-}
+const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number }) => {
+	const token = useAuthenticated()
 
-const AlbumCard: React.FC<Props> = (props: Props) => {
-	const { position, album } = props
-
-	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-	const api = useSpotifyApi()
-	const [data, setData] = useState<SpotifyApi.AlbumObjectFull>()
 
-	useEffect(() => {
-		if (!api) return
-		if (!album) return
-
-		api.getAlbum(album.id)
-			.then(setData)
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, album])
+	const { data: album } = useGetAlbumQuery({ id: albumId!, token }, { skip: !albumId })
 
 	const handleAlbumClick = () => {
 		if (album) {
@@ -45,7 +28,7 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 						flexDirection: "row"
 					}}>
 					<AsyncImage
-						src={data?.images[0]?.url}
+						src={album?.images[0]?.url}
 						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
 						component={thumbnailUrl => (
 							<CardMedia
@@ -63,9 +46,9 @@ const AlbumCard: React.FC<Props> = (props: Props) => {
 							flexDirection: "column",
 							justifyContent: "center"
 						}}>
-						{data ? (
+						{album ? (
 							<>
-								<Typography variant="h5">{data.name}</Typography>
+								<Typography variant="h5">{album.name}</Typography>
 								<Typography variant="subtitle1">Track #{position}</Typography>
 							</>
 						) : (

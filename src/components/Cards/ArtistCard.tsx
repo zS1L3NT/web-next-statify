@@ -1,34 +1,18 @@
-import React, { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
+import { useGetArtistQuery } from "../../api/artist"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
-	artist?: SpotifyApi.ArtistObjectSimplified
-}
+const ArtistCard = ({ artistId }: { artistId?: string }) => {
+	const token = useAuthenticated()
 
-const ArtistCard: React.FC<Props> = (props: Props) => {
-	const { artist } = props
-
-	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
-	const api = useSpotifyApi()
-	const [data, setData] = useState<SpotifyApi.ArtistObjectFull>()
 
-	useEffect(() => {
-		if (!api) return
-		if (!artist) return
-
-		api.getArtist(artist.id)
-			.then(setData)
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, artist])
+	const { data: artist } = useGetArtistQuery({ id: artistId, token }, { skip: !artistId })
 
 	const handleArtistClick = () => {
 		if (artist) {
@@ -45,7 +29,7 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 						flexDirection: "row"
 					}}>
 					<AsyncImage
-						src={data?.images[0]?.url}
+						src={artist?.images[0]?.url}
 						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
 						component={thumbnailUrl => (
 							<CardMedia
@@ -63,10 +47,10 @@ const ArtistCard: React.FC<Props> = (props: Props) => {
 							flexDirection: "column",
 							justifyContent: "center"
 						}}>
-						{data ? (
+						{artist ? (
 							<>
-								<Typography variant="h5">{data.name}</Typography>
-								<Typography variant="subtitle1">{getFollowers(data)}</Typography>
+								<Typography variant="h5">{artist.name}</Typography>
+								<Typography variant="subtitle1">{getFollowers(artist)}</Typography>
 							</>
 						) : (
 							<>

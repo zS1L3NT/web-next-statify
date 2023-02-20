@@ -1,8 +1,8 @@
-import React from "react"
+import React, { PropsWithChildren } from "react"
 
 import { Typography } from "@mui/material"
 
-const PageIndicator: React.FC = (props: { children?: React.ReactNode }) => (
+const PageIndicator = ({ children }: PropsWithChildren<{}>) => (
 	<Typography
 		sx={{
 			bgcolor: "primary.main",
@@ -14,7 +14,7 @@ const PageIndicator: React.FC = (props: { children?: React.ReactNode }) => (
 			mx: { xs: "auto", sm: 0 }
 		}}
 		variant="body2">
-		{props.children}
+		{children}
 	</Typography>
 )
 

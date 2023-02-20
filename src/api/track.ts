@@ -45,8 +45,6 @@ const track = api.injectEndpoints({
 export const {
 	useAddToMySavedTracksMutation,
 	useGetIsInMySavedTracksQuery,
-	useGetRecentsQuery,
-	useGetRecommendationsQuery,
 	useGetTopTracksQuery,
 	useGetTrackQuery,
 	useGetTracksQuery,

@@ -1,14 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import AccessTokenReducer from "./slices/AccessTokenSlice"
 import ErrorReducer from "./slices/ErrorSlice"
 import SnackbarReducer from "./slices/SnackbarSlice"
 import ThemeReducer from "./slices/ThemeSlice"
+import TokenReducer from "./slices/TokenSlice"
 
 const store = configureStore({
 	reducer: {
 		theme: ThemeReducer,
-		access_token: AccessTokenReducer,
+		token: TokenReducer,
 		error: ErrorReducer,
 		snackbar: SnackbarReducer
 	}

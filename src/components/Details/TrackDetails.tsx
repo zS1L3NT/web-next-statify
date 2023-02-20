@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -6,34 +6,25 @@ import {
 	IconButton, Skeleton, Stack, Tooltip, Typography
 } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
-import { set_snackbar } from "../../slices/SnackbarSlice"
+import {
+	useAddToMySavedTracksMutation, useGetIsInMySavedTracksQuery, useRemoveFromMySavedTracksMutation
+} from "../../api/track"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import getDuration from "../../utils/getDuration"
 import AsyncImage from "../AsyncImage"
 import PageIndicator from "../PageIndicator"
 
-interface Props {
-	track?: SpotifyApi.TrackObjectFull
-}
+const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
+	const token = useAuthenticated()
 
-const TrackDetails: React.FC<Props> = (props: Props) => {
-	const { track } = props
+	const { data: isInMySavedTracks } = useGetIsInMySavedTracksQuery(
+		{ ids: [track?.id ?? ""], token },
+		{ skip: !track }
+	)
+	const [addToMySavedTracks] = useAddToMySavedTracksMutation()
+	const [removeFromMySavedTracks] = useRemoveFromMySavedTracksMutation()
 
-	const dispatch = useAppDispatch()
-	const api = useSpotifyApi()
-	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-
-	useEffect(() => {
-		if (!api) return
-		if (!track) return
-
-		api.containsMySavedTracks([track.id])
-			.then(res => setLiked(res[0] !== undefined ? res[0] : null))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, track])
 
 	const handleTrackOpen = () => {
 		if (track) {
@@ -41,61 +32,19 @@ const TrackDetails: React.FC<Props> = (props: Props) => {
 		}
 	}
 
-	const handleLike = () => {
-		if (api && track) {
-			setLiked(null)
-			api.addToMySavedTracks([track.id])
-				.then(() => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Track added to your Liked Tracks",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to add Track to your Liked Tracks",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleLike = async () => {
+		if (!track) return
+
+		await addToMySavedTracks({ ids: [track.id], token })
 	}
 
-	const handleUnlike = () => {
-		if (api && track) {
-			setLiked(null)
-			api.removeFromMySavedTracks([track.id])
-				.then(() => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Track removed from your Liked Tracks",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to remove Track from your Liked Tracks",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleUnlike = async () => {
+		if (!track) return
+
+		await removeFromMySavedTracks({ ids: [track.id], token })
 	}
+
+	const liked = isInMySavedTracks?.[0] ?? null
 
 	return (
 		<>

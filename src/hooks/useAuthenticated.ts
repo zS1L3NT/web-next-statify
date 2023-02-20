@@ -3,17 +3,19 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import useAppSelector from "./useAppSelector"
 
-const useAuthenticated = (): void => {
-	const access_token = useAppSelector(state => state.access_token)
+const useAuthenticated = (): string => {
+	const token = useAppSelector(state => state.token)
 	const location = useLocation()
 	const navigate = useNavigate()
 
 	useEffect(() => {
-		if (!access_token) {
+		if (!token) {
 			sessionStorage.setItem("redirect", location.pathname)
 			navigate("/logout")
 		}
-	}, [navigate, location.pathname, access_token])
+	}, [navigate, location.pathname, token])
+
+	return token ?? ""
 }
 
 export default useAuthenticated
