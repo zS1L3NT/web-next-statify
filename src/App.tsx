@@ -27,7 +27,7 @@ import { dark, light } from "./theme"
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
-	const access_token = useAppSelector(state => state.access_token)
+	const token = useAppSelector(state => state.token)
 	const location = useLocation()
 	const navigate = useNavigate()
 
@@ -47,14 +47,18 @@ const App = (): JSX.Element => {
 	}, [location])
 
 	useEffect(() => {
-		if (localStorage.getItem("access_token")) {
-			dispatch(setToken(localStorage.getItem("access_token")))
-			localStorage.removeItem("access_token")
+		if (localStorage.getItem("token")) {
+			dispatch(setToken(localStorage.getItem("token")))
+			localStorage.removeItem("token")
+		}
+
+		if (token) {
+			navigate("/")
 		}
 
 		const beforeunload = () => {
-			if (access_token) {
-				localStorage.setItem("access_token", access_token)
+			if (token) {
+				localStorage.setItem("token", token)
 			}
 		}
 
@@ -62,7 +66,7 @@ const App = (): JSX.Element => {
 		return () => {
 			window.removeEventListener("beforeunload", beforeunload)
 		}
-	}, [navigate, access_token])
+	}, [token])
 
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>
