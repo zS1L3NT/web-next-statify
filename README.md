@@ -47,34 +47,45 @@ Overlapping elements was simplified for me thanks to [this](https://css-tricks.c
 ## Build with
 
 -   TypeScript
-    -   [![@types/luxon](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/luxon?style=flat-square)](https://npmjs.com/package/@types/luxon)
-    -   [![@types/react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react?style=flat-square)](https://npmjs.com/package/@types/react)
-    -   [![@types/react-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-dom?style=flat-square)](https://npmjs.com/package/@types/react-dom)
-    -   [![@types/react-lazyload](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-lazyload?style=flat-square)](https://npmjs.com/package/@types/react-lazyload)
-    -   [![@types/react-redux](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-redux?style=flat-square)](https://npmjs.com/package/@types/react-redux)
-    -   [![@types/react-router-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@types/react-router-dom?style=flat-square)](https://npmjs.com/package/@types/react-router-dom)
-    -   [![typescript](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/typescript?style=flat-square)](https://npmjs.com/package/typescript)
--   React
-    -   [![react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react?style=flat-square)](https://npmjs.com/package/react)
-    -   [![react-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-dom?style=flat-square)](https://npmjs.com/package/react-dom)
-    -   [![react-lazyload](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-lazyload?style=flat-square)](https://npmjs.com/package/react-lazyload)
-    -   [![react-router-dom](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-router-dom?style=flat-square)](https://npmjs.com/package/react-router-dom)
-    -   [![react-use-is-online](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-use-is-online?style=flat-square)](https://npmjs.com/package/react-use-is-online)
--   MUI
-    -   [![@emotion/react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@emotion/react?style=flat-square)](https://npmjs.com/package/@emotion/react)
-    -   [![@emotion/styled](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@emotion/styled?style=flat-square)](https://npmjs.com/package/@emotion/styled)
-    -   [![@mui/icons-material](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@mui/icons-material?style=flat-square)](https://npmjs.com/package/@mui/icons-material)
-    -   [![@mui/lab](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@mui/lab?style=flat-square)](https://npmjs.com/package/@mui/lab)
-    -   [![@mui/material](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@mui/material?style=flat-square)](https://npmjs.com/package/@mui/material)
--   Redux
-    -   [![@reduxjs/toolkit](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/@reduxjs/toolkit?style=flat-square)](https://npmjs.com/package/@reduxjs/toolkit)
-    -   [![react-redux](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/react-redux?style=flat-square)](https://npmjs.com/package/react-redux)
--   Vite
-    -   [![@vitejs/plugin-react](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/@vitejs/plugin-react?style=flat-square)](https://npmjs.com/package/@vitejs/plugin-react)
-    -   [![vite](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/vite?style=flat-square)](https://npmjs.com/package/vite)
-    -   [![vite-plugin-pwa](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/vite-plugin-pwa?style=flat-square)](https://npmjs.com/package/vite-plugin-pwa)
-    -   [![workbox-window](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/dev/workbox-window?style=flat-square)](https://npmjs.com/package/workbox-window)
--   Miscellaneous
-    -   [![axios](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/axios?style=flat-square)](https://npmjs.com/package/axios)
-    -   [![luxon](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/luxon?style=flat-square)](https://npmjs.com/package/luxon)
-    -   [![spotify-web-api-js](https://img.shields.io/github/package-json/dependency-version/zS1L3NT/web-react-statify/spotify-web-api-js?style=flat-square)](https://npmjs.com/package/spotify-web-api-js)
+	-   TypeScript
+        -   [![@types/luxon](https://img.shields.io/badge/%40types%2Fluxon-%5E3.2.0-red?style=flat-square)](https://npmjs.com/package/@types/luxon/v/3.2.0)
+        -   [![@types/react](https://img.shields.io/badge/%40types%2Freact-%5E18.0.28-red?style=flat-square)](https://npmjs.com/package/@types/react/v/18.0.28)
+        -   [![@types/react-dom](https://img.shields.io/badge/%40types%2Freact--dom-%5E18.0.11-red?style=flat-square)](https://npmjs.com/package/@types/react-dom/v/18.0.11)
+        -   [![@types/react-lazyload](https://img.shields.io/badge/%40types%2Freact--lazyload-%5E3.2.0-red?style=flat-square)](https://npmjs.com/package/@types/react-lazyload/v/3.2.0)
+        -   [![@types/react-redux](https://img.shields.io/badge/%40types%2Freact--redux-%5E7.1.25-red?style=flat-square)](https://npmjs.com/package/@types/react-redux/v/7.1.25)
+        -   [![@types/react-router-dom](https://img.shields.io/badge/%40types%2Freact--router--dom-%5E5.3.3-red?style=flat-square)](https://npmjs.com/package/@types/react-router-dom/v/5.3.3)
+        -   [![@typescript-eslint/eslint-plugin](https://img.shields.io/badge/%40typescript--eslint%2Feslint--plugin-latest-red?style=flat-square)](https://npmjs.com/package/@typescript-eslint/eslint-plugin/v/latest)
+        -   [![@typescript-eslint/parser](https://img.shields.io/badge/%40typescript--eslint%2Fparser-latest-red?style=flat-square)](https://npmjs.com/package/@typescript-eslint/parser/v/latest)
+        -   [![ts-node](https://img.shields.io/badge/ts--node-latest-red?style=flat-square)](https://npmjs.com/package/ts-node/v/latest)
+        -   [![typescript](https://img.shields.io/badge/typescript-%5E5.1.6-red?style=flat-square)](https://npmjs.com/package/typescript/v/5.1.6)
+	-   React
+        -   [![react](https://img.shields.io/badge/react-%5E18.2.0-red?style=flat-square)](https://npmjs.com/package/react/v/18.2.0)
+        -   [![react-dom](https://img.shields.io/badge/react--dom-%5E18.2.0-red?style=flat-square)](https://npmjs.com/package/react-dom/v/18.2.0)
+        -   [![react-ga4](https://img.shields.io/badge/react--ga4-%5E2.0.0-red?style=flat-square)](https://npmjs.com/package/react-ga4/v/2.0.0)
+        -   [![react-lazyload](https://img.shields.io/badge/react--lazyload-%5E3.2.0-red?style=flat-square)](https://npmjs.com/package/react-lazyload/v/3.2.0)
+        -   [![react-router-dom](https://img.shields.io/badge/react--router--dom-%5E6.8.1-red?style=flat-square)](https://npmjs.com/package/react-router-dom/v/6.8.1)
+        -   [![react-use-is-online](https://img.shields.io/badge/react--use--is--online-%5E1.2.1-red?style=flat-square)](https://npmjs.com/package/react-use-is-online/v/1.2.1)
+	-   MUI
+        -   [![@emotion/react](https://img.shields.io/badge/%40emotion%2Freact-%5E11.10.6-red?style=flat-square)](https://npmjs.com/package/@emotion/react/v/11.10.6)
+        -   [![@emotion/styled](https://img.shields.io/badge/%40emotion%2Fstyled-%5E11.10.6-red?style=flat-square)](https://npmjs.com/package/@emotion/styled/v/11.10.6)
+        -   [![@mui/icons-material](https://img.shields.io/badge/%40mui%2Ficons--material-%5E5.11.9-red?style=flat-square)](https://npmjs.com/package/@mui/icons-material/v/5.11.9)
+        -   [![@mui/lab](https://img.shields.io/badge/%40mui%2Flab-5.0.0--alpha.120-red?style=flat-square)](https://npmjs.com/package/@mui/lab/v/5.0.0-alpha.120)
+        -   [![@mui/material](https://img.shields.io/badge/%40mui%2Fmaterial-%5E5.11.9-red?style=flat-square)](https://npmjs.com/package/@mui/material/v/5.11.9)
+	-   Redux
+        -   [![@reduxjs/toolkit](https://img.shields.io/badge/%40reduxjs%2Ftoolkit-%5E1.9.2-red?style=flat-square)](https://npmjs.com/package/@reduxjs/toolkit/v/1.9.2)
+        -   [![react-redux](https://img.shields.io/badge/react--redux-%5E8.0.5-red?style=flat-square)](https://npmjs.com/package/react-redux/v/8.0.5)
+	-	ESLint
+        -   [![eslint](https://img.shields.io/badge/eslint-latest-red?style=flat-square)](https://npmjs.com/package/eslint/v/latest)
+        -   [![eslint-config-prettier](https://img.shields.io/badge/eslint--config--prettier-latest-red?style=flat-square)](https://npmjs.com/package/eslint-config-prettier/v/latest)
+        -   [![eslint-plugin-react](https://img.shields.io/badge/eslint--plugin--react-latest-red?style=flat-square)](https://npmjs.com/package/eslint-plugin-react/v/latest)
+        -   [![eslint-plugin-simple-import-sort](https://img.shields.io/badge/eslint--plugin--simple--import--sort-latest-red?style=flat-square)](https://npmjs.com/package/eslint-plugin-simple-import-sort/v/latest)
+        -   [![prettier](https://img.shields.io/badge/prettier-latest-red?style=flat-square)](https://npmjs.com/package/prettier/v/latest)
+	-   Vite
+        -   [![@vitejs/plugin-react](https://img.shields.io/badge/%40vitejs%2Fplugin--react-%5E3.1.0-red?style=flat-square)](https://npmjs.com/package/@vitejs/plugin-react/v/3.1.0)
+        -   [![vite](https://img.shields.io/badge/vite-%5E4.1.1-red?style=flat-square)](https://npmjs.com/package/vite/v/4.1.1)
+        -   [![vite-plugin-pwa](https://img.shields.io/badge/vite--plugin--pwa-%5E0.14.4-red?style=flat-square)](https://npmjs.com/package/vite-plugin-pwa/v/0.14.4)
+        -   [![workbox-window](https://img.shields.io/badge/workbox--window-%5E6.5.4-red?style=flat-square)](https://npmjs.com/package/workbox-window/v/6.5.4)
+	-   Miscellaneous
+        -   [![axios](https://img.shields.io/badge/axios-%5E1.3.3-red?style=flat-square)](https://npmjs.com/package/axios/v/1.3.3)
+        -   [![luxon](https://img.shields.io/badge/luxon-%5E3.2.1-red?style=flat-square)](https://npmjs.com/package/luxon/v/3.2.1)
+        -   [![spotify-web-api-js](https://img.shields.io/badge/spotify--web--api--js-%5E1.5.2-red?style=flat-square)](https://npmjs.com/package/spotify-web-api-js/v/1.5.2)
