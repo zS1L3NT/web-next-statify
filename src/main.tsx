@@ -7,11 +7,9 @@ import App from "./App"
 import store from "./store"
 
 createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<ReduxProvider store={store}>
-			<BrowserRouter>
-				<App />
-			</BrowserRouter>
-		</ReduxProvider>
-	</React.StrictMode>
+	<ReduxProvider store={store}>
+		<BrowserRouter>
+			<App />
+		</BrowserRouter>
+	</ReduxProvider>
 )

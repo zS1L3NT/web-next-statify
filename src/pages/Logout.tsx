@@ -11,7 +11,8 @@ const Logout = ({}: {}) => {
 
 	useEffect(() => {
 		dispatch(setToken(null))
-		navigate(sessionStorage.getItem("redirect") ? "/login" : "/")
+		navigate("/")
+		sessionStorage.removeItem("redirect")
 	}, [dispatch, navigate])
 
 	return <></>

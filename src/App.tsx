@@ -29,7 +29,6 @@ const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
 	const token = useAppSelector(state => state.token)
 	const location = useLocation()
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		ReactGA.initialize("G-P3JDSNFPZ5")
@@ -50,10 +49,6 @@ const App = (): JSX.Element => {
 		if (localStorage.getItem("token")) {
 			dispatch(setToken(localStorage.getItem("token")))
 			localStorage.removeItem("token")
-		}
-
-		if (token) {
-			navigate("/")
 		}
 
 		const beforeunload = () => {

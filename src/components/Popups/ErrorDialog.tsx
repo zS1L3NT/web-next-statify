@@ -31,7 +31,7 @@ const ErrorDialog = () => {
 			if (location.pathname !== "/login") {
 				sessionStorage.setItem("redirect", location.pathname)
 			}
-			setTimeout(() => navigate("/logout"), 500)
+			setTimeout(() => navigate("/login"), 500)
 		}
 	}
 

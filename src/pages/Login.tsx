@@ -26,9 +26,10 @@ const Login = ({}: {}) => {
 			const matches = location.hash.match(/access_token=([^&]*)/)
 			if (matches) {
 				dispatch(setToken(matches[1] as string))
-			} else {
-				navigate("/")
 			}
+
+			navigate(sessionStorage.getItem("redirect") || "/")
+			sessionStorage.removeItem("redirect")
 		} else {
 			const query = new URLSearchParams({
 				response_type: "token",

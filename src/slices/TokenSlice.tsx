@@ -4,7 +4,7 @@ type iTokenData = string | null
 
 const slice = createSlice({
 	name: "token",
-	initialState: null as iTokenData,
+	initialState: (localStorage.getItem("token") ?? null) as iTokenData,
 	reducers: {
 		setToken: (state, action: PayloadAction<iTokenData>) => {
 			return action.payload
