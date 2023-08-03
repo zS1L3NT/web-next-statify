@@ -8,8 +8,8 @@ const slice = createSlice({
 	reducers: {
 		setToken: (state, action: PayloadAction<iTokenData>) => {
 			return action.payload
-		}
-	}
+		},
+	},
 })
 
 export const { setToken } = slice.actions

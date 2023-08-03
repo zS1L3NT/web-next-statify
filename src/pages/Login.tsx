@@ -9,7 +9,7 @@ import useAppDispatch from "../hooks/useAppDispatch"
 import useAppSelector from "../hooks/useAppSelector"
 import { setToken } from "../slices/TokenSlice"
 
-const Login = ({}: {}) => {
+const Login = () => {
 	const navigate = useNavigate()
 	const location = useLocation()
 
@@ -38,7 +38,7 @@ const Login = ({}: {}) => {
 				redirect_uri: import.meta.env.PROD
 					? "https://statify.zectan.com/login"
 					: "http://localhost:5173/login",
-				scope: "user-top-read user-read-recently-played user-follow-read user-follow-modify user-library-read user-library-modify"
+				scope: "user-top-read user-read-recently-played user-follow-read user-follow-modify user-library-read user-library-modify",
 			})
 
 			window.location.href = "https://accounts.spotify.com/authorize?" + query.toString()
@@ -52,11 +52,13 @@ const Login = ({}: {}) => {
 			sx={{
 				display: "flex",
 				flexDirection: "column",
-				alignItems: "center"
+				alignItems: "center",
 			}}>
 			<CloudOffIcon sx={{ mt: 16, height: 96, width: 96 }} />
-			<Typography sx={{ mt: 4 }} variant="h5">
-				You're Offline!
+			<Typography
+				sx={{ mt: 4 }}
+				variant="h5">
+				You&apos;re Offline!
 			</Typography>
 			<Typography sx={{ mt: 1, textAlign: "center" }}>
 				Waiting for Internet Connection

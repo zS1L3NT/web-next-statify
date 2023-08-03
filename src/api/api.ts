@@ -13,7 +13,7 @@ const api = createApi({
 	endpoints: builder => ({
 		getRecents: builder.query<SpotifyApi.PlayHistoryObject[], RequireToken>({
 			query: ({ token }) => ["getMyRecentlyPlayedTracks", [{ limit: 50 }], token],
-			transformResponse: res => res.items
+			transformResponse: res => res.items,
 		}),
 		getRecommendations: builder.query<
 			SpotifyApi.RecommendationsFromSeedsResponse,
@@ -29,13 +29,13 @@ const api = createApi({
 					{
 						...(args.seed_artists && { seed_artists: args.seed_artists.join(",") }),
 						...(args.seed_tracks && { seed_tracks: args.seed_tracks.join(",") }),
-						...(args.limit && { limit: args.limit })
-					}
+						...(args.limit && { limit: args.limit }),
+					},
 				],
-				token
-			]
-		})
-	})
+				token,
+			],
+		}),
+	}),
 })
 
 export default api

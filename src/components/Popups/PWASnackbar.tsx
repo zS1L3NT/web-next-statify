@@ -7,14 +7,14 @@ const PWASnackbar = () => {
 	const {
 		offlineReady: [offlineReady, setOfflineReady],
 		needRefresh: [needRefresh, setNeedRefresh],
-		updateServiceWorker
+		updateServiceWorker,
 	} = useRegisterSW({
 		onRegistered: res => {
 			console.log("Service Worker Registered: ", res)
 		},
 		onRegisterError: error => {
 			console.log("Service Worker Registration error", error)
-		}
+		},
 	})
 
 	const handleClose = () => {

@@ -6,7 +6,9 @@ const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
 	const navigate = useNavigate()
 
 	return appearance.condition() ? (
-		<Card sx={{ width: 250, mb: 3 }} onClick={() => navigate(appearance.link)}>
+		<Card
+			sx={{ width: 250, mb: 3 }}
+			onClick={() => navigate(appearance.link)}>
 			<CardActionArea sx={{ height: "100%" }}>
 				<CardContent>
 					<Typography
@@ -15,7 +17,7 @@ const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
 						sx={{
 							width: "fit-content",
 							marginRight: "0.8rem",
-							float: "left"
+							float: "left",
 						}}>
 						{appearance.hash ? "#" : ""}
 						{appearance.condition()}

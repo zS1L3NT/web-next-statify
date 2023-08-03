@@ -5,7 +5,7 @@ import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
 const NavItem = ({
 	setOpen,
-	item
+	item,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	item: iDrawerItem

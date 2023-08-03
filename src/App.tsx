@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import ReactGA from "react-ga4"
-import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 
 import { CssBaseline, ThemeProvider } from "@mui/material"
 
@@ -68,39 +68,148 @@ const App = (): JSX.Element => {
 			<CssBaseline />
 			<Navigator />
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="login" element={<Login />} />
-				<Route path="logout" element={<Logout />} />
+				<Route
+					path="/"
+					element={<Home />}
+				/>
+				<Route
+					path="login"
+					element={<Login />}
+				/>
+				<Route
+					path="logout"
+					element={<Logout />}
+				/>
 				<Route path="top-tracks">
-					<Route index element={<Navigate to="short-term" replace />} />
-					<Route path="short-term" element={<TopTracks />} />
-					<Route path="medium-term" element={<TopTracks />} />
-					<Route path="long-term" element={<TopTracks />} />
-					<Route path="*" element={<Navigate to="short-term" replace />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
+					<Route
+						path="short-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="medium-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="long-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="*"
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
 				</Route>
 				<Route path="top-artists">
-					<Route index element={<Navigate to="short-term" replace />} />
-					<Route path="short-term" element={<TopArtists />} />
-					<Route path="medium-term" element={<TopArtists />} />
-					<Route path="long-term" element={<TopArtists />} />
-					<Route path="*" element={<Navigate to="short-term" replace />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
+					<Route
+						path="short-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="medium-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="long-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="*"
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
 				</Route>
-				<Route path="recents" element={<RecentlyPlayed />} />
-				<Route path="dark" element={<Dark />} />
-				<Route path="light" element={<Light />} />
+				<Route
+					path="recents"
+					element={<RecentlyPlayed />}
+				/>
+				<Route
+					path="dark"
+					element={<Dark />}
+				/>
+				<Route
+					path="light"
+					element={<Light />}
+				/>
 				<Route path="track">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Track />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Track />}
+					/>
 				</Route>
 				<Route path="artist">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Artist />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Artist />}
+					/>
 				</Route>
 				<Route path="album">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Album />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Album />}
+					/>
 				</Route>
-				<Route path="*" element={<Navigate to="" replace />} />
+				<Route
+					path="*"
+					element={
+						<Navigate
+							to=""
+							replace
+						/>
+					}
+				/>
 			</Routes>
 			<ErrorDialog />
 			<PWASnackbar />
@@ -112,16 +221,16 @@ const App = (): JSX.Element => {
 export const tabs = [
 	{
 		term: "short_term",
-		description: "Last Month"
+		description: "Last Month",
 	},
 	{
 		term: "medium_term",
-		description: "Last 6 Months"
+		description: "Last 6 Months",
 	},
 	{
 		term: "long_term",
-		description: "All Time"
-	}
+		description: "All Time",
+	},
 ] as const
 
 export default App

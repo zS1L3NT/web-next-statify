@@ -3,8 +3,17 @@ import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Avatar, Link, ListItem, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack,
-	TableCell, TableRow, Typography
+	Avatar,
+	Link,
+	ListItem,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	Skeleton,
+	Stack,
+	TableCell,
+	TableRow,
+	Typography,
 } from "@mui/material"
 
 import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
@@ -12,7 +21,7 @@ import AsyncImage from "../AsyncImage"
 
 const RecentItem = ({
 	smallScreen,
-	recent
+	recent,
 }: {
 	smallScreen: boolean
 	recent?: SpotifyApi.PlayHistoryObject
@@ -31,15 +40,26 @@ const RecentItem = ({
 
 	return smallScreen ? (
 		<LazyLoad height={72}>
-			<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
+			<ListItem
+				onClick={() => handleTrackClick(recent?.track)}
+				disablePadding>
 				<ListItemButton>
 					<ListItemAvatar>
 						<AsyncImage
 							// @ts-ignore
 							src={recent.track.album.images[0].url}
-							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							skeleton={
+								<Skeleton
+									variant="circular"
+									width={45}
+									height={45}
+								/>
+							}
 							component={thumbnailUrl => (
-								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+								<Avatar
+									sx={{ width: 45, height: 45 }}
+									src={thumbnailUrl}
+								/>
 							)}
 						/>
 					</ListItemAvatar>
@@ -58,8 +78,16 @@ const RecentItem = ({
 						/>
 					) : (
 						<Stack my="6px">
-							<Skeleton variant="text" width={200} height={24} />
-							<Skeleton variant="text" width={160} height={20} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={24}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={20}
+							/>
 						</Stack>
 					)}
 				</ListItemButton>
@@ -71,9 +99,18 @@ const RecentItem = ({
 				<AsyncImage
 					// @ts-ignore
 					src={recent.track.album.images[0].url}
-					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					skeleton={
+						<Skeleton
+							variant="circular"
+							width={45}
+							height={45}
+						/>
+					}
 					component={thumbnailUrl => (
-						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+						<Avatar
+							sx={{ width: 45, height: 45 }}
+							src={thumbnailUrl}
+						/>
 					)}
 				/>
 			</TableCell>
@@ -89,7 +126,11 @@ const RecentItem = ({
 						</Link>
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell>
@@ -99,7 +140,7 @@ const RecentItem = ({
 							.map(artist => (
 								<Link
 									sx={{
-										cursor: "pointer"
+										cursor: "pointer",
 									}}
 									key={artist.id}
 									color="inherit"
@@ -112,7 +153,11 @@ const RecentItem = ({
 							.slice(0, -1)}
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={120} height={20} />
+					<Skeleton
+						variant="text"
+						width={120}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell align="center">
@@ -123,7 +168,11 @@ const RecentItem = ({
 							DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")}
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 		</TableRow>

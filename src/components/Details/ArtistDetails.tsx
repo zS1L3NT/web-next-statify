@@ -2,12 +2,26 @@ import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
-	Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, CircularProgress, Dialog, Grid,
-	IconButton, Skeleton, Stack, Tooltip, Typography
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Dialog,
+	Grid,
+	IconButton,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography,
 } from "@mui/material"
 
 import {
-	useFollowArtistsMutation, useGetIsFollowingArtistsQuery, useUnfollowArtistsMutation
+	useFollowArtistsMutation,
+	useGetIsFollowingArtistsQuery,
+	useUnfollowArtistsMutation,
 } from "../../api/artist"
 import useAuthenticated from "../../hooks/useAuthenticated"
 import getFollowers from "../../utils/getFollowers"
@@ -19,7 +33,7 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 
 	const { data: isFollowingArtists } = useGetIsFollowingArtistsQuery(
 		{ ids: [artist?.id ?? ""], token },
-		{ skip: !artist }
+		{ skip: !artist },
 	)
 	const [followArtists] = useFollowArtistsMutation()
 	const [unfollowArtists] = useUnfollowArtistsMutation()
@@ -52,7 +66,9 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 				sx={{ mt: { xs: 2, sm: 4 }, mb: { sm: 4 } }}
 				container
 				direction={{ xs: "column", sm: "row" }}>
-				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
+				<Grid
+					sx={{ mx: { xs: "auto", sm: 2 } }}
+					item>
 					<AsyncImage
 						src={artist?.images[0]?.url}
 						skeleton={
@@ -64,7 +80,9 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 							/>
 						}
 						component={thumbnailUrl => (
-							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
+							<Card
+								sx={{ borderRadius: 5 }}
+								onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -82,7 +100,7 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 					sx={{
 						my: { xs: 1, sm: 3 },
 						mx: { xs: "auto", sm: 3 },
-						textAlign: { xs: "center", sm: "start" }
+						textAlign: { xs: "center", sm: "start" },
 					}}
 					item
 					display="flex"
@@ -96,12 +114,23 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 						</>
 					) : (
 						<>
-							<Skeleton variant="text" width={200} height={45} />
-							<Skeleton variant="text" width={160} height={40} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={45}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={40}
+							/>
 						</>
 					)}
 
-					<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+					<Stack
+						direction="row"
+						spacing={1}
+						sx={{ mx: { xs: "auto", sm: 0 } }}>
 						<Tooltip
 							title={
 								following === null
@@ -123,7 +152,9 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 							</IconButton>
 						</Tooltip>
 						<Tooltip title="Open in Spotify">
-							<IconButton sx={{ width: 46 }} onClick={handleArtistOpen}>
+							<IconButton
+								sx={{ width: 46 }}
+								onClick={handleArtistOpen}>
 								<Avatar
 									sx={{ width: 30, height: 30 }}
 									src="/assets/spotify-logo.png"

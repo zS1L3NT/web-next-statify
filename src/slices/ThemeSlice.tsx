@@ -12,8 +12,8 @@ const slice = createSlice({
 	reducers: {
 		setTheme: (state, action: PayloadAction<iThemeData>) => {
 			return action.payload
-		}
-	}
+		},
+	},
 })
 
 export const { setTheme } = slice.actions

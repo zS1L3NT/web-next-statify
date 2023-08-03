@@ -2,12 +2,26 @@ import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
-	Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, CircularProgress, Dialog, Grid,
-	IconButton, Skeleton, Stack, Tooltip, Typography
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Dialog,
+	Grid,
+	IconButton,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography,
 } from "@mui/material"
 
 import {
-	useAddToMySavedTracksMutation, useGetIsInMySavedTracksQuery, useRemoveFromMySavedTracksMutation
+	useAddToMySavedTracksMutation,
+	useGetIsInMySavedTracksQuery,
+	useRemoveFromMySavedTracksMutation,
 } from "../../api/track"
 import useAuthenticated from "../../hooks/useAuthenticated"
 import getDuration from "../../utils/getDuration"
@@ -19,7 +33,7 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 
 	const { data: isInMySavedTracks } = useGetIsInMySavedTracksQuery(
 		{ ids: [track?.id ?? ""], token },
-		{ skip: !track }
+		{ skip: !track },
 	)
 	const [addToMySavedTracks] = useAddToMySavedTracksMutation()
 	const [removeFromMySavedTracks] = useRemoveFromMySavedTracksMutation()
@@ -52,7 +66,9 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 				sx={{ mt: { xs: 2, sm: 4 }, mb: { sm: 4 } }}
 				container
 				direction={{ xs: "column", sm: "row" }}>
-				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
+				<Grid
+					sx={{ mx: { xs: "auto", sm: 2 } }}
+					item>
 					<AsyncImage
 						src={track?.album.images[0]?.url}
 						skeleton={
@@ -64,7 +80,9 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 							/>
 						}
 						component={thumbnailUrl => (
-							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
+							<Card
+								sx={{ borderRadius: 5 }}
+								onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -82,7 +100,7 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 					sx={{
 						my: { xs: 1, sm: 3 },
 						mx: { xs: "auto", sm: 3 },
-						textAlign: { xs: "center", sm: "start" }
+						textAlign: { xs: "center", sm: "start" },
 					}}
 					item
 					display="flex"
@@ -101,13 +119,28 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 						</>
 					) : (
 						<>
-							<Skeleton variant="text" width={200} height={45} />
-							<Skeleton variant="text" width={160} height={40} />
-							<Skeleton variant="text" width={80} height={30} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={45}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={40}
+							/>
+							<Skeleton
+								variant="text"
+								width={80}
+								height={30}
+							/>
 						</>
 					)}
 
-					<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+					<Stack
+						direction="row"
+						spacing={1}
+						sx={{ mx: { xs: "auto", sm: 0 } }}>
 						<Tooltip
 							title={
 								liked === null
@@ -129,7 +162,9 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 							</IconButton>
 						</Tooltip>
 						<Tooltip title="Open in Spotify">
-							<IconButton sx={{ width: 46 }} onClick={handleTrackOpen}>
+							<IconButton
+								sx={{ width: 46 }}
+								onClick={handleTrackOpen}>
 								<Avatar
 									sx={{ width: 30, height: 30 }}
 									src="/assets/spotify-logo.png"

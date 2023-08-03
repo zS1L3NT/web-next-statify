@@ -2,7 +2,13 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+	Backdrop,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 } from "@mui/material"
 
 import useAppDispatch from "../../hooks/useAppDispatch"
@@ -41,7 +47,10 @@ const ErrorDialog = () => {
 	}
 
 	return (
-		<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
+		<Dialog
+			open={!!error}
+			BackdropComponent={Backdrop}
+			fullWidth>
 			<DialogTitle>{localError?.name || ""}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>

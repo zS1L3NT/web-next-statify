@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import useAppDispatch from "../hooks/useAppDispatch"
 import { setToken } from "../slices/TokenSlice"
 
-const Logout = ({}: {}) => {
+const Logout = () => {
 	const navigate = useNavigate()
 
 	const dispatch = useAppDispatch()

@@ -21,16 +21,24 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 	}
 
 	return (
-		<Card sx={{ mb: 2 }} onClick={handleArtistClick}>
+		<Card
+			sx={{ mb: 2 }}
+			onClick={handleArtistClick}>
 			<CardActionArea>
 				<Box
 					sx={{
 						display: "flex",
-						flexDirection: "row"
+						flexDirection: "row",
 					}}>
 					<AsyncImage
 						src={artist?.images[0]?.url}
-						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
+						skeleton={
+							<Skeleton
+								variant="rectangular"
+								width={120}
+								height={120}
+							/>
+						}
 						component={thumbnailUrl => (
 							<CardMedia
 								component="img"
@@ -45,7 +53,7 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 							ml: 2,
 							display: "flex",
 							flexDirection: "column",
-							justifyContent: "center"
+							justifyContent: "center",
 						}}>
 						{artist ? (
 							<>
@@ -54,8 +62,16 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 							</>
 						) : (
 							<>
-								<Skeleton variant="text" width={200} height={40} />
-								<Skeleton variant="text" width={160} height={30} />
+								<Skeleton
+									variant="text"
+									width={200}
+									height={40}
+								/>
+								<Skeleton
+									variant="text"
+									width={160}
+									height={30}
+								/>
 							</>
 						)}
 					</CardMedia>

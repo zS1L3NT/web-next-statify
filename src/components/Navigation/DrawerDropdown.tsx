@@ -6,7 +6,7 @@ import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui
 
 const DrawerDropdown = ({
 	setOpen,
-	dropdown
+	dropdown,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	dropdown: iDrawerDropdown
@@ -27,8 +27,13 @@ const DrawerDropdown = ({
 				<ListItemText primary={dropdown.title} />
 				{dropdownOpen ? <ExpandLess /> : <ExpandMore />}
 			</ListItemButton>
-			<Collapse in={dropdownOpen} timeout="auto" unmountOnExit>
-				<List component="div" disablePadding>
+			<Collapse
+				in={dropdownOpen}
+				timeout="auto"
+				unmountOnExit>
+				<List
+					component="div"
+					disablePadding>
 					{dropdown.items.map(item =>
 						item.condition() ? (
 							<ListItemButton
@@ -40,7 +45,7 @@ const DrawerDropdown = ({
 							</ListItemButton>
 						) : (
 							<></>
-						)
+						),
 					)}
 				</List>
 			</Collapse>

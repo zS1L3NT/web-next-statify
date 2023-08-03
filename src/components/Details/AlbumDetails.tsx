@@ -2,12 +2,26 @@ import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
-	Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, CircularProgress, Dialog, Grid,
-	IconButton, Skeleton, Stack, Tooltip, Typography
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Dialog,
+	Grid,
+	IconButton,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography,
 } from "@mui/material"
 
 import {
-	useAddToMySavedAlbumsMutation, useGetIsInMySavedAlbumsQuery, useRemoveFromMySavedAlbumsMutation
+	useAddToMySavedAlbumsMutation,
+	useGetIsInMySavedAlbumsQuery,
+	useRemoveFromMySavedAlbumsMutation,
 } from "../../api/album"
 import useAuthenticated from "../../hooks/useAuthenticated"
 import getDuration from "../../utils/getDuration"
@@ -16,7 +30,7 @@ import PageIndicator from "../PageIndicator"
 
 const AlbumDetails = ({
 	album,
-	tracks
+	tracks,
 }: {
 	album?: SpotifyApi.AlbumObjectFull
 	tracks: SpotifyApi.TrackObjectSimplified[] | undefined[]
@@ -25,7 +39,7 @@ const AlbumDetails = ({
 
 	const { data: isInMySavedAlbums } = useGetIsInMySavedAlbumsQuery(
 		{ ids: [album?.id ?? ""], token },
-		{ skip: !album }
+		{ skip: !album },
 	)
 	const [addToMySavedAlbums] = useAddToMySavedAlbumsMutation()
 	const [removeFromMySavedAlbums] = useRemoveFromMySavedAlbumsMutation()
@@ -58,7 +72,9 @@ const AlbumDetails = ({
 				sx={{ mt: { xs: 2, sm: 4 }, mb: { sm: 4 } }}
 				container
 				direction={{ xs: "column", sm: "row" }}>
-				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
+				<Grid
+					sx={{ mx: { xs: "auto", sm: 2 } }}
+					item>
 					<AsyncImage
 						src={album?.images[0]?.url}
 						skeleton={
@@ -70,7 +86,9 @@ const AlbumDetails = ({
 							/>
 						}
 						component={thumbnailUrl => (
-							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
+							<Card
+								sx={{ borderRadius: 5 }}
+								onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -88,7 +106,7 @@ const AlbumDetails = ({
 					sx={{
 						my: { xs: 1, sm: 3 },
 						mx: { xs: "auto", sm: 3 },
-						textAlign: { xs: "center", sm: "start" }
+						textAlign: { xs: "center", sm: "start" },
 					}}
 					item
 					display="flex"
@@ -103,19 +121,34 @@ const AlbumDetails = ({
 							</Typography>
 							<Typography variant="subtitle1">
 								{getDuration(
-									tracks.map(t => t?.duration_ms || 0).reduce((v, a) => v + a, 0)
+									tracks.map(t => t?.duration_ms || 0).reduce((v, a) => v + a, 0),
 								)}
 							</Typography>
 						</>
 					) : (
 						<>
-							<Skeleton variant="text" width={200} height={45} />
-							<Skeleton variant="text" width={160} height={40} />
-							<Skeleton variant="text" width={80} height={30} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={45}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={40}
+							/>
+							<Skeleton
+								variant="text"
+								width={80}
+								height={30}
+							/>
 						</>
 					)}
 
-					<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+					<Stack
+						direction="row"
+						spacing={1}
+						sx={{ mx: { xs: "auto", sm: 0 } }}>
 						<Tooltip
 							title={
 								liked === null
@@ -137,7 +170,9 @@ const AlbumDetails = ({
 							</IconButton>
 						</Tooltip>
 						<Tooltip title="Open in Spotify">
-							<IconButton sx={{ width: 46 }} onClick={handleAlbumOpen}>
+							<IconButton
+								sx={{ width: 46 }}
+								onClick={handleAlbumOpen}>
 								<Avatar
 									sx={{ width: 30, height: 30 }}
 									src="/assets/spotify-logo.png"

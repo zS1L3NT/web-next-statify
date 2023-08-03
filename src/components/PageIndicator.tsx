@@ -2,7 +2,7 @@ import React, { PropsWithChildren } from "react"
 
 import { Typography } from "@mui/material"
 
-const PageIndicator = ({ children }: PropsWithChildren<{}>) => (
+const PageIndicator = ({ children }: PropsWithChildren) => (
 	<Typography
 		sx={{
 			bgcolor: "primary.main",
@@ -11,7 +11,7 @@ const PageIndicator = ({ children }: PropsWithChildren<{}>) => (
 			lineHeight: 1,
 			p: 0.5,
 			mb: 0.5,
-			mx: { xs: "auto", sm: 0 }
+			mx: { xs: "auto", sm: 0 },
 		}}
 		variant="body2">
 		{children}

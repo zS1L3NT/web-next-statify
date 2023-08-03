@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom"
 import useAppDispatch from "../hooks/useAppDispatch"
 import { setTheme } from "../slices/ThemeSlice"
 
-const Light = ({}: {}) => {
+const Light = () => {
 	const navigate = useNavigate()
 
 	const dispatch = useAppDispatch()

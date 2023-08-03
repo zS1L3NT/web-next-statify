@@ -10,13 +10,21 @@ const HomeCard = ({ card }: { card: iHomeCard }) => {
 	const token = useAppSelector(state => state.token)
 
 	return (
-		<Grid key={card.id} item>
-			<Card key={card.id} sx={{ maxWidth: 400, p: 1, mx: 3 }}>
+		<Grid
+			key={card.id}
+			item>
+			<Card
+				key={card.id}
+				sx={{ maxWidth: 400, p: 1, mx: 3 }}>
 				<CardContent>
-					<Typography variant="h4" gutterBottom>
+					<Typography
+						variant="h4"
+						gutterBottom>
 						{card.header}
 					</Typography>
-					<Typography variant="body1" color="text.secondary">
+					<Typography
+						variant="body1"
+						color="text.secondary">
 						{card.body}
 					</Typography>
 				</CardContent>

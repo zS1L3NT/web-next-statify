@@ -25,11 +25,17 @@ const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number 
 				<Box
 					sx={{
 						display: "flex",
-						flexDirection: "row"
+						flexDirection: "row",
 					}}>
 					<AsyncImage
 						src={album?.images[0]?.url}
-						skeleton={<Skeleton variant="rectangular" width={120} height={120} />}
+						skeleton={
+							<Skeleton
+								variant="rectangular"
+								width={120}
+								height={120}
+							/>
+						}
 						component={thumbnailUrl => (
 							<CardMedia
 								component="img"
@@ -44,7 +50,7 @@ const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number 
 							ml: 2,
 							display: "flex",
 							flexDirection: "column",
-							justifyContent: "center"
+							justifyContent: "center",
 						}}>
 						{album ? (
 							<>
@@ -53,8 +59,16 @@ const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number 
 							</>
 						) : (
 							<>
-								<Skeleton variant="text" width={200} height={40} />
-								<Skeleton variant="text" width={160} height={30} />
+								<Skeleton
+									variant="text"
+									width={200}
+									height={40}
+								/>
+								<Skeleton
+									variant="text"
+									width={160}
+									height={30}
+								/>
 							</>
 						)}
 					</CardMedia>

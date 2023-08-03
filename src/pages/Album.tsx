@@ -22,7 +22,7 @@ import useAuthenticated from "../hooks/useAuthenticated"
  * * - Picture
  */
 
-const Album = ({}: {}) => {
+const Album = () => {
 	const token = useAuthenticated()
 
 	const location = useLocation()
@@ -32,31 +32,50 @@ const Album = ({}: {}) => {
 
 	return (
 		<Container>
-			<AlbumDetails album={album} tracks={tracks ?? Array(10).fill(undefined)} />
+			<AlbumDetails
+				album={album}
+				tracks={tracks ?? Array(10).fill(undefined)}
+			/>
 
-			<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
+			<Typography
+				sx={{ mt: { sm: 1 }, mb: 2 }}
+				variant="h5">
 				Artists
 			</Typography>
-			<Grid direction={{ xs: "column", sm: "row" }} container>
+			<Grid
+				direction={{ xs: "column", sm: "row" }}
+				container>
 				{album ? (
 					album.artists.map(artist => (
-						<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} key={artist.id} item>
+						<Grid
+							sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }}
+							key={artist.id}
+							item>
 							<ArtistCard artistId={artist.id} />
 						</Grid>
 					))
 				) : (
-					<Grid sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }} item>
+					<Grid
+						sx={{ width: { xs: "100%", sm: "50%" }, p: 1 }}
+						item>
 						<ArtistCard />
 					</Grid>
 				)}
 			</Grid>
 
-			<Typography sx={{ mt: { sm: 1 }, mb: 2 }} variant="h5">
+			<Typography
+				sx={{ mt: { sm: 1 }, mb: 2 }}
+				variant="h5">
 				Tracks
 			</Typography>
 			<List>
 				{(tracks ?? Array(10).fill(undefined)).map((track, i) => (
-					<Track key={i} track={track} album={album} i={i} />
+					<Track
+						key={i}
+						track={track}
+						album={album}
+						i={i}
+					/>
 				))}
 			</List>
 		</Container>

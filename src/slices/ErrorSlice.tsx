@@ -17,25 +17,25 @@ const slice = createSlice({
 						const response = JSON.parse(response_str)
 						return {
 							name: `HTTP Error ${response.error.status}`,
-							message: response.error.message
+							message: response.error.message,
 						}
 					} catch (err) {
 						return {
 							name: "Error",
-							message: (err as Error).message
+							message: (err as Error).message,
 						}
 					}
 				} else {
 					return {
 						name: action.payload.name,
-						message: action.payload.message
+						message: action.payload.message,
 					}
 				}
 			} else {
 				return null
 			}
-		}
-	}
+		},
+	},
 })
 
 export const { setError } = slice.actions

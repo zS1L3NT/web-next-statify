@@ -1,13 +1,26 @@
 import {
-	Card, CardContent, CircularProgress, Container, List, Paper, Table, TableBody, TableCell,
-	TableContainer, TableHead, TableRow, Typography, useMediaQuery, useTheme
+	Card,
+	CardContent,
+	CircularProgress,
+	Container,
+	List,
+	Paper,
+	Table,
+	TableBody,
+	TableCell,
+	TableContainer,
+	TableHead,
+	TableRow,
+	Typography,
+	useMediaQuery,
+	useTheme,
 } from "@mui/material"
 
 import { useGetRecentsQuery } from "../api/api"
 import RecentItem from "../components/Items/RecentItem"
 import useAuthenticated from "../hooks/useAuthenticated"
 
-const RecentlyPlayed = ({}: {}) => {
+const RecentlyPlayed = () => {
 	const token = useAuthenticated()
 
 	const theme = useTheme()
@@ -19,7 +32,9 @@ const RecentlyPlayed = ({}: {}) => {
 		<Container>
 			<Card sx={{ my: 3 }}>
 				<CardContent>
-					<Typography variant="h4" gutterBottom>
+					<Typography
+						variant="h4"
+						gutterBottom>
 						Recently Played Tracks
 					</Typography>
 					<Typography variant="body1">

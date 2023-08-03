@@ -11,37 +11,37 @@ const track = api.injectEndpoints({
 			} & RequireToken
 		>({
 			query: ({ token, ...args }) => ["getMyTopTracks", [args], token],
-			transformResponse: res => res.items
+			transformResponse: res => res.items,
 		}),
 		getTracks: builder.query<SpotifyApi.TrackObjectFull[], { ids: string[] } & RequireToken>({
 			query: ({ token, ids }) => ["getTracks", [ids], token],
-			transformResponse: res => res.tracks
+			transformResponse: res => res.tracks,
 		}),
 		getTrack: builder.query<SpotifyApi.TrackObjectFull, { id: string } & RequireToken>({
-			query: ({ token, id }) => ["getTrack", [id], token]
+			query: ({ token, id }) => ["getTrack", [id], token],
 		}),
 		getIsInMySavedTracks: builder.query<
 			SpotifyApi.CheckUsersSavedTracksResponse,
 			{ ids: string[] } & RequireToken
 		>({
 			query: ({ token, ids }) => ["containsMySavedTracks", [ids], token],
-			providesTags: ["SavedTracks"]
+			providesTags: ["SavedTracks"],
 		}),
 		addToMySavedTracks: builder.mutation<
 			SpotifyApi.SaveTracksForUserResponse,
 			{ ids: string[] } & RequireToken
 		>({
 			query: ({ token, ids }) => ["addToMySavedTracks", [ids], token],
-			invalidatesTags: ["SavedTracks"]
+			invalidatesTags: ["SavedTracks"],
 		}),
 		removeFromMySavedTracks: builder.mutation<
 			SpotifyApi.RemoveUsersSavedTracksResponse,
 			{ ids: string[] } & RequireToken
 		>({
 			query: ({ token, ids }) => ["removeFromMySavedTracks", [ids], token],
-			invalidatesTags: ["SavedTracks"]
-		})
-	})
+			invalidatesTags: ["SavedTracks"],
+		}),
+	}),
 })
 
 export const {
@@ -50,5 +50,5 @@ export const {
 	useGetTopTracksQuery,
 	useGetTrackQuery,
 	useGetTracksQuery,
-	useRemoveFromMySavedTracksMutation
+	useRemoveFromMySavedTracksMutation,
 } = track

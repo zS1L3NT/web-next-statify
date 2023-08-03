@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 const AsyncImage = ({
 	src,
 	skeleton,
-	component
+	component,
 }: {
 	src: string | undefined
 	skeleton: JSX.Element
@@ -15,7 +15,7 @@ const AsyncImage = ({
 	useEffect(() => {
 		setFade(false)
 
-		if (!!src) {
+		if (src) {
 			setThumbnailUrl(null)
 
 			const image = new Image()
@@ -29,11 +29,15 @@ const AsyncImage = ({
 
 	return (
 		<div style={{ display: "grid" }}>
-			<div style={{ gridArea: "1 / 1 / 2 / 2" }} className={fade ? "fade-out" : ""}>
+			<div
+				style={{ gridArea: "1 / 1 / 2 / 2" }}
+				className={fade ? "fade-out" : ""}>
 				{skeleton}
 			</div>
 			{thumbnailUrl && (
-				<div style={{ gridArea: "1 / 1 / 2 / 2" }} className="fade-in">
+				<div
+					style={{ gridArea: "1 / 1 / 2 / 2" }}
+					className="fade-in">
 					{component(thumbnailUrl!)}
 				</div>
 			)}

@@ -11,7 +11,7 @@ const slice = createSlice({
 	initialState: {
 		open: false,
 		message: "",
-		variant: "error"
+		variant: "error",
 	} as iSnackbarData,
 	reducers: {
 		setSnackbar: (state, action: PayloadAction<iSnackbarData>) => {
@@ -19,8 +19,8 @@ const slice = createSlice({
 		},
 		clearSnackbar: state => {
 			state.open = false
-		}
-	}
+		},
+	},
 })
 
 export const { setSnackbar, clearSnackbar } = slice.actions
