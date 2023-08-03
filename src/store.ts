@@ -1,19 +1,20 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-import AccessTokenReducer from "./slices/AccessTokenSlice"
+import api from "./api/api"
 import ErrorReducer from "./slices/ErrorSlice"
 import SnackbarReducer from "./slices/SnackbarSlice"
-import StatisticsReducer from "./slices/StatisticsSlice"
 import ThemeReducer from "./slices/ThemeSlice"
+import TokenReducer from "./slices/TokenSlice"
 
 const store = configureStore({
 	reducer: {
+		[api.reducerPath]: api.reducer,
 		theme: ThemeReducer,
-		access_token: AccessTokenReducer,
+		token: TokenReducer,
 		error: ErrorReducer,
 		snackbar: SnackbarReducer,
-		statistics: StatisticsReducer
-	}
+	},
+	middleware: gdm => gdm().concat(api.middleware),
 })
 
 export type RootState = ReturnType<typeof store.getState>

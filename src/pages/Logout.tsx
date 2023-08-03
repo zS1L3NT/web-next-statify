@@ -2,15 +2,17 @@ import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import useAppDispatch from "../hooks/useAppDispatch"
-import { set_access_token } from "../slices/AccessTokenSlice"
+import { setToken } from "../slices/TokenSlice"
 
-const Logout: React.FC = () => {
-	const dispatch = useAppDispatch()
+const Logout = () => {
 	const navigate = useNavigate()
 
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
-		dispatch(set_access_token(null))
-		navigate(sessionStorage.getItem("redirect") ? "/login" : "/")
+		dispatch(setToken(null))
+		navigate("/")
+		sessionStorage.removeItem("redirect")
 	}, [dispatch, navigate])
 
 	return <></>

@@ -1,21 +1,19 @@
-import React from "react"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Card, CardActionArea, CardContent, CardMedia, Grid, Skeleton, Typography
+	Card,
+	CardActionArea,
+	CardContent,
+	CardMedia,
+	Grid,
+	Skeleton,
+	Typography,
 } from "@mui/material"
 
 import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
-	artist?: SpotifyApi.ArtistObjectFull
-	i: number
-}
-
-const TopArtistItem: React.FC<Props> = (props: Props) => {
-	const { artist, i } = props
-
+const TopArtistItem = ({ artist, i }: { artist?: SpotifyApi.ArtistObjectFull; i: number }) => {
 	const navigate = useNavigate()
 
 	const handleArtistClick = (artist?: SpotifyApi.ArtistObjectFull) => {
@@ -26,11 +24,19 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 
 	return (
 		<Grid item>
-			<Card sx={{ p: 0, minWidth: 250 }} onClick={() => handleArtistClick(artist)}>
+			<Card
+				sx={{ p: 0, minWidth: 250 }}
+				onClick={() => handleArtistClick(artist)}>
 				<CardActionArea>
 					<AsyncImage
 						src={artist?.images[0]?.url}
-						skeleton={<Skeleton variant="rectangular" width={250} height={250} />}
+						skeleton={
+							<Skeleton
+								variant="rectangular"
+								width={250}
+								height={250}
+							/>
+						}
 						component={thumbnailUrl => (
 							<CardMedia
 								component="img"
@@ -51,8 +57,16 @@ const TopArtistItem: React.FC<Props> = (props: Props) => {
 							</>
 						) : (
 							<>
-								<Skeleton variant="text" width={100} height={40} />
-								<Skeleton variant="text" width={50} height={20} />
+								<Skeleton
+									variant="text"
+									width={100}
+									height={40}
+								/>
+								<Skeleton
+									variant="text"
+									width={50}
+									height={20}
+								/>
 							</>
 						)}
 					</CardContent>

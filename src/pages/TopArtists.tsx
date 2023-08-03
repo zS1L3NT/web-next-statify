@@ -3,35 +3,46 @@ import { useLocation, useNavigate } from "react-router-dom"
 
 import { TabContext } from "@mui/lab"
 import {
-	Box, Card, CardContent, Container, Grid, LinearProgress, Tab, Tabs, Typography
+	Box,
+	Card,
+	CardContent,
+	Container,
+	Grid,
+	LinearProgress,
+	Tab,
+	Tabs,
+	Typography,
 } from "@mui/material"
 
 import { tabs } from "../App"
 import TopArtistItem from "../components/Items/TopArtistItem"
-import useAppSelector from "../hooks/useAppSelector"
-import useAuthenticated from "../hooks/useAthenticated"
+import useAuthenticated from "../hooks/useAuthenticated"
+import useGetFullTopArtistsQuery from "../hooks/useGetFullTopArtistsQuery"
 
-const TopArtists: React.FC = () => {
-	const artists = useAppSelector(state => state.statistics.artists)
-	const location = useLocation()
+const TopArtists = () => {
+	const token = useAuthenticated()
+
 	const navigate = useNavigate()
-	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const location = useLocation()
 
-	useAuthenticated()
+	const [term, setTerm] = useState<"" | "short_term" | "medium_term" | "long_term">("")
+	const { data: topArtists } = useGetFullTopArtistsQuery(
+		{
+			time_range: term as "short_term" | "medium_term" | "long_term",
+			token,
+		},
+		{ skip: !term },
+	)
 
 	useEffect(() => {
 		const parts = location.pathname.split("/")
 		setTerm(
-			parts[parts.length - 1]!.replace("-", "_") as "short_term" | "medium_term" | "long_term"
+			parts[parts.length - 1]!.replace("-", "_") as
+				| "short_term"
+				| "medium_term"
+				| "long_term",
 		)
 	}, [location.pathname])
-
-	useEffect(() => {
-		if (Object.values(artists).includes(null)) {
-			sessionStorage.setItem("redirect", location.pathname)
-			navigate("/login")
-		}
-	}, [navigate, location.pathname, artists])
 
 	return term ? (
 		<TabContext value={term}>
@@ -40,15 +51,26 @@ const TopArtists: React.FC = () => {
 					value={term}
 					onChange={(e, tab) => navigate("../" + tab.replace("_", "-"))}
 					centered>
-					<Tab label="Last Month" value="short_term" />
-					<Tab label="Last 6 Months" value="medium_term" />
-					<Tab label="All Time" value="long_term" />
+					<Tab
+						label="Last Month"
+						value="short_term"
+					/>
+					<Tab
+						label="Last 6 Months"
+						value="medium_term"
+					/>
+					<Tab
+						label="All Time"
+						value="long_term"
+					/>
 				</Tabs>
 				<Container sx={{ mt: 3 }}>
 					<Card>
 						<CardContent>
 							<Typography variant="h4">Top Artists</Typography>
-							<Typography variant="h6" gutterBottom>
+							<Typography
+								variant="h6"
+								gutterBottom>
 								{tabs.find(t => t.term === term)?.description}
 							</Typography>
 							<Typography variant="body1">
@@ -56,12 +78,17 @@ const TopArtists: React.FC = () => {
 							</Typography>
 						</CardContent>
 					</Card>
-					<Grid sx={{ my: 1 }} container spacing={5} justifyContent="space-evenly">
-						{(term
-							? artists[term] || Array(5).fill(undefined)
-							: Array(5).fill(undefined)
-						).map((artist, i) => (
-							<TopArtistItem key={i} artist={artist} i={i} />
+					<Grid
+						sx={{ my: 1 }}
+						container
+						spacing={5}
+						justifyContent="space-evenly">
+						{(topArtists ?? Array(5).fill(undefined)).map((a, i) => (
+							<TopArtistItem
+								key={i}
+								artist={a}
+								i={i}
+							/>
 						))}
 					</Grid>
 				</Container>

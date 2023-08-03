@@ -1,24 +1,32 @@
-import React from "react"
 import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Avatar, Link, ListItem, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack,
-	TableCell, TableRow, Typography
+	Avatar,
+	Link,
+	ListItem,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	Skeleton,
+	Stack,
+	TableCell,
+	TableRow,
+	Typography,
 } from "@mui/material"
 
 import getDuration from "../../utils/getDuration"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
+const TopTrackItem = ({
+	smallScreen,
+	track,
+	i,
+}: {
 	smallScreen: boolean
 	track?: SpotifyApi.TrackObjectFull
 	i?: number
-}
-
-const TopTrackItem: React.FC<Props> = (props: Props) => {
-	const { smallScreen, track, i } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectFull) => {
@@ -35,14 +43,25 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 
 	return smallScreen ? (
 		<LazyLoad height={72}>
-			<ListItem onClick={() => handleTrackClick(track)} disablePadding>
+			<ListItem
+				onClick={() => handleTrackClick(track)}
+				disablePadding>
 				<ListItemButton>
 					<ListItemAvatar>
 						<AsyncImage
 							src={track?.album.images[0]?.url}
-							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							skeleton={
+								<Skeleton
+									variant="circular"
+									width={45}
+									height={45}
+								/>
+							}
 							component={thumbnailUrl => (
-								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+								<Avatar
+									sx={{ width: 45, height: 45 }}
+									src={thumbnailUrl}
+								/>
 							)}
 						/>
 					</ListItemAvatar>
@@ -53,8 +72,16 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 						/>
 					) : (
 						<Stack my="6px">
-							<Skeleton variant="text" width={200} height={24} />
-							<Skeleton variant="text" width={160} height={20} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={24}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={20}
+							/>
 						</Stack>
 					)}
 				</ListItemButton>
@@ -66,9 +93,18 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 			<TableCell>
 				<AsyncImage
 					src={track?.album.images[0]?.url}
-					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					skeleton={
+						<Skeleton
+							variant="circular"
+							width={45}
+							height={45}
+						/>
+					}
 					component={thumbnailUrl => (
-						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+						<Avatar
+							sx={{ width: 45, height: 45 }}
+							src={thumbnailUrl}
+						/>
 					)}
 				/>
 			</TableCell>
@@ -84,7 +120,11 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 						</Link>
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell>
@@ -94,7 +134,7 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 							.map(artist => (
 								<Link
 									sx={{
-										cursor: "pointer"
+										cursor: "pointer",
 									}}
 									key={artist.id}
 									color="inherit"
@@ -107,14 +147,22 @@ const TopTrackItem: React.FC<Props> = (props: Props) => {
 							.slice(0, -1)}
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={120} height={20} />
+					<Skeleton
+						variant="text"
+						width={120}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell align="center">
 				{track ? (
 					<Typography variant="body1">{getDuration(track.duration_ms)}</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 		</TableRow>

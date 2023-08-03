@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react"
 
-interface Props {
+const AsyncImage = ({
+	src,
+	skeleton,
+	component,
+}: {
 	src: string | undefined
 	skeleton: JSX.Element
 	component: (url: string) => JSX.Element
-}
-
-const AsyncImage = (props: Props) => {
-	const { src, skeleton, component } = props
-
+}) => {
 	const [fade, setFade] = useState(false)
 	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
 
 	useEffect(() => {
 		setFade(false)
 
-		if (!!src) {
+		if (src) {
 			setThumbnailUrl(null)
 
 			const image = new Image()
@@ -29,11 +29,15 @@ const AsyncImage = (props: Props) => {
 
 	return (
 		<div style={{ display: "grid" }}>
-			<div style={{ gridArea: "1 / 1 / 2 / 2" }} className={fade ? "fade-out" : ""}>
+			<div
+				style={{ gridArea: "1 / 1 / 2 / 2" }}
+				className={fade ? "fade-out" : ""}>
 				{skeleton}
 			</div>
 			{thumbnailUrl && (
-				<div style={{ gridArea: "1 / 1 / 2 / 2" }} className="fade-in">
+				<div
+					style={{ gridArea: "1 / 1 / 2 / 2" }}
+					className="fade-in">
 					{component(thumbnailUrl!)}
 				</div>
 			)}

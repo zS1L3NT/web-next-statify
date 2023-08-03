@@ -2,14 +2,15 @@ import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 
 import useAppDispatch from "../hooks/useAppDispatch"
-import { set_theme } from "../slices/ThemeSlice"
+import { setTheme } from "../slices/ThemeSlice"
 
-const Dark: React.FC = () => {
-	const dispatch = useAppDispatch()
+const Dark = () => {
 	const navigate = useNavigate()
 
+	const dispatch = useAppDispatch()
+
 	useEffect(() => {
-		dispatch(set_theme("dark"))
+		dispatch(setTheme("dark"))
 		navigate(-1)
 	}, [dispatch, navigate])
 

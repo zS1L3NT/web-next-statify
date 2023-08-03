@@ -1,40 +1,50 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
-	Avatar, Backdrop, Box, Card, CardActionArea, CardMedia, CircularProgress, Dialog, Grid,
-	IconButton, Skeleton, Stack, Tooltip, Typography
+	Avatar,
+	Backdrop,
+	Box,
+	Card,
+	CardActionArea,
+	CardMedia,
+	CircularProgress,
+	Dialog,
+	Grid,
+	IconButton,
+	Skeleton,
+	Stack,
+	Tooltip,
+	Typography,
 } from "@mui/material"
 
-import useAppDispatch from "../../hooks/useAppDispatch"
-import useSpotifyApi from "../../hooks/useSpotifyApi"
-import { set_error } from "../../slices/ErrorSlice"
-import { set_snackbar } from "../../slices/SnackbarSlice"
+import {
+	useAddToMySavedAlbumsMutation,
+	useGetIsInMySavedAlbumsQuery,
+	useRemoveFromMySavedAlbumsMutation,
+} from "../../api/album"
+import useAuthenticated from "../../hooks/useAuthenticated"
 import getDuration from "../../utils/getDuration"
 import AsyncImage from "../AsyncImage"
 import PageIndicator from "../PageIndicator"
 
-interface Props {
+const AlbumDetails = ({
+	album,
+	tracks,
+}: {
 	album?: SpotifyApi.AlbumObjectFull
-	tracks: (SpotifyApi.TrackObjectSimplified | undefined)[]
-}
+	tracks: SpotifyApi.TrackObjectSimplified[] | undefined[]
+}) => {
+	const token = useAuthenticated()
 
-const AlbumDetails: React.FC<Props> = (props: Props) => {
-	const { album, tracks } = props
+	const { data: isInMySavedAlbums } = useGetIsInMySavedAlbumsQuery(
+		{ ids: [album?.id ?? ""], token },
+		{ skip: !album },
+	)
+	const [addToMySavedAlbums] = useAddToMySavedAlbumsMutation()
+	const [removeFromMySavedAlbums] = useRemoveFromMySavedAlbumsMutation()
 
-	const dispatch = useAppDispatch()
-	const api = useSpotifyApi()
-	const [liked, setLiked] = useState<boolean | null>(null)
 	const [showImage, setShowImage] = useState(false)
-
-	useEffect(() => {
-		if (!api) return
-		if (!album) return
-
-		api.containsMySavedAlbums([album.id])
-			.then(res => setLiked(res[0] !== undefined ? res[0] : null))
-			.catch(err => dispatch(set_error(err)))
-	}, [dispatch, api, album])
 
 	const handleAlbumOpen = () => {
 		if (album) {
@@ -42,61 +52,19 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 		}
 	}
 
-	const handleLike = () => {
-		if (api && album) {
-			setLiked(null)
-			api.addToMySavedAlbums([album.id])
-				.then(() => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Album saved to your Library",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to save Album to your Library",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleLike = async () => {
+		if (!album) return
+
+		await addToMySavedAlbums({ ids: [album.id], token })
 	}
 
-	const handleUnlike = () => {
-		if (api && album) {
-			setLiked(null)
-			api.removeFromMySavedAlbums([album.id])
-				.then(() => {
-					setLiked(false)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Album removed from your Library",
-							variant: "success"
-						})
-					)
-				})
-				.catch(err => {
-					setLiked(true)
-					dispatch(
-						set_snackbar({
-							open: true,
-							message: "Failed to remove Album from your Library",
-							variant: "error"
-						})
-					)
-					dispatch(set_error(err))
-				})
-		}
+	const handleUnlike = async () => {
+		if (!album) return
+
+		await removeFromMySavedAlbums({ ids: [album.id], token })
 	}
+
+	const liked = isInMySavedAlbums?.[0] ?? null
 
 	return (
 		<>
@@ -104,7 +72,9 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 				sx={{ mt: { xs: 2, sm: 4 }, mb: { sm: 4 } }}
 				container
 				direction={{ xs: "column", sm: "row" }}>
-				<Grid sx={{ mx: { xs: "auto", sm: 2 } }} item>
+				<Grid
+					sx={{ mx: { xs: "auto", sm: 2 } }}
+					item>
 					<AsyncImage
 						src={album?.images[0]?.url}
 						skeleton={
@@ -116,7 +86,9 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 							/>
 						}
 						component={thumbnailUrl => (
-							<Card sx={{ borderRadius: 5 }} onClick={() => setShowImage(true)}>
+							<Card
+								sx={{ borderRadius: 5 }}
+								onClick={() => setShowImage(true)}>
 								<CardActionArea>
 									<CardMedia
 										component="img"
@@ -134,7 +106,7 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 					sx={{
 						my: { xs: 1, sm: 3 },
 						mx: { xs: "auto", sm: 3 },
-						textAlign: { xs: "center", sm: "start" }
+						textAlign: { xs: "center", sm: "start" },
 					}}
 					item
 					display="flex"
@@ -149,19 +121,34 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 							</Typography>
 							<Typography variant="subtitle1">
 								{getDuration(
-									tracks.map(t => t?.duration_ms || 0).reduce((v, a) => v + a, 0)
+									tracks.map(t => t?.duration_ms || 0).reduce((v, a) => v + a, 0),
 								)}
 							</Typography>
 						</>
 					) : (
 						<>
-							<Skeleton variant="text" width={200} height={45} />
-							<Skeleton variant="text" width={160} height={40} />
-							<Skeleton variant="text" width={80} height={30} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={45}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={40}
+							/>
+							<Skeleton
+								variant="text"
+								width={80}
+								height={30}
+							/>
 						</>
 					)}
 
-					<Stack direction="row" spacing={1} sx={{ mx: { xs: "auto", sm: 0 } }}>
+					<Stack
+						direction="row"
+						spacing={1}
+						sx={{ mx: { xs: "auto", sm: 0 } }}>
 						<Tooltip
 							title={
 								liked === null
@@ -183,7 +170,9 @@ const AlbumDetails: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</Tooltip>
 						<Tooltip title="Open in Spotify">
-							<IconButton sx={{ width: 46 }} onClick={handleAlbumOpen}>
+							<IconButton
+								sx={{ width: 46 }}
+								onClick={handleAlbumOpen}>
 								<Avatar
 									sx={{ width: 30, height: 30 }}
 									src="/assets/spotify-logo.png"

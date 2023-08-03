@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import ReactGA from "react-ga4"
-import { Navigate, Route, Routes, useLocation, useNavigate } from "react-router-dom"
+import { Navigate, Route, Routes, useLocation } from "react-router-dom"
 
 import { CssBaseline, ThemeProvider } from "@mui/material"
 
@@ -22,15 +22,13 @@ import RecentlyPlayed from "./pages/RecentlyPlayed"
 import TopArtists from "./pages/TopArtists"
 import TopTracks from "./pages/TopTracks"
 import Track from "./pages/Track"
-import { set_access_token } from "./slices/AccessTokenSlice"
+import { setToken } from "./slices/TokenSlice"
 import { dark, light } from "./theme"
 
 const App = (): JSX.Element => {
 	const dispatch = useAppDispatch()
-	const access_token = useAppSelector(state => state.access_token)
-	const statistics = useAppSelector(state => state.statistics)
+	const token = useAppSelector(state => state.token)
 	const location = useLocation()
-	const navigate = useNavigate()
 
 	useEffect(() => {
 		ReactGA.initialize("G-P3JDSNFPZ5")
@@ -48,27 +46,14 @@ const App = (): JSX.Element => {
 	}, [location])
 
 	useEffect(() => {
-		if (localStorage.getItem("access_token")) {
-			dispatch(set_access_token(localStorage.getItem("access_token")))
-			localStorage.removeItem("access_token")
-		}
-
-		if (
-			access_token &&
-			!statistics.tracks.short_term &&
-			!statistics.tracks.medium_term &&
-			!statistics.tracks.long_term &&
-			!statistics.artists.short_term &&
-			!statistics.artists.medium_term &&
-			!statistics.artists.long_term &&
-			!statistics.recents
-		) {
-			navigate("/login")
+		if (localStorage.getItem("token")) {
+			dispatch(setToken(localStorage.getItem("token")))
+			localStorage.removeItem("token")
 		}
 
 		const beforeunload = () => {
-			if (access_token) {
-				localStorage.setItem("access_token", access_token)
+			if (token) {
+				localStorage.setItem("token", token)
 			}
 		}
 
@@ -76,46 +61,155 @@ const App = (): JSX.Element => {
 		return () => {
 			window.removeEventListener("beforeunload", beforeunload)
 		}
-	}, [navigate, access_token])
+	}, [token])
 
 	return (
 		<ThemeProvider theme={useThemeValue(dark, light)}>
 			<CssBaseline />
 			<Navigator />
 			<Routes>
-				<Route path="/" element={<Home />} />
-				<Route path="login" element={<Login />} />
-				<Route path="logout" element={<Logout />} />
+				<Route
+					path="/"
+					element={<Home />}
+				/>
+				<Route
+					path="login"
+					element={<Login />}
+				/>
+				<Route
+					path="logout"
+					element={<Logout />}
+				/>
 				<Route path="top-tracks">
-					<Route index element={<Navigate to="short-term" replace />} />
-					<Route path="short-term" element={<TopTracks />} />
-					<Route path="medium-term" element={<TopTracks />} />
-					<Route path="long-term" element={<TopTracks />} />
-					<Route path="*" element={<Navigate to="short-term" replace />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
+					<Route
+						path="short-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="medium-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="long-term"
+						element={<TopTracks />}
+					/>
+					<Route
+						path="*"
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
 				</Route>
 				<Route path="top-artists">
-					<Route index element={<Navigate to="short-term" replace />} />
-					<Route path="short-term" element={<TopArtists />} />
-					<Route path="medium-term" element={<TopArtists />} />
-					<Route path="long-term" element={<TopArtists />} />
-					<Route path="*" element={<Navigate to="short-term" replace />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
+					<Route
+						path="short-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="medium-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="long-term"
+						element={<TopArtists />}
+					/>
+					<Route
+						path="*"
+						element={
+							<Navigate
+								to="short-term"
+								replace
+							/>
+						}
+					/>
 				</Route>
-				<Route path="recents" element={<RecentlyPlayed />} />
-				<Route path="dark" element={<Dark />} />
-				<Route path="light" element={<Light />} />
+				<Route
+					path="recents"
+					element={<RecentlyPlayed />}
+				/>
+				<Route
+					path="dark"
+					element={<Dark />}
+				/>
+				<Route
+					path="light"
+					element={<Light />}
+				/>
 				<Route path="track">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Track />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Track />}
+					/>
 				</Route>
 				<Route path="artist">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Artist />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Artist />}
+					/>
 				</Route>
 				<Route path="album">
-					<Route index element={<Navigate to="" replace />} />
-					<Route path=":id" element={<Album />} />
+					<Route
+						index
+						element={
+							<Navigate
+								to=""
+								replace
+							/>
+						}
+					/>
+					<Route
+						path=":id"
+						element={<Album />}
+					/>
 				</Route>
-				<Route path="*" element={<Navigate to="" replace />} />
+				<Route
+					path="*"
+					element={
+						<Navigate
+							to=""
+							replace
+						/>
+					}
+				/>
 			</Routes>
 			<ErrorDialog />
 			<PWASnackbar />
@@ -127,16 +221,16 @@ const App = (): JSX.Element => {
 export const tabs = [
 	{
 		term: "short_term",
-		description: "Last Month"
+		description: "Last Month",
 	},
 	{
 		term: "medium_term",
-		description: "Last 6 Months"
+		description: "Last 6 Months",
 	},
 	{
 		term: "long_term",
-		description: "All Time"
-	}
+		description: "All Time",
+	},
 ] as const
 
 export default App

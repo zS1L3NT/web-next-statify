@@ -2,17 +2,25 @@ import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Backdrop, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle
+	Backdrop,
+	Button,
+	Dialog,
+	DialogActions,
+	DialogContent,
+	DialogContentText,
+	DialogTitle,
 } from "@mui/material"
 
 import useAppDispatch from "../../hooks/useAppDispatch"
 import useAppSelector from "../../hooks/useAppSelector"
-import { set_error } from "../../slices/ErrorSlice"
+import { setError } from "../../slices/ErrorSlice"
 
 const ErrorDialog = () => {
-	const dispatch = useAppDispatch()
 	const navigate = useNavigate()
+
 	const error = useAppSelector(state => state.error)
+	const dispatch = useAppDispatch()
+
 	const [localError, setLocalError] = useState<Error>()
 
 	useEffect(() => {
@@ -20,7 +28,7 @@ const ErrorDialog = () => {
 	}, [error])
 
 	const handleRetry = () => {
-		dispatch(set_error(null))
+		dispatch(setError(null))
 
 		// If is a id not found error, don't set the redirect path and don't logout
 		if (localError?.message.endsWith(" not found")) {
@@ -29,17 +37,20 @@ const ErrorDialog = () => {
 			if (location.pathname !== "/login") {
 				sessionStorage.setItem("redirect", location.pathname)
 			}
-			setTimeout(() => navigate("/logout"), 500)
+			setTimeout(() => navigate("/login"), 500)
 		}
 	}
 
 	const handleHome = () => {
-		dispatch(set_error(null))
+		dispatch(setError(null))
 		navigate("/")
 	}
 
 	return (
-		<Dialog open={!!error} BackdropComponent={Backdrop} fullWidth>
+		<Dialog
+			open={!!error}
+			BackdropComponent={Backdrop}
+			fullWidth>
 			<DialogTitle>{localError?.name || ""}</DialogTitle>
 			<DialogContent>
 				<DialogContentText>

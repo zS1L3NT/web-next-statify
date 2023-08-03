@@ -1,25 +1,31 @@
 import { DateTime } from "luxon"
-import React from "react"
 import LazyLoad from "react-lazyload"
 import { useNavigate } from "react-router-dom"
 
 import {
-	Avatar, Link, ListItem, ListItemAvatar, ListItemButton, ListItemText, Skeleton, Stack,
-	TableCell, TableRow, Typography
+	Avatar,
+	Link,
+	ListItem,
+	ListItemAvatar,
+	ListItemButton,
+	ListItemText,
+	Skeleton,
+	Stack,
+	TableCell,
+	TableRow,
+	Typography,
 } from "@mui/material"
 
 import getTimeSincePlayed from "../../utils/getTimeSincePlayed"
 import AsyncImage from "../AsyncImage"
 
-interface Props {
+const RecentItem = ({
+	smallScreen,
+	recent,
+}: {
 	smallScreen: boolean
-	image?: string
 	recent?: SpotifyApi.PlayHistoryObject
-}
-
-const RecentItem: React.FC<Props> = (props: Props) => {
-	const { smallScreen, image, recent } = props
-
+}) => {
 	const navigate = useNavigate()
 
 	const handleTrackClick = (track?: SpotifyApi.TrackObjectSimplified) => {
@@ -34,14 +40,26 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 
 	return smallScreen ? (
 		<LazyLoad height={72}>
-			<ListItem onClick={() => handleTrackClick(recent?.track)} disablePadding>
+			<ListItem
+				onClick={() => handleTrackClick(recent?.track)}
+				disablePadding>
 				<ListItemButton>
 					<ListItemAvatar>
 						<AsyncImage
-							src={image}
-							skeleton={<Skeleton variant="circular" width={45} height={45} />}
+							// @ts-ignore
+							src={recent.track.album.images[0].url}
+							skeleton={
+								<Skeleton
+									variant="circular"
+									width={45}
+									height={45}
+								/>
+							}
 							component={thumbnailUrl => (
-								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+								<Avatar
+									sx={{ width: 45, height: 45 }}
+									src={thumbnailUrl}
+								/>
 							)}
 						/>
 					</ListItemAvatar>
@@ -60,8 +78,16 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 						/>
 					) : (
 						<Stack my="6px">
-							<Skeleton variant="text" width={200} height={24} />
-							<Skeleton variant="text" width={160} height={20} />
+							<Skeleton
+								variant="text"
+								width={200}
+								height={24}
+							/>
+							<Skeleton
+								variant="text"
+								width={160}
+								height={20}
+							/>
 						</Stack>
 					)}
 				</ListItemButton>
@@ -71,10 +97,20 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 		<TableRow hover>
 			<TableCell>
 				<AsyncImage
-					src={image}
-					skeleton={<Skeleton variant="circular" width={45} height={45} />}
+					// @ts-ignore
+					src={recent.track.album.images[0].url}
+					skeleton={
+						<Skeleton
+							variant="circular"
+							width={45}
+							height={45}
+						/>
+					}
 					component={thumbnailUrl => (
-						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
+						<Avatar
+							sx={{ width: 45, height: 45 }}
+							src={thumbnailUrl}
+						/>
 					)}
 				/>
 			</TableCell>
@@ -90,7 +126,11 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 						</Link>
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell>
@@ -100,7 +140,7 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 							.map(artist => (
 								<Link
 									sx={{
-										cursor: "pointer"
+										cursor: "pointer",
 									}}
 									key={artist.id}
 									color="inherit"
@@ -113,7 +153,11 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 							.slice(0, -1)}
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={120} height={20} />
+					<Skeleton
+						variant="text"
+						width={120}
+						height={20}
+					/>
 				)}
 			</TableCell>
 			<TableCell align="center">
@@ -124,7 +168,11 @@ const RecentItem: React.FC<Props> = (props: Props) => {
 							DateTime.fromISO(recent.played_at).toFormat("d LLLL yyyy")}
 					</Typography>
 				) : (
-					<Skeleton variant="text" width={160} height={20} />
+					<Skeleton
+						variant="text"
+						width={160}
+						height={20}
+					/>
 				)}
 			</TableCell>
 		</TableRow>
