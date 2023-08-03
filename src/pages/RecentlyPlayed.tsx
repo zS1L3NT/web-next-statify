@@ -4,7 +4,6 @@ import {
 } from "@mui/material"
 
 import { useGetRecentsQuery } from "../api/api"
-import { useGetTracksQuery } from "../api/track"
 import RecentItem from "../components/Items/RecentItem"
 import useAuthenticated from "../hooks/useAuthenticated"
 
@@ -15,10 +14,6 @@ const RecentlyPlayed = ({}: {}) => {
 	const smallScreen = useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 
 	const { data: recents } = useGetRecentsQuery({ token })
-	const { data: tracks } = useGetTracksQuery(
-		{ ids: recents?.map(r => r.track.id) ?? [], token },
-		{ skip: !recents }
-	)
 
 	return (
 		<Container>
@@ -36,11 +31,10 @@ const RecentlyPlayed = ({}: {}) => {
 				<Card sx={{ my: 3 }}>
 					{smallScreen ? (
 						<List>
-							{recents!.map((recent, i) => (
+							{recents.map((recent, i) => (
 								<RecentItem
 									key={i}
 									smallScreen={smallScreen}
-									image={tracks?.[i]?.album.images[0]?.url}
 									recent={recent}
 								/>
 							))}
@@ -61,7 +55,6 @@ const RecentlyPlayed = ({}: {}) => {
 										<RecentItem
 											key={i}
 											smallScreen={smallScreen}
-											image={tracks?.[i]?.album.images[0]?.url}
 											recent={recent}
 										/>
 									))}

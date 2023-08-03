@@ -12,11 +12,9 @@ import AsyncImage from "../AsyncImage"
 
 const RecentItem = ({
 	smallScreen,
-	image,
 	recent
 }: {
 	smallScreen: boolean
-	image?: string
 	recent?: SpotifyApi.PlayHistoryObject
 }) => {
 	const navigate = useNavigate()
@@ -37,7 +35,8 @@ const RecentItem = ({
 				<ListItemButton>
 					<ListItemAvatar>
 						<AsyncImage
-							src={image}
+							// @ts-ignore
+							src={recent.track.album.images[0].url}
 							skeleton={<Skeleton variant="circular" width={45} height={45} />}
 							component={thumbnailUrl => (
 								<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />
@@ -70,7 +69,8 @@ const RecentItem = ({
 		<TableRow hover>
 			<TableCell>
 				<AsyncImage
-					src={image}
+					// @ts-ignore
+					src={recent.track.album.images[0].url}
 					skeleton={<Skeleton variant="circular" width={45} height={45} />}
 					component={thumbnailUrl => (
 						<Avatar sx={{ width: 45, height: 45 }} src={thumbnailUrl} />

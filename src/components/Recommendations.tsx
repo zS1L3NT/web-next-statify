@@ -14,12 +14,15 @@ const Recommendations = ({
 }) => {
 	const token = useAuthenticated()
 
-	const { data: recommendations } = useGetRecommendationsQuery({
-		seed_tracks: track ? [track.id] : undefined,
-		seed_artists: artist ? [artist.id] : undefined,
-		limit: 10,
-		token
-	})
+	const { data: recommendations } = useGetRecommendationsQuery(
+		{
+			seed_tracks: track ? [track.id] : undefined,
+			seed_artists: artist ? [artist.id] : undefined,
+			limit: 10,
+			token
+		},
+		{ skip: !track && !artist }
+	)
 	const { data: tracks } = useGetTracksQuery(
 		{ ids: recommendations?.tracks.map(t => t.id) ?? [], token },
 		{ skip: !recommendations }

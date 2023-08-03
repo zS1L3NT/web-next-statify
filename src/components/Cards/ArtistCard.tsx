@@ -12,7 +12,7 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 
 	const navigate = useNavigate()
 
-	const { data: artist } = useGetArtistQuery({ id: artistId, token }, { skip: !artistId })
+	const { data: artist } = useGetArtistQuery({ id: artistId!, token }, { skip: !artistId })
 
 	const handleArtistClick = () => {
 		if (artist) {
