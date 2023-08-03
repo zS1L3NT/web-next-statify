@@ -13,16 +13,16 @@ const slice = createSlice({
 			if (action.payload) {
 				const response_str = (action.payload as any).response
 				if (response_str) {
-					const [err, response] = _useTry(() => JSON.parse(response_str))
-					if (err) {
-						return {
-							name: "Error",
-							message: response
-						}
-					} else {
+					try {
+						const response = JSON.parse(response_str)
 						return {
 							name: `HTTP Error ${response.error.status}`,
 							message: response.error.message
+						}
+					} catch (err) {
+						return {
+							name: "Error",
+							message: (err as Error).message
 						}
 					}
 				} else {

@@ -10,9 +10,10 @@ export default (async ([func, args, token], { dispatch }) => {
 
 	try {
 		// @ts-ignore
-		return await spotifyApi[func](...args)
+		return { data: await spotifyApi[func](...args) }
 	} catch (err) {
 		dispatch(setError(err as Error))
+		return { error: err as Error }
 	}
 }) satisfies BaseQueryFn<
 	[func: keyof SpotifyWebApi.SpotifyWebApiJs, args: any[], token: string],
