@@ -87,5 +87,7 @@ Overlapping elements was simplified for me thanks to [this](https://css-tricks.c
         -   [![workbox-window](https://img.shields.io/badge/workbox--window-%5E6.5.4-red?style=flat-square)](https://npmjs.com/package/workbox-window/v/6.5.4)
 	-   Miscellaneous
         -   [![axios](https://img.shields.io/badge/axios-%5E1.3.3-red?style=flat-square)](https://npmjs.com/package/axios/v/1.3.3)
+        -   [![bun-types](https://img.shields.io/badge/bun--types-%5E1.0.21-red?style=flat-square)](https://npmjs.com/package/bun-types/v/1.0.21)
         -   [![luxon](https://img.shields.io/badge/luxon-%5E3.2.1-red?style=flat-square)](https://npmjs.com/package/luxon/v/3.2.1)
+        -   [![posthog-js](https://img.shields.io/badge/posthog--js-%5E1.96.1-red?style=flat-square)](https://npmjs.com/package/posthog-js/v/1.96.1)
         -   [![spotify-web-api-js](https://img.shields.io/badge/spotify--web--api--js-%5E1.5.2-red?style=flat-square)](https://npmjs.com/package/spotify-web-api-js/v/1.5.2)

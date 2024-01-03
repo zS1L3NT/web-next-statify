@@ -11,7 +11,7 @@
 		/** Project */
 		"rootDir": "src",
 		"outDir": "dist",
-		"typeRoots": ["./node_modules/@types", "./src/@types"],
+		"types": ["bun-types"],
 
 		/** Type Checking */
 		"strict": true,
