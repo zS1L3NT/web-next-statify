@@ -31,23 +31,9 @@ import {
 } from "@mui/material"
 
 import AsyncImage from "@/components/AsyncImage"
+import { TERMS } from "@/constants"
 import { options } from "@/next-auth"
 import getDuration from "@/utils/getDuration"
-
-const terms = {
-	month: {
-		term: "short_term",
-		description: "Last Month",
-	},
-	halfyear: {
-		term: "medium_term",
-		description: "Last 6 Months",
-	},
-	lifetime: {
-		term: "long_term",
-		description: "Lifetime",
-	},
-} as const
 
 export default async function Page({ params: { term } }: { params: { term: string } }) {
 	const session = await getServerSession(options)
@@ -55,7 +41,7 @@ export default async function Page({ params: { term } }: { params: { term: strin
 		return <></>
 	}
 
-	if (!(term in terms)) {
+	if (!(term in TERMS)) {
 		return redirect("/top-tracks/month")
 	}
 
@@ -64,12 +50,12 @@ export default async function Page({ params: { term } }: { params: { term: strin
 
 	const tracks = await Promise.all([
 		spotify.getMyTopTracks({
-			time_range: terms[term as keyof typeof terms].term,
+			time_range: TERMS[term as keyof typeof TERMS].term,
 			offset: 0,
 			limit: 49,
 		}),
 		spotify.getMyTopTracks({
-			time_range: terms[term as keyof typeof terms].term,
+			time_range: TERMS[term as keyof typeof TERMS].term,
 			offset: 49,
 			limit: 50,
 		}),
@@ -82,24 +68,15 @@ export default async function Page({ params: { term } }: { params: { term: strin
 			<Tabs
 				value={term}
 				centered>
-				<Tab
-					LinkComponent={Link}
-					href="/top-tracks/month"
-					label="Last Month"
-					value="month"
-				/>
-				<Tab
-					LinkComponent={Link}
-					href="/top-tracks/halfyear"
-					label="Last 6 Months"
-					value="halfyear"
-				/>
-				<Tab
-					LinkComponent={Link}
-					href="/top-tracks/lifetime"
-					label="All Time"
-					value="lifetime"
-				/>
+				{Object.entries(TERMS).map(([key, { term, description }]) => (
+					<Tab
+						key={key}
+						LinkComponent={Link}
+						href={`/top-tracks/${key}`}
+						label={description}
+						value={term}
+					/>
+				))}
 			</Tabs>
 			<Container sx={{ mt: 3 }}>
 				<Card>
@@ -108,7 +85,7 @@ export default async function Page({ params: { term } }: { params: { term: strin
 						<Typography
 							variant="h6"
 							gutterBottom>
-							{terms[term as keyof typeof terms].description}
+							{TERMS[term as keyof typeof TERMS].description}
 						</Typography>
 						<Typography variant="body1">
 							These are the tracks you listen to the most
