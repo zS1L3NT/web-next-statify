@@ -1,4 +1,7 @@
-import React, { useState } from "react"
+"use client"
+
+import { Session } from "next-auth"
+import { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -18,25 +21,23 @@ import {
 	Typography,
 } from "@mui/material"
 
-import {
-	useFollowArtistsMutation,
-	useGetIsFollowingArtistsQuery,
-	useUnfollowArtistsMutation,
-} from "../../api/artist"
-import useAuthenticated from "../../hooks/useAuthenticated"
-import getFollowers from "../../utils/getFollowers"
-import AsyncImage from "../AsyncImage"
-import PageIndicator from "../PageIndicator"
+import AsyncImage from "@/components/AsyncImage"
+import PageIndicator from "@/components/PageIndicator"
+import getFollowers from "@/utils/getFollowers"
 
-const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => {
-	const token = useAuthenticated()
-
-	const { data: isFollowingArtists } = useGetIsFollowingArtistsQuery(
-		{ ids: [artist?.id ?? ""], token },
-		{ skip: !artist },
-	)
-	const [followArtists] = useFollowArtistsMutation()
-	const [unfollowArtists] = useUnfollowArtistsMutation()
+export default function Details({
+	session,
+	artist,
+}: {
+	session: Session
+	artist: SpotifyApi.ArtistObjectFull
+}) {
+	// const { data: isFollowingArtists } = useGetIsFollowingArtistsQuery(
+	// 	{ ids: [artist?.id ?? ""], token },
+	// 	{ skip: !artist },
+	// )
+	// const [followArtists] = useFollowArtistsMutation()
+	// const [unfollowArtists] = useUnfollowArtistsMutation()
 
 	const [showImage, setShowImage] = useState(false)
 
@@ -49,16 +50,16 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 	const handleFollow = async () => {
 		if (!artist) return
 
-		await followArtists({ ids: [artist.id], token })
+		// await followArtists({ ids: [artist.id], token })
 	}
 
 	const handleUnfollow = async () => {
 		if (!artist) return
 
-		await unfollowArtists({ ids: [artist.id], token })
+		// await unfollowArtists({ ids: [artist.id], token })
 	}
 
-	const following = isFollowingArtists?.[0] ?? null
+	const following = false // isFollowingArtists?.[0] ?? null
 
 	return (
 		<>
@@ -78,23 +79,21 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 								width={200}
 								height={200}
 							/>
-						}
-						component={thumbnailUrl => (
-							<Card
-								sx={{ borderRadius: 5 }}
-								onClick={() => setShowImage(true)}>
-								<CardActionArea>
-									<CardMedia
-										component="img"
-										width={200}
-										height={200}
-										image={thumbnailUrl}
-										alt="Image"
-									/>
-								</CardActionArea>
-							</Card>
-						)}
-					/>
+						}>
+						<Card
+							sx={{ borderRadius: 5 }}
+							onClick={() => setShowImage(true)}>
+							<CardActionArea>
+								<CardMedia
+									component="img"
+									width={200}
+									height={200}
+									image={artist?.images[0]?.url}
+									alt="Image"
+								/>
+							</CardActionArea>
+						</Card>
+					</AsyncImage>
 				</Grid>
 				<Grid
 					sx={{
@@ -136,8 +135,8 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 								following === null
 									? ""
 									: following
-									? "Unfollow this artist"
-									: "Follow this artist"
+										? "Unfollow this artist"
+										: "Follow this artist"
 							}>
 							<IconButton
 								sx={{ width: 46 }}
@@ -168,7 +167,7 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 			<Dialog
 				open={showImage}
 				onClose={() => setShowImage(false)}
-				BackdropComponent={Backdrop}>
+				slots={{ backdrop: Backdrop }}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"
@@ -179,5 +178,3 @@ const ArtistDetails = ({ artist }: { artist?: SpotifyApi.ArtistObjectFull }) => 
 		</>
 	)
 }
-
-export default ArtistDetails

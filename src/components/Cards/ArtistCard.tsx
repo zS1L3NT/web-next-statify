@@ -14,7 +14,7 @@ export default async function ArtistCard({ session, id }: { session: Session; id
 	return (
 		<Card
 			component={Link}
-			href={`/artists/${id}`}
+			href={`/artist/${id}`}
 			sx={{ mb: 2 }}>
 			<CardActionArea>
 				<Box

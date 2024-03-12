@@ -62,6 +62,13 @@ export const getRecommendations = cache(
 	},
 )
 
+export const getArtistTopTracks = cache((token: string, id: string) => {
+	const spotify = new SpotifyWebApi()
+	spotify.setAccessToken(token)
+
+	return spotify.getArtistTopTracks(id, "SG").then(res => res.body.tracks)
+})
+
 export const getTrack = cache((token: string, id: string) => {
 	const spotify = new SpotifyWebApi()
 	spotify.setAccessToken(token)
