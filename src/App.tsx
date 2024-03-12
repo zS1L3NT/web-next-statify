@@ -14,7 +14,6 @@ import useThemeValue from "./hooks/useThemeValue"
 import Album from "./pages/Album"
 import Artist from "./pages/Artist"
 import Dark from "./pages/Dark"
-import Home from "./pages/Home"
 import Light from "./pages/Light"
 import Login from "./pages/Login"
 import Logout from "./pages/Logout"
@@ -68,10 +67,6 @@ const App = (): JSX.Element => {
 			<CssBaseline />
 			<Navigator />
 			<Routes>
-				<Route
-					path="/"
-					element={<Home />}
-				/>
 				<Route
 					path="login"
 					element={<Login />}
