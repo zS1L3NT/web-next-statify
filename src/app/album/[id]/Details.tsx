@@ -1,4 +1,7 @@
-import React, { useState } from "react"
+"use client"
+
+import { Session } from "next-auth"
+import { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -18,31 +21,25 @@ import {
 	Typography,
 } from "@mui/material"
 
-import {
-	useAddToMySavedAlbumsMutation,
-	useGetIsInMySavedAlbumsQuery,
-	useRemoveFromMySavedAlbumsMutation,
-} from "../../api/album"
-import useAuthenticated from "../../hooks/useAuthenticated"
-import getDuration from "../../utils/getDuration"
-import AsyncImage from "../AsyncImage"
-import PageIndicator from "../PageIndicator"
+import AsyncImage from "@/components/AsyncImage"
+import PageIndicator from "@/components/PageIndicator"
+import getDuration from "@/utils/getDuration"
 
-const AlbumDetails = ({
+export default function Details({
+	session,
 	album,
 	tracks,
 }: {
-	album?: SpotifyApi.AlbumObjectFull
-	tracks: SpotifyApi.TrackObjectSimplified[] | undefined[]
-}) => {
-	const token = useAuthenticated()
-
-	const { data: isInMySavedAlbums } = useGetIsInMySavedAlbumsQuery(
-		{ ids: [album?.id ?? ""], token },
-		{ skip: !album },
-	)
-	const [addToMySavedAlbums] = useAddToMySavedAlbumsMutation()
-	const [removeFromMySavedAlbums] = useRemoveFromMySavedAlbumsMutation()
+	session: Session
+	album: SpotifyApi.AlbumObjectFull
+	tracks: SpotifyApi.TrackObjectSimplified[]
+}) {
+	// const { data: isInMySavedAlbums } = useGetIsInMySavedAlbumsQuery(
+	// 	{ ids: [album?.id ?? ""], token },
+	// 	{ skip: !album },
+	// )
+	// const [addToMySavedAlbums] = useAddToMySavedAlbumsMutation()
+	// const [removeFromMySavedAlbums] = useRemoveFromMySavedAlbumsMutation()
 
 	const [showImage, setShowImage] = useState(false)
 
@@ -55,16 +52,16 @@ const AlbumDetails = ({
 	const handleLike = async () => {
 		if (!album) return
 
-		await addToMySavedAlbums({ ids: [album.id], token })
+		// await addToMySavedAlbums({ ids: [album.id], token })
 	}
 
 	const handleUnlike = async () => {
 		if (!album) return
 
-		await removeFromMySavedAlbums({ ids: [album.id], token })
+		// await removeFromMySavedAlbums({ ids: [album.id], token })
 	}
 
-	const liked = isInMySavedAlbums?.[0] ?? null
+	const liked = false // isInMySavedAlbums?.[0] ?? null
 
 	return (
 		<>
@@ -84,23 +81,21 @@ const AlbumDetails = ({
 								width={200}
 								height={200}
 							/>
-						}
-						component={thumbnailUrl => (
-							<Card
-								sx={{ borderRadius: 5 }}
-								onClick={() => setShowImage(true)}>
-								<CardActionArea>
-									<CardMedia
-										component="img"
-										width={200}
-										height={200}
-										image={thumbnailUrl}
-										alt="Image"
-									/>
-								</CardActionArea>
-							</Card>
-						)}
-					/>
+						}>
+						<Card
+							sx={{ borderRadius: 5 }}
+							onClick={() => setShowImage(true)}>
+							<CardActionArea>
+								<CardMedia
+									component="img"
+									width={200}
+									height={200}
+									image={album?.images[0]?.url}
+									alt="Image"
+								/>
+							</CardActionArea>
+						</Card>
+					</AsyncImage>
 				</Grid>
 				<Grid
 					sx={{
@@ -154,8 +149,8 @@ const AlbumDetails = ({
 								liked === null
 									? ""
 									: liked
-									? "Remove this Album from your Library"
-									: "Add this Album to your Library"
+										? "Remove this Album from your Library"
+										: "Add this Album to your Library"
 							}>
 							<IconButton
 								sx={{ width: 46 }}
@@ -186,7 +181,7 @@ const AlbumDetails = ({
 			<Dialog
 				open={showImage}
 				onClose={() => setShowImage(false)}
-				BackdropComponent={Backdrop}>
+				slots={{ backdrop: Backdrop }}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"
@@ -197,5 +192,3 @@ const AlbumDetails = ({
 		</>
 	)
 }
-
-export default AlbumDetails

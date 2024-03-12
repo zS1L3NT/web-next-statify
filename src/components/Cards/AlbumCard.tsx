@@ -21,7 +21,7 @@ export default async function AlbumCard({
 	return (
 		<Card
 			component={Link}
-			href={`/ablum/${id}`}>
+			href={`/album/${id}`}>
 			<CardActionArea>
 				<Box
 					sx={{

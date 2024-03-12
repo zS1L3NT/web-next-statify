@@ -62,13 +62,6 @@ export const getRecommendations = cache(
 	},
 )
 
-export const getArtistTopTracks = cache((token: string, id: string) => {
-	const spotify = new SpotifyWebApi()
-	spotify.setAccessToken(token)
-
-	return spotify.getArtistTopTracks(id, "SG").then(res => res.body.tracks)
-})
-
 export const getTrack = cache((token: string, id: string) => {
 	const spotify = new SpotifyWebApi()
 	spotify.setAccessToken(token)
@@ -83,9 +76,23 @@ export const getArtist = cache((token: string, id: string) => {
 	return spotify.getArtist(id).then(res => res.body)
 })
 
+export const getArtistTopTracks = cache((token: string, id: string) => {
+	const spotify = new SpotifyWebApi()
+	spotify.setAccessToken(token)
+
+	return spotify.getArtistTopTracks(id, "SG").then(res => res.body.tracks)
+})
+
 export const getAlbum = cache((token: string, id: string) => {
 	const spotify = new SpotifyWebApi()
 	spotify.setAccessToken(token)
 
 	return spotify.getAlbum(id).then(res => res.body)
+})
+
+export const getAlbumTracks = cache((token: string, id: string) => {
+	const spotify = new SpotifyWebApi()
+	spotify.setAccessToken(token)
+
+	return spotify.getAlbumTracks(id).then(res => res.body.items)
 })

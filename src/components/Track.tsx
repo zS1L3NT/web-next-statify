@@ -19,7 +19,7 @@ export default function Track({
 	i,
 }: {
 	track?: SpotifyApi.TrackObjectFull | SpotifyApi.TrackObjectSimplified
-	album?: SpotifyApi.AlbumObjectSimplified
+	album?: SpotifyApi.SingleAlbumResponse
 	i: number
 }) {
 	return (
