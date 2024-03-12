@@ -1,6 +1,7 @@
 declare module NodeJS {
 	interface ProcessEnv {
-		readonly VITE_POSTHOG_KEY: string
-		readonly VITE_POSTHOG_HOST: string
+		readonly NEXTAUTH_SECRET: string
+		readonly SPOTIFY_CLIENT_ID: string
+		readonly SPOTIFY_CLIENT_SECRET: string
 	}
 }
