@@ -1,6 +1,5 @@
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
-import SpotifyWebApi from "spotify-web-api-node"
 
 import {
 	Box,
@@ -21,6 +20,7 @@ import {
 import AsyncImage from "@/components/AsyncImage"
 import { TERMS } from "@/constants"
 import { options } from "@/next-auth"
+import { getTopArtists } from "@/queries"
 import getFollowers from "@/utils/getFollowers"
 
 export default async function Page({ params: { term } }: { params: { term: string } }) {
@@ -33,21 +33,7 @@ export default async function Page({ params: { term } }: { params: { term: strin
 		return redirect("/top-tracks/month")
 	}
 
-	const spotify = new SpotifyWebApi()
-	spotify.setAccessToken(session.token)
-
-	const artists = await Promise.all([
-		spotify.getMyTopArtists({
-			time_range: TERMS[term as keyof typeof TERMS].term,
-			offset: 0,
-			limit: 49,
-		}),
-		spotify.getMyTopArtists({
-			time_range: TERMS[term as keyof typeof TERMS].term,
-			offset: 49,
-			limit: 50,
-		}),
-	]).then(ress => ress.flatMap(res => res.body.items))
+	const artists = await getTopArtists(session.token, term as keyof typeof TERMS)
 
 	return term ? (
 		<Box sx={{ my: 2 }}>

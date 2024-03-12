@@ -1,14 +1,13 @@
-import { useNavigate } from "react-router-dom"
+import Link from "next/link"
 
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
 
 const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
-	const navigate = useNavigate()
-
 	return appearance.condition() ? (
 		<Card
-			sx={{ width: 250, mb: 3 }}
-			onClick={() => navigate(appearance.link)}>
+			component={Link}
+			href={appearance.link}
+			sx={{ width: 250, mb: 3 }}>
 			<CardActionArea sx={{ height: "100%" }}>
 				<CardContent>
 					<Typography

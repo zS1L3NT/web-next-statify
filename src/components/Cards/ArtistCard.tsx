@@ -1,29 +1,21 @@
-import { useNavigate } from "react-router-dom"
+import Link from "next/link"
+import { Session } from "next-auth"
 
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 
-import { useGetArtistQuery } from "../../api/artist"
-import useAuthenticated from "../../hooks/useAuthenticated"
+import { getArtist } from "@/queries"
+
 import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 
-const ArtistCard = ({ artistId }: { artistId?: string }) => {
-	const token = useAuthenticated()
-
-	const navigate = useNavigate()
-
-	const { data: artist } = useGetArtistQuery({ id: artistId!, token }, { skip: !artistId })
-
-	const handleArtistClick = () => {
-		if (artist) {
-			navigate("/artist/" + artist.id)
-		}
-	}
+export default async function ArtistCard({ session, id }: { session: Session; id: string }) {
+	const artist = await getArtist(session.token, id)
 
 	return (
 		<Card
-			sx={{ mb: 2 }}
-			onClick={handleArtistClick}>
+			component={Link}
+			href={`/artists/${id}`}
+			sx={{ mb: 2 }}>
 			<CardActionArea>
 				<Box
 					sx={{
@@ -38,16 +30,14 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 								width={120}
 								height={120}
 							/>
-						}
-						component={thumbnailUrl => (
-							<CardMedia
-								component="img"
-								sx={{ width: 120 }}
-								image={thumbnailUrl}
-								alt="Picture"
-							/>
-						)}
-					/>
+						}>
+						<CardMedia
+							component="img"
+							sx={{ width: 120 }}
+							image={artist?.images[0]?.url}
+							alt="Picture"
+						/>
+					</AsyncImage>
 					<CardMedia
 						sx={{
 							ml: 2,
@@ -55,30 +45,11 @@ const ArtistCard = ({ artistId }: { artistId?: string }) => {
 							flexDirection: "column",
 							justifyContent: "center",
 						}}>
-						{artist ? (
-							<>
-								<Typography variant="h5">{artist.name}</Typography>
-								<Typography variant="subtitle1">{getFollowers(artist)}</Typography>
-							</>
-						) : (
-							<>
-								<Skeleton
-									variant="text"
-									width={200}
-									height={40}
-								/>
-								<Skeleton
-									variant="text"
-									width={160}
-									height={30}
-								/>
-							</>
-						)}
+						<Typography variant="h5">{artist.name}</Typography>
+						<Typography variant="subtitle1">{getFollowers(artist)}</Typography>
 					</CardMedia>
 				</Box>
 			</CardActionArea>
 		</Card>
 	)
 }
-
-export default ArtistCard

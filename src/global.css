@@ -17,6 +17,10 @@ body,
 	width: 0;
 }
 
+a {
+	text-decoration: none;
+}
+
 .preload {
 	z-index: 10;
 	position: absolute;

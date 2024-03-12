@@ -1,26 +1,27 @@
-import { useNavigate } from "react-router-dom"
+import Link from "next/link"
+import { Session } from "next-auth"
 
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 
-import { useGetAlbumQuery } from "../../api/album"
-import useAuthenticated from "../../hooks/useAuthenticated"
+import { getAlbum } from "@/queries"
+
 import AsyncImage from "../AsyncImage"
 
-const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number }) => {
-	const token = useAuthenticated()
-
-	const navigate = useNavigate()
-
-	const { data: album } = useGetAlbumQuery({ id: albumId!, token }, { skip: !albumId })
-
-	const handleAlbumClick = () => {
-		if (album) {
-			navigate("/album/" + album.id)
-		}
-	}
+export default async function AlbumCard({
+	session,
+	id,
+	position,
+}: {
+	session: Session
+	id: string
+	position: number
+}) {
+	const album = await getAlbum(session.token, id)
 
 	return (
-		<Card onClick={handleAlbumClick}>
+		<Card
+			component={Link}
+			href={`/ablum/${id}`}>
 			<CardActionArea>
 				<Box
 					sx={{
@@ -35,16 +36,14 @@ const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number 
 								width={120}
 								height={120}
 							/>
-						}
-						component={thumbnailUrl => (
-							<CardMedia
-								component="img"
-								sx={{ width: 120 }}
-								image={thumbnailUrl}
-								alt="Picture"
-							/>
-						)}
-					/>
+						}>
+						<CardMedia
+							component="img"
+							sx={{ width: 120 }}
+							image={album?.images[0]?.url}
+							alt="Picture"
+						/>
+					</AsyncImage>
 					<CardMedia
 						sx={{
 							ml: 2,
@@ -52,30 +51,11 @@ const AlbumCard = ({ albumId, position }: { albumId?: string; position?: number 
 							flexDirection: "column",
 							justifyContent: "center",
 						}}>
-						{album ? (
-							<>
-								<Typography variant="h5">{album.name}</Typography>
-								<Typography variant="subtitle1">Track #{position}</Typography>
-							</>
-						) : (
-							<>
-								<Skeleton
-									variant="text"
-									width={200}
-									height={40}
-								/>
-								<Skeleton
-									variant="text"
-									width={160}
-									height={30}
-								/>
-							</>
-						)}
+						<Typography variant="h5">{album.name}</Typography>
+						<Typography variant="subtitle1">Track #{position}</Typography>
 					</CardMedia>
 				</Box>
 			</CardActionArea>
 		</Card>
 	)
 }
-
-export default AlbumCard

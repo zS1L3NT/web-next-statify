@@ -1,32 +1,24 @@
+import { Session } from "next-auth"
+
 import { List, Typography } from "@mui/material"
 
-import { useGetRecommendationsQuery } from "../api/api"
-import { useGetTracksQuery } from "../api/track"
-import useAuthenticated from "../hooks/useAuthenticated"
+import { getRecommendations } from "@/queries"
+
 import Track from "./Track"
 
-const Recommendations = ({
+export default async function Recommendations({
+	session,
 	track,
 	artist,
 }: {
+	session: Session
 	artist?: SpotifyApi.ArtistObjectSimplified
 	track?: SpotifyApi.TrackObjectSimplified
-}) => {
-	const token = useAuthenticated()
-
-	const { data: recommendations } = useGetRecommendationsQuery(
-		{
-			seed_tracks: track ? [track.id] : undefined,
-			seed_artists: artist ? [artist.id] : undefined,
-			limit: 10,
-			token,
-		},
-		{ skip: !track && !artist },
-	)
-	const { data: tracks } = useGetTracksQuery(
-		{ ids: recommendations?.tracks.map(t => t.id) ?? [], token },
-		{ skip: !recommendations },
-	)
+}) {
+	const recommendations = await getRecommendations(session.token, {
+		track: track?.id,
+		artist: artist?.id,
+	})
 
 	return (
 		<>
@@ -41,7 +33,7 @@ const Recommendations = ({
 				Tracks like this
 			</Typography>
 			<List>
-				{(tracks ?? Array(10).fill(undefined)).map((track, i) => (
+				{(recommendations ?? Array(10).fill(undefined)).map((track, i) => (
 					<Track
 						key={i}
 						track={track}
@@ -52,5 +44,3 @@ const Recommendations = ({
 		</>
 	)
 }
-
-export default Recommendations

@@ -2,7 +2,6 @@ import { DateTime } from "luxon"
 import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
-import SpotifyWebApi from "spotify-web-api-node"
 
 import {
 	Avatar,
@@ -31,6 +30,7 @@ import {
 import AsyncImage from "@/components/AsyncImage"
 import { TERMS } from "@/constants"
 import { options } from "@/next-auth"
+import { getRecents } from "@/queries"
 import getTimeSincePlayed from "@/utils/getTimeSincePlayed"
 
 export default async function Page({ params: { term } }: { params: { term: string } }) {
@@ -43,12 +43,7 @@ export default async function Page({ params: { term } }: { params: { term: strin
 		return redirect("/top-tracks/month")
 	}
 
-	const spotify = new SpotifyWebApi()
-	spotify.setAccessToken(session.token)
-
-	const recents = await spotify
-		.getMyRecentlyPlayedTracks({ limit: 50 })
-		.then(res => res.body.items)
+	const recents = await getRecents(session.token)
 
 	const smallScreen = false // useMediaQuery(theme.breakpoints.down("lg")) // in wrong order but needs theme
 

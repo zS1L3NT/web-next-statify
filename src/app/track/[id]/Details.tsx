@@ -1,4 +1,7 @@
-import React, { useState } from "react"
+"use client"
+
+import { Session } from "next-auth"
+import { useState } from "react"
 
 import { Star, StarBorder } from "@mui/icons-material"
 import {
@@ -18,25 +21,23 @@ import {
 	Typography,
 } from "@mui/material"
 
-import {
-	useAddToMySavedTracksMutation,
-	useGetIsInMySavedTracksQuery,
-	useRemoveFromMySavedTracksMutation,
-} from "../../api/track"
-import useAuthenticated from "../../hooks/useAuthenticated"
-import getDuration from "../../utils/getDuration"
-import AsyncImage from "../AsyncImage"
-import PageIndicator from "../PageIndicator"
+import AsyncImage from "@/components/AsyncImage"
+import PageIndicator from "@/components/PageIndicator"
+import getDuration from "@/utils/getDuration"
 
-const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
-	const token = useAuthenticated()
-
-	const { data: isInMySavedTracks } = useGetIsInMySavedTracksQuery(
-		{ ids: [track?.id ?? ""], token },
-		{ skip: !track },
-	)
-	const [addToMySavedTracks] = useAddToMySavedTracksMutation()
-	const [removeFromMySavedTracks] = useRemoveFromMySavedTracksMutation()
+export default function Details({
+	session,
+	track,
+}: {
+	session: Session
+	track: SpotifyApi.TrackObjectFull
+}) {
+	// const { data: isInMySavedTracks } = useGetIsInMySavedTracksQuery(
+	// 	{ ids: [track?.id ?? ""], token },
+	// 	{ skip: !track },
+	// )
+	// const [addToMySavedTracks] = useAddToMySavedTracksMutation()
+	// const [removeFromMySavedTracks] = useRemoveFromMySavedTracksMutation()
 
 	const [showImage, setShowImage] = useState(false)
 
@@ -49,16 +50,16 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 	const handleLike = async () => {
 		if (!track) return
 
-		await addToMySavedTracks({ ids: [track.id], token })
+		// await addToMySavedTracks({ ids: [track.id], token })
 	}
 
 	const handleUnlike = async () => {
 		if (!track) return
 
-		await removeFromMySavedTracks({ ids: [track.id], token })
+		// await removeFromMySavedTracks({ ids: [track.id], token })
 	}
 
-	const liked = isInMySavedTracks?.[0] ?? null
+	const liked = false // isInMySavedTracks?.[0] ?? null
 
 	return (
 		<>
@@ -78,23 +79,21 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 								width={200}
 								height={200}
 							/>
-						}
-						component={thumbnailUrl => (
-							<Card
-								sx={{ borderRadius: 5 }}
-								onClick={() => setShowImage(true)}>
-								<CardActionArea>
-									<CardMedia
-										component="img"
-										width={200}
-										height={200}
-										image={thumbnailUrl}
-										alt="Image"
-									/>
-								</CardActionArea>
-							</Card>
-						)}
-					/>
+						}>
+						<Card
+							sx={{ borderRadius: 5 }}
+							onClick={() => setShowImage(true)}>
+							<CardActionArea>
+								<CardMedia
+									component="img"
+									width={200}
+									height={200}
+									image={track?.album.images[0]?.url}
+									alt="Image"
+								/>
+							</CardActionArea>
+						</Card>
+					</AsyncImage>
 				</Grid>
 				<Grid
 					sx={{
@@ -146,8 +145,8 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 								liked === null
 									? ""
 									: liked
-									? "Remove this Track from your Liked Tracks"
-									: "Add this Track to your Liked Tracks"
+										? "Remove this Track from your Liked Tracks"
+										: "Add this Track to your Liked Tracks"
 							}>
 							<IconButton
 								sx={{ width: 46 }}
@@ -178,7 +177,7 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 			<Dialog
 				open={showImage}
 				onClose={() => setShowImage(false)}
-				BackdropComponent={Backdrop}>
+				slots={{ backdrop: Backdrop }}>
 				<Box
 					sx={{ width: { xs: 300, sm: 500 }, height: { xs: 300, sm: 500 } }}
 					component="img"
@@ -189,5 +188,3 @@ const TrackDetails = ({ track }: { track?: SpotifyApi.TrackObjectFull }) => {
 		</>
 	)
 }
-
-export default TrackDetails
