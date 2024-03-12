@@ -13,7 +13,7 @@ import {
 	Typography,
 } from "@mui/material"
 
-import { options } from "@/nextauth"
+import { options } from "@/next-auth"
 
 const cards = [
 	{
@@ -66,7 +66,7 @@ export default async function Page() {
 						justifyContent="center">
 						<Button
 							LinkComponent={Link}
-							href="/login"
+							href="/api/auth/signin/spotify"
 							size="large"
 							variant="contained"
 							disabled={!!session}>
