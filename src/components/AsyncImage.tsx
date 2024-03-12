@@ -1,14 +1,15 @@
-import { useEffect, useState } from "react"
+"use client"
+
+import { PropsWithChildren, useEffect, useState } from "react"
 
 const AsyncImage = ({
 	src,
 	skeleton,
-	component,
-}: {
+	children,
+}: PropsWithChildren<{
 	src: string | undefined
 	skeleton: JSX.Element
-	component: (url: string) => JSX.Element
-}) => {
+}>) => {
 	const [fade, setFade] = useState(false)
 	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
 
@@ -38,7 +39,7 @@ const AsyncImage = ({
 				<div
 					style={{ gridArea: "1 / 1 / 2 / 2" }}
 					className="fade-in">
-					{component(thumbnailUrl!)}
+					{children}
 				</div>
 			)}
 		</div>

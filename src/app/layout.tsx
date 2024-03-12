@@ -5,6 +5,8 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
 
 import { dark } from "@/theme"
 
+import "../global.css"
+
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en">
