@@ -1,24 +1,17 @@
+import Link from "next/link"
 import React, { Dispatch, SetStateAction, useState } from "react"
-import { useNavigate } from "react-router-dom"
 
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
-const DrawerDropdown = ({
+export default function Dropdown({
 	setOpen,
 	dropdown,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	dropdown: iDrawerDropdown
-}) => {
-	const navigate = useNavigate()
-
+}) {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
-
-	const redirect = (url: string) => {
-		navigate(url)
-		setOpen(false)
-	}
 
 	return dropdown.condition() ? (
 		<React.Fragment key={dropdown.id}>
@@ -38,8 +31,10 @@ const DrawerDropdown = ({
 						item.condition() ? (
 							<ListItemButton
 								key={item.id}
+								LinkComponent={Link}
+								href={item.url}
 								sx={{ pl: 4 }}
-								onClick={() => redirect(item.url)}>
+								onClick={() => setOpen(false)}>
 								<ListItemIcon>{item.icon}</ListItemIcon>
 								<ListItemText primary={item.title} />
 							</ListItemButton>
@@ -54,5 +49,3 @@ const DrawerDropdown = ({
 		<></>
 	)
 }
-
-export default DrawerDropdown

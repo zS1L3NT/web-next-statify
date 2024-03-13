@@ -1,25 +1,21 @@
+import Link from "next/link"
 import React, { Dispatch, SetStateAction } from "react"
-import { useNavigate } from "react-router-dom"
 
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
-const NavItem = ({
+export default function Item({
 	setOpen,
 	item,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
 	item: iDrawerItem
-}) => {
-	const navigate = useNavigate()
-
-	const redirect = (url: string) => {
-		navigate(url)
-		setOpen(false)
-	}
-
+}) {
 	return item.condition() ? (
 		<React.Fragment key={item.id}>
-			<ListItemButton onClick={() => redirect(item.url)}>
+			<ListItemButton
+				LinkComponent={Link}
+				href={item.url}
+				onClick={() => setOpen(false)}>
 				<ListItemIcon>{item.icon}</ListItemIcon>
 				<ListItemText primary={item.title} />
 			</ListItemButton>
@@ -28,5 +24,3 @@ const NavItem = ({
 		<></>
 	)
 }
-
-export default NavItem
