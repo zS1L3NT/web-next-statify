@@ -23,7 +23,7 @@ import {
 
 import AsyncImage from "@/components/AsyncImage"
 import PageIndicator from "@/components/PageIndicator"
-import getDuration from "@/utils/getDuration"
+import { getDuration } from "@/utils"
 
 export default function Details({
 	session,

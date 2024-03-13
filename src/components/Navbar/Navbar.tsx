@@ -7,7 +7,7 @@ import { Audiotrack, History, Home, Login, Logout, Person } from "@mui/icons-mat
 import MenuIcon from "@mui/icons-material/Menu"
 import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
 
-import { TERMS } from "@/constants"
+import { TERMS } from "@/utils"
 
 import Dropdown, { iNavbarDropdown } from "./Dropdown"
 import Item, { iNavbarItem } from "./Item"

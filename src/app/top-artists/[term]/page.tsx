@@ -18,10 +18,10 @@ import {
 } from "@mui/material"
 
 import AsyncImage from "@/components/AsyncImage"
-import { TERMS } from "@/constants"
 import { options } from "@/next-auth"
 import { getTopArtists } from "@/queries"
-import getFollowers from "@/utils/getFollowers"
+import { TERMS } from "@/utils"
+import { getFollowers } from "@/utils"
 
 export default async function Page({ params: { term } }: { params: { term: string } }) {
 	const session = await getServerSession(options)

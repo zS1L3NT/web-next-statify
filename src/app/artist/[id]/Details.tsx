@@ -23,7 +23,7 @@ import {
 
 import AsyncImage from "@/components/AsyncImage"
 import PageIndicator from "@/components/PageIndicator"
-import getFollowers from "@/utils/getFollowers"
+import { getFollowers } from "@/utils"
 
 export default function Details({
 	session,

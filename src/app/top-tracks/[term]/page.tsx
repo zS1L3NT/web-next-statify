@@ -30,10 +30,10 @@ import {
 } from "@mui/material"
 
 import AsyncImage from "@/components/AsyncImage"
-import { TERMS } from "@/constants"
 import { options } from "@/next-auth"
 import { getTopTracks } from "@/queries"
-import getDuration from "@/utils/getDuration"
+import { TERMS } from "@/utils"
+import { getDuration } from "@/utils"
 
 export default async function Page({ params: { term } }: { params: { term: string } }) {
 	const session = await getServerSession(options)

@@ -4,8 +4,8 @@ import { Session } from "next-auth"
 import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
 
 import { getArtist } from "@/queries"
+import { getFollowers } from "@/utils"
 
-import getFollowers from "../../utils/getFollowers"
 import AsyncImage from "../AsyncImage"
 
 export default async function ArtistCard({ session, id }: { session: Session; id: string }) {
