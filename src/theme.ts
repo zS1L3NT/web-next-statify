@@ -2,34 +2,17 @@
 
 import { createTheme } from "@mui/material"
 
-const palette = {
-	success: {
-		main: "#1db954",
-	},
-	error: {
-		main: "#e22134",
-	},
-	warning: {
-		main: "#ff5722",
-	},
-}
-
-const light = createTheme({
+export default createTheme({
 	palette: {
-		...palette,
-		primary: {
-			main: "#1ED760",
-			contrastText: "#111111",
+		success: {
+			main: "#1db954",
 		},
-		background: {
-			default: "#EEEEEE",
+		error: {
+			main: "#e22134",
 		},
-	},
-})
-
-const dark = createTheme({
-	palette: {
-		...palette,
+		warning: {
+			main: "#ff5722",
+		},
 		primary: {
 			main: "#25b359",
 			contrastText: "#DDDDDD",
@@ -40,5 +23,3 @@ const dark = createTheme({
 		},
 	},
 })
-
-export { light, dark }

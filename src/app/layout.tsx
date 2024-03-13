@@ -4,7 +4,7 @@ import { CssBaseline, ThemeProvider } from "@mui/material"
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
 
 import Navbar from "@/components/Navbar/Navbar"
-import { dark } from "@/theme"
+import theme from "@/theme"
 
 import "../global.css"
 
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 		<html lang="en">
 			<body>
 				<AppRouterCacheProvider>
-					<ThemeProvider theme={dark}>
+					<ThemeProvider theme={theme}>
 						<CssBaseline />
 						<Navbar />
 						{children}
