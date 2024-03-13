@@ -3,12 +3,20 @@ import React, { Dispatch, SetStateAction } from "react"
 
 import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
+export type iNavbarItem = {
+	id: string
+	icon: JSX.Element
+	title: string
+	url: string
+	condition: () => boolean
+}
+
 export default function Item({
 	setOpen,
 	item,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
-	item: iDrawerItem
+	item: iNavbarItem
 }) {
 	return item.condition() ? (
 		<React.Fragment key={item.id}>

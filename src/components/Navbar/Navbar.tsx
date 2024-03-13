@@ -9,8 +9,8 @@ import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } f
 
 import { TERMS } from "@/constants"
 
-import Dropdown from "./Dropdown"
-import Item from "./Item"
+import Dropdown, { iNavbarDropdown } from "./Dropdown"
+import Item, { iNavbarItem } from "./Item"
 
 export default function Navbar() {
 	return (
@@ -25,7 +25,7 @@ function _Navbar() {
 	const hasSession = !!session
 	const [open, setOpen] = useState(false)
 
-	const data: (iDrawerItem | iDrawerDropdown)[] = [
+	const data: (iNavbarItem | iNavbarDropdown)[] = [
 		{
 			id: "nav-home",
 			icon: <Home />,

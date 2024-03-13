@@ -4,12 +4,23 @@ import React, { Dispatch, SetStateAction, useState } from "react"
 import { ExpandLess, ExpandMore } from "@mui/icons-material"
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
 
+import { iNavbarItem } from "./Item"
+
+export type iNavbarDropdown = {
+	id: string
+	icon: JSX.Element
+	title: string
+	drop: number
+	items: iNavbarItem[]
+	condition: () => boolean
+}
+
 export default function Dropdown({
 	setOpen,
 	dropdown,
 }: {
 	setOpen: Dispatch<SetStateAction<boolean>>
-	dropdown: iDrawerDropdown
+	dropdown: iNavbarDropdown
 }) {
 	const [dropdownOpen, setDropdownOpen] = useState(false)
 

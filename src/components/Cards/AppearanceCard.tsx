@@ -2,7 +2,14 @@ import Link from "next/link"
 
 import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
 
-const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
+export type iAppearanceCard = {
+	text: string
+	hash: boolean
+	link: string
+	condition: () => any
+}
+
+export default function AppearanceCard({ appearance }: { appearance: iAppearanceCard }) {
 	return appearance.condition() ? (
 		<Card
 			component={Link}
@@ -29,5 +36,3 @@ const AppearanceCard = ({ appearance }: { appearance: iAppearanceCard }) => {
 		<></>
 	)
 }
-
-export default AppearanceCard
