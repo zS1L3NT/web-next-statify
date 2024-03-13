@@ -2,14 +2,14 @@
 
 import { PropsWithChildren, useEffect, useState } from "react"
 
-const AsyncImage = ({
+export default function AsyncImage({
 	src,
 	skeleton,
 	children,
 }: PropsWithChildren<{
 	src: string | undefined
 	skeleton: JSX.Element
-}>) => {
+}>) {
 	const [fade, setFade] = useState(false)
 	const [thumbnailUrl, setThumbnailUrl] = useState<string | null>(null)
 
@@ -45,5 +45,3 @@ const AsyncImage = ({
 		</div>
 	)
 }
-
-export default AsyncImage
