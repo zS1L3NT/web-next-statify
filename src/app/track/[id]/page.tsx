@@ -1,7 +1,5 @@
 import { getServerSession } from "next-auth"
 
-import { Container, Grid, Typography } from "@mui/material"
-
 import AlbumCard from "@/components/Cards/AlbumCard"
 import AppearanceCard, { iAppearanceCard } from "@/components/Cards/AppearanceCard"
 import ArtistCard from "@/components/Cards/ArtistCard"

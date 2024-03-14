@@ -3,30 +3,6 @@ import Link from "next/link"
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
-import {
-	Avatar,
-	Card,
-	CardContent,
-	CircularProgress,
-	Container,
-	Link as MaterialLink,
-	List,
-	ListItem,
-	ListItemAvatar,
-	ListItemButton,
-	ListItemText,
-	Paper,
-	Skeleton,
-	Stack,
-	Table,
-	TableBody,
-	TableCell,
-	TableContainer,
-	TableHead,
-	TableRow,
-	Typography,
-} from "@mui/material"
-
 import AsyncImage from "@/components/AsyncImage"
 import { options } from "@/next-auth"
 import { getRecents } from "@/queries"

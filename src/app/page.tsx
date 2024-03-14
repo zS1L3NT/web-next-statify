@@ -1,18 +1,6 @@
 import Link from "next/link"
 import { getServerSession } from "next-auth"
 
-import {
-	Box,
-	Button,
-	Card,
-	CardActions,
-	CardContent,
-	Container,
-	Grid,
-	Stack,
-	Typography,
-} from "@mui/material"
-
 import { options } from "@/next-auth"
 
 const cards = [

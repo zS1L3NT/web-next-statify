@@ -1,22 +1,6 @@
 import { redirect } from "next/navigation"
 import { getServerSession } from "next-auth"
 
-import {
-	Box,
-	Card,
-	CardActionArea,
-	CardContent,
-	CardMedia,
-	Container,
-	Grid,
-	LinearProgress,
-	Link,
-	Skeleton,
-	Tab,
-	Tabs,
-	Typography,
-} from "@mui/material"
-
 import AsyncImage from "@/components/AsyncImage"
 import { options } from "@/next-auth"
 import { getTopArtists } from "@/queries"

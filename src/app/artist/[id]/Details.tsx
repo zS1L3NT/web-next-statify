@@ -3,24 +3,6 @@
 import { Session } from "next-auth"
 import { useState } from "react"
 
-import { Star, StarBorder } from "@mui/icons-material"
-import {
-	Avatar,
-	Backdrop,
-	Box,
-	Card,
-	CardActionArea,
-	CardMedia,
-	CircularProgress,
-	Dialog,
-	Grid,
-	IconButton,
-	Skeleton,
-	Stack,
-	Tooltip,
-	Typography,
-} from "@mui/material"
-
 import AsyncImage from "@/components/AsyncImage"
 import PageIndicator from "@/components/PageIndicator"
 import { getFollowers } from "@/utils"

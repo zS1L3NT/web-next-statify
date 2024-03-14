@@ -1,7 +1,5 @@
 import { getServerSession } from "next-auth"
 
-import { Container, Grid, List, Skeleton, Stack, Typography } from "@mui/material"
-
 import AppearanceCard, { iAppearanceCard } from "@/components/Cards/AppearanceCard"
 import Recommendations from "@/components/Recommendations"
 import Track from "@/components/Track"

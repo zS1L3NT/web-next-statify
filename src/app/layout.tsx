@@ -1,8 +1,5 @@
 import { PropsWithChildren } from "react"
 
-import { CssBaseline, ThemeProvider } from "@mui/material"
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter"
-
 import Navbar from "@/components/Navbar/Navbar"
 import theme from "@/theme"
 

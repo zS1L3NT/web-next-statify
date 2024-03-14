@@ -1,7 +1,5 @@
 import Link from "next/link"
 
-import { Card, CardActionArea, CardContent, Typography } from "@mui/material"
-
 export type iAppearanceCard = {
 	text: string
 	hash: boolean

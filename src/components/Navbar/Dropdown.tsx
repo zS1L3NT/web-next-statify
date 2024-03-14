@@ -1,9 +1,6 @@
 import Link from "next/link"
 import React, { Dispatch, SetStateAction, useState } from "react"
 
-import { ExpandLess, ExpandMore } from "@mui/icons-material"
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
-
 import { iNavbarItem } from "./Item"
 
 export type iNavbarDropdown = {

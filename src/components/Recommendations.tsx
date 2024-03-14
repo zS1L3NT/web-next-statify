@@ -1,7 +1,5 @@
 import { Session } from "next-auth"
 
-import { List, Typography } from "@mui/material"
-
 import { getRecommendations } from "@/queries"
 
 import Track from "./Track"

@@ -1,7 +1,5 @@
 import React, { PropsWithChildren } from "react"
 
-import { Typography } from "@mui/material"
-
 export default function PageIndicator({ children }: PropsWithChildren) {
 	return (
 		<Typography

@@ -1,16 +1,5 @@
 import Link from "next/link"
 
-import {
-	Avatar,
-	Card,
-	CardActionArea,
-	ListItem,
-	ListItemAvatar,
-	ListItemText,
-	Skeleton,
-	Stack,
-} from "@mui/material"
-
 import AsyncImage from "./AsyncImage"
 
 export default function Track({

@@ -3,10 +3,6 @@
 import { SessionProvider, useSession } from "next-auth/react"
 import React, { useState } from "react"
 
-import { Audiotrack, History, Home, Login, Logout, Person } from "@mui/icons-material"
-import MenuIcon from "@mui/icons-material/Menu"
-import { AppBar, Box, IconButton, List, SwipeableDrawer, Toolbar, Typography } from "@mui/material"
-
 import { TERMS } from "@/utils"
 
 import Dropdown, { iNavbarDropdown } from "./Dropdown"

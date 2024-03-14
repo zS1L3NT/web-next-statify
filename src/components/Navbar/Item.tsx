@@ -1,8 +1,6 @@
 import Link from "next/link"
 import React, { Dispatch, SetStateAction } from "react"
 
-import { ListItemButton, ListItemIcon, ListItemText } from "@mui/material"
-
 export type iNavbarItem = {
 	id: string
 	icon: JSX.Element

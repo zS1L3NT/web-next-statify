@@ -1,8 +1,6 @@
 import Link from "next/link"
 import { Session } from "next-auth"
 
-import { Box, Card, CardActionArea, CardMedia, Skeleton, Typography } from "@mui/material"
-
 import { getAlbum } from "@/queries"
 
 import AsyncImage from "../AsyncImage"
