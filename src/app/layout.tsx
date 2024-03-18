@@ -10,7 +10,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
 			<body>
 				<ThemeProvider
 					attribute="class"
-					defaultTheme="system"
+					defaultTheme="dark"
 					enableSystem
 					disableTransitionOnChange>
 					{children}
