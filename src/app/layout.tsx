@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react"
 
-import ThemeProvider from "@/components/ThemeProvider"
+import ThemeProvider from "@/components/theme-provider"
 
 import "./globals.scss"
 
