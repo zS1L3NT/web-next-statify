@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react"
 
-import Spotify from "./spotify"
+import Icons from "./icons"
 import { Button } from "./ui/button"
 
 export default function LoginButton() {
@@ -11,7 +11,7 @@ export default function LoginButton() {
 			className="mt-2 md:mt-4 lg:mt-6"
 			variant="outline"
 			onClick={() => signIn("spotify")}>
-			<Spotify style={{ width: 16, height: 16, color: "black" }} />
+			<Icons.spotify className="size-4" />
 			<p className="ml-2">Login with Spotify</p>
 		</Button>
 	)

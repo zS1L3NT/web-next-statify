@@ -51,9 +51,11 @@
 
 @layer base {
 	* {
-		@apply border-border;
+		@apply box-border p-0 m-0;
 	}
+
+	html,
 	body {
-		@apply bg-background text-foreground;
+		@apply bg-background md:bg-black text-foreground size-full;
 	}
 }
