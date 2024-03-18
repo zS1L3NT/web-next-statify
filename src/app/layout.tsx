@@ -1,13 +1,21 @@
 import { PropsWithChildren } from "react"
 
-import "./globals.scss"
+import ThemeProvider from "@/components/ThemeProvider"
 
-export const revalidate = 15 * 60
+import "./globals.scss"
 
 export default function RootLayout({ children }: PropsWithChildren) {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange>
+					{children}
+				</ThemeProvider>
+			</body>
 		</html>
 	)
 }

@@ -1,7 +1,7 @@
 import { cache } from "react"
 import SpotifyWebApi from "spotify-web-api-node"
 
-import { TERMS } from "./utils"
+import { TERMS } from "@/lib/utils"
 
 export const getTopTracks = cache((token: string, term: keyof typeof TERMS) => {
 	const spotify = new SpotifyWebApi()
