@@ -3,7 +3,7 @@ import { redirect } from "next/navigation"
 
 import Icons from "@/components/icons"
 import { buttonVariants } from "@/components/ui/button"
-import { getLoginUrl, getSession } from "@/lib/auth"
+import { getSession, loginHref } from "@/lib/auth"
 import { cn } from "@/lib/utils"
 
 export default async function Page() {
@@ -24,7 +24,7 @@ export default async function Page() {
 				</p>
 
 				<Link
-					href={getLoginUrl()}
+					href={loginHref}
 					className={cn(buttonVariants({ variant: "outline" }), "mt-2 md:mt-4 lg:mt-6")}>
 					<Icons.spotify className="size-4" />
 					<p className="ml-2">Login with Spotify</p>

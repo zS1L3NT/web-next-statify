@@ -15,13 +15,11 @@ export type Session = {
 	}
 }
 
-export const getLoginUrl = () => {
-	const url = new URL("https://accounts.spotify.com/authorize")
-	url.searchParams.append("client_id", process.env.SPOTIFY_CLIENT_ID)
-	url.searchParams.append("redirect_uri", process.env.SPOTIFY_REDIRECT_URI)
-	url.searchParams.append("response_type", "code")
-	return url.href
-}
+const loginUrl = new URL("https://accounts.spotify.com/authorize")
+loginUrl.searchParams.append("client_id", process.env.SPOTIFY_CLIENT_ID)
+loginUrl.searchParams.append("redirect_uri", process.env.SPOTIFY_REDIRECT_URI)
+loginUrl.searchParams.append("response_type", "code")
+export const loginHref = loginUrl.href
 
 export const refreshSession = async (input: { code: string } | { refresh_token: string }) => {
 	const token = await fetch("https://accounts.spotify.com/api/token", {
