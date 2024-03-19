@@ -1,11 +1,13 @@
+import Link from "next/link"
 import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
 
-import LoginButton from "@/components/login-button"
-import { options } from "@/next-auth"
+import Icons from "@/components/icons"
+import { buttonVariants } from "@/components/ui/button"
+import { getLoginUrl, getSession } from "@/lib/auth"
+import { cn } from "@/lib/utils"
 
 export default async function Page() {
-	const session = await getServerSession(options)
+	const session = await getSession()
 	if (session) return redirect("/dashboard")
 
 	return (
@@ -21,7 +23,12 @@ export default async function Page() {
 					View your top spotify statistics
 				</p>
 
-				<LoginButton />
+				<Link
+					href={getLoginUrl()}
+					className={cn(buttonVariants({ variant: "outline" }), "mt-2 md:mt-4 lg:mt-6")}>
+					<Icons.spotify className="size-4" />
+					<p className="ml-2">Login with Spotify</p>
+				</Link>
 			</section>
 		</main>
 	)

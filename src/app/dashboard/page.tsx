@@ -1,14 +1,13 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
-import { getServerSession } from "next-auth"
 
 import Icons from "@/components/icons"
 import Playlist from "@/components/playlist"
-import { options } from "@/next-auth"
+import { getSession } from "@/lib/auth"
 import { getRecents, getTopArtists, getTopTracks } from "@/queries"
 
 export default async function Page() {
-	const session = await getServerSession(options)
+	const session = await getSession()
 	if (!session) return redirect("/")
 
 	const [
@@ -20,13 +19,13 @@ export default async function Page() {
 		artistsLifetime,
 		recents,
 	] = await Promise.all([
-		getTopTracks(session.token!, "month"),
-		getTopTracks(session.token!, "halfyear"),
-		getTopTracks(session.token!, "lifetime"),
-		getTopArtists(session.token!, "month"),
-		getTopArtists(session.token!, "halfyear"),
-		getTopArtists(session.token!, "lifetime"),
-		getRecents(session.token!),
+		getTopTracks(session.token.access_token, "month"),
+		getTopTracks(session.token.access_token, "halfyear"),
+		getTopTracks(session.token.access_token, "lifetime"),
+		getTopArtists(session.token.access_token, "month"),
+		getTopArtists(session.token.access_token, "halfyear"),
+		getTopArtists(session.token.access_token, "lifetime"),
+		getRecents(session.token.access_token),
 	])
 
 	return (
@@ -34,7 +33,7 @@ export default async function Page() {
 			<section className="fixed top-0 flex items-center w-full gap-2 p-4 pt-12 shadow-xl bg-background shadow-black md:hidden">
 				<Image
 					className="rounded-full"
-					src={session.user!.image!}
+					src={session.user.picture}
 					alt="Profile picture"
 					width={32}
 					height={32}
