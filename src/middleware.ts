@@ -9,6 +9,11 @@ export async function middleware(req: NextRequest) {
 	if (!cookie) return NextResponse.next()
 
 	const session = await verify(cookie)
+	if (!session) {
+		cookies().delete(process.env.COOKIE_NAME)
+		return NextResponse.next()
+	}
+
 	if (Date.now() < session.token.expires_at) return NextResponse.next()
 
 	try {

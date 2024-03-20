@@ -14,8 +14,12 @@ export async function sign(session: Session): Promise<string> {
 		.sign(new TextEncoder().encode(process.env.JWT_SECRET))
 }
 
-export async function verify(token: string): Promise<Session> {
-	return await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET)).then(
-		data => data.payload as Session,
-	)
+export async function verify(token: string): Promise<Session | null> {
+	try {
+		return await jwtVerify(token, new TextEncoder().encode(process.env.JWT_SECRET)).then(
+			data => data.payload as Session,
+		)
+	} catch {
+		return null
+	}
 }
