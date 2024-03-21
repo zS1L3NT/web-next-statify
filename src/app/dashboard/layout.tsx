@@ -1,12 +1,13 @@
 import Image from "next/image"
 import { redirect } from "next/navigation"
+import { PropsWithChildren } from "react"
 
 import Icons from "@/components/icons"
 import Playlist from "@/components/playlist"
 import { getSession } from "@/lib/auth"
 import { getRecents, getTopArtists, getTopTracks } from "@/queries"
 
-export default async function Page() {
+export default async function Layout({ children }: PropsWithChildren) {
 	const session = await getSession()
 	if (!session) return redirect("/")
 
@@ -19,13 +20,13 @@ export default async function Page() {
 		artistsLifetime,
 		recents,
 	] = await Promise.all([
-		getTopTracks(session.token.access_token, "month"),
-		getTopTracks(session.token.access_token, "halfyear"),
-		getTopTracks(session.token.access_token, "lifetime"),
-		getTopArtists(session.token.access_token, "month"),
-		getTopArtists(session.token.access_token, "halfyear"),
-		getTopArtists(session.token.access_token, "lifetime"),
-		getRecents(session.token.access_token),
+		getTopTracks(session, "month"),
+		getTopTracks(session, "halfyear"),
+		getTopTracks(session, "lifetime"),
+		getTopArtists(session, "month"),
+		getTopArtists(session, "halfyear"),
+		getTopArtists(session, "lifetime"),
+		getRecents(session),
 	])
 
 	return (
@@ -111,6 +112,8 @@ export default async function Page() {
 					description="Last 50 tracks"
 				/>
 			</section>
+
+			{children}
 		</main>
 	)
 }

@@ -19,6 +19,10 @@ const loginUrl = new URL("https://accounts.spotify.com/authorize")
 loginUrl.searchParams.append("client_id", process.env.SPOTIFY_CLIENT_ID)
 loginUrl.searchParams.append("redirect_uri", process.env.SPOTIFY_REDIRECT_URI)
 loginUrl.searchParams.append("response_type", "code")
+loginUrl.searchParams.append(
+	"scope",
+	"user-top-read user-read-recently-played user-follow-read user-follow-modify user-library-read user-library-modify",
+)
 export const loginHref = loginUrl.href
 
 export const refreshSession = async (input: { code: string } | { refresh_token: string }) => {
