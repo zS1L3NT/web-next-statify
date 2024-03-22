@@ -11,5 +11,7 @@ export default async function Page({ params: { term } }: { params: { term: strin
 
 	const tracks = await getTopTracks(session, term)
 
-	return <></>
+	return (
+		<section className="absolute bg-gray-700 size-full left-full md:flex-1 md:static"></section>
+	)
 }

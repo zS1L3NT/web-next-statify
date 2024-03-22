@@ -55,7 +55,13 @@
 	}
 
 	html,
-	body {
+	body,
+	main {
 		@apply bg-background md:bg-black text-foreground size-full;
 	}
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation-duration: 5s;
 }

@@ -11,7 +11,7 @@ export default async function Page({
 	if (!session) return redirect("/")
 
 	return (
-		<main className="relative flex md:size-full">
+		<main className="relative flex overflow-x-hidden">
 			{playlists}
 			{children}
 		</main>
