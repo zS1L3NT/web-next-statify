@@ -1,9 +1,9 @@
-import Playlist from "@/app/dashboard/[playlist]/components/playlist"
+import Playlist from "@/components/playlist"
 import { getSession } from "@/lib/auth"
 import { getRecents, getTopArtists, getTopTracks } from "@/queries"
 
 export default async function Page() {
-	const session = await getSession()!
+	const session = await getSession()
 	if (!session) return <></>
 
 	const [
@@ -33,6 +33,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Tracks"
 				description="Last month"
+				href="/dashboard/top-tracks/month"
 			/>
 
 			<Playlist
@@ -42,6 +43,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Tracks"
 				description="Past half year"
+				href="/dashboard/top-tracks/halfyear"
 			/>
 
 			<Playlist
@@ -51,6 +53,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Tracks"
 				description="Lifetime"
+				href="/dashboard/top-tracks/lifetime"
 			/>
 
 			<Playlist
@@ -60,6 +63,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Artists"
 				description="Last month"
+				href="/dashboard/top-artists/month"
 			/>
 
 			<Playlist
@@ -69,6 +73,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Artists"
 				description="Past half year"
+				href="/dashboard/top-artists/halfyear"
 			/>
 
 			<Playlist
@@ -78,6 +83,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Top Artists"
 				description="Lifetime"
+				href="/dashboard/top-artists/lifetime"
 			/>
 
 			<Playlist
@@ -87,6 +93,7 @@ export default async function Page() {
 					.slice(0, 4)}
 				name="Recents"
 				description="Last 50 tracks"
+				href="/dashboard/recents"
 			/>
 		</>
 	)

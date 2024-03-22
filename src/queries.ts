@@ -1,23 +1,12 @@
 import { Session } from "@/lib/auth"
-
-const TERMS = {
-	month: {
-		range: "short_term",
-		description: "4 Weeks",
-	},
-	halfyear: {
-		range: "medium_term",
-		description: "6 Months",
-	},
-	lifetime: {
-		range: "long_term",
-		description: "Lifetime",
-	},
-} as const
+import { TERMS } from "@/lib/utils"
 
 const revalidate = 15 * 60
 
-export const getTopTracks = (session: Session, term: keyof typeof TERMS) => {
+export const getTopTracks = async (
+	session: Session,
+	term: keyof typeof TERMS,
+): Promise<SpotifyApi.TrackObjectFull[]> => {
 	const { range } = TERMS[term as keyof typeof TERMS]
 	return Promise.all([
 		fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${range}&limit=49`, {
@@ -31,7 +20,10 @@ export const getTopTracks = (session: Session, term: keyof typeof TERMS) => {
 	]).then(ress => ress.flatMap(res => res.items))
 }
 
-export const getTopArtists = (session: Session, term: keyof typeof TERMS) => {
+export const getTopArtists = async (
+	session: Session,
+	term: keyof typeof TERMS,
+): Promise<SpotifyApi.ArtistObjectFull[]> => {
 	const { range } = TERMS[term as keyof typeof TERMS]
 	return Promise.all([
 		fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${range}&limit=49`, {
@@ -45,7 +37,7 @@ export const getTopArtists = (session: Session, term: keyof typeof TERMS) => {
 	]).then(ress => ress.flatMap(res => res.items))
 }
 
-export const getRecents = (session: Session): Promise<SpotifyApi.PlayHistoryObject[]> => {
+export const getRecents = async (session: Session): Promise<SpotifyApi.PlayHistoryObject[]> => {
 	return fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50`, {
 		headers: { Authorization: `Bearer ${session.token.access_token}` },
 		next: { revalidate },

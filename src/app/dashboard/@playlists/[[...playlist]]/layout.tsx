@@ -22,7 +22,7 @@ export default async function Layout({ children }: PropsWithChildren) {
 				<h3 className="text-xl font-bold">Your Statistics</h3>
 			</section>
 
-			<section className="p-2 bg-background overscroll-x-none mt-24 md:m-2 md:h-[calc(100%-16px)] md:w-[30%] md:max-w-[360px] md:rounded-lg">
+			<section className="p-2 w-full bg-background overscroll-x-none mt-24 md:m-2 md:h-[calc(100%-16px)] md:w-[30%] md:max-w-[360px] md:rounded-lg">
 				<div className="hidden gap-3 pt-2 pb-4 ml-[20px] md:flex">
 					<Icons.libraryOpen className="fill-muted-foreground size-6" />
 					<h3 className="text-lg text-muted-foreground">Your Statistics</h3>
