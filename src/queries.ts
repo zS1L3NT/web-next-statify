@@ -3,10 +3,16 @@ import { TERMS } from "@/lib/utils"
 
 const revalidate = 15 * 60
 
+const DEV_DELAY = 10
+
 export const getTopTracks = async (
 	session: Session,
 	term: keyof typeof TERMS,
 ): Promise<SpotifyApi.TrackObjectFull[]> => {
+	return new Promise(res => setTimeout(res, DEV_DELAY))
+		.then(() => import(`../dump/tracks-${term}.json`))
+		.then(v => v.default as SpotifyApi.TrackObjectFull[])
+
 	const { range } = TERMS[term as keyof typeof TERMS]
 	return Promise.all([
 		fetch(`https://api.spotify.com/v1/me/top/tracks?time_range=${range}&limit=49`, {
@@ -24,6 +30,10 @@ export const getTopArtists = async (
 	session: Session,
 	term: keyof typeof TERMS,
 ): Promise<SpotifyApi.ArtistObjectFull[]> => {
+	return new Promise(res => setTimeout(res, DEV_DELAY))
+		.then(() => import(`../dump/artists-${term}.json`))
+		.then(v => v.default as SpotifyApi.ArtistObjectFull[])
+
 	const { range } = TERMS[term as keyof typeof TERMS]
 	return Promise.all([
 		fetch(`https://api.spotify.com/v1/me/top/artists?time_range=${range}&limit=49`, {
@@ -38,6 +48,10 @@ export const getTopArtists = async (
 }
 
 export const getRecents = async (session: Session): Promise<SpotifyApi.PlayHistoryObject[]> => {
+	return new Promise(res => setTimeout(res, DEV_DELAY))
+		.then(() => import(`../dump/recents.json`))
+		.then(v => v.default as SpotifyApi.PlayHistoryObject[])
+
 	return fetch(`https://api.spotify.com/v1/me/player/recently-played?limit=50`, {
 		headers: { Authorization: `Bearer ${session.token.access_token}` },
 		next: { revalidate },
