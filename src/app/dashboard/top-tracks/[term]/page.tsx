@@ -4,6 +4,8 @@ import { getSession } from "@/lib/auth"
 import { isTerm } from "@/lib/utils"
 import { getTopTracks } from "@/queries"
 
+import Client from "./client"
+
 export default async function Page({ params: { term } }: { params: { term: string } }) {
 	const session = await getSession()
 	if (!session) return <></>
@@ -12,6 +14,10 @@ export default async function Page({ params: { term } }: { params: { term: strin
 	const tracks = await getTopTracks(session, term)
 
 	return (
-		<section className="absolute bg-gray-700 size-full left-full md:flex-1 md:static"></section>
+		<Client
+			term={term}
+			picture={session.user.picture}
+			tracks={tracks}
+		/>
 	)
 }
